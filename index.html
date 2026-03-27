@@ -354,34 +354,36 @@
       .trust-strip-item { flex: 1 1 calc(50% - 10px); white-space: normal; }
     }
     @media (max-width: 580px) {
-      /* ── Navbar: logo + hamburger only ── */
+      /* ── Navbar: logo left, hamburger right ── */
       .navbar { padding: 24px 0; }
       .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         height: 55px;
         border-radius: 14px;
         background: rgba(0,0,0,0.37);
         padding: 0 20px;
         max-width: calc(100% - 57px);
-        grid-template-columns: auto 1fr auto;
       }
       .nav-links   { display: none; }
       .nav-actions { display: none; }
       .hamburger   { display: flex; }
 
-      /* ── Overlay: photo visible at top, solid black from 53% ── */
+      /* ── Overlay: transparent top → solid black (gradiente subido) ── */
       .hero-overlay {
         background: linear-gradient(
           to bottom,
-          transparent  0%,
-          transparent 20%,
-          rgba(0,0,0,0.85) 48%,
-          rgba(0,0,0,1.00) 60%,
+          transparent   0%,
+          transparent  14%,
+          rgba(0,0,0,0.75) 40%,
+          rgba(0,0,0,1.00) 54%,
           rgba(0,0,0,1.00) 100%
         );
       }
 
-      /* ── Photo: show family (left portion of landscape photo) ── */
-      .hero-bg-img { object-position: 55% center; }
+      /* ── Photo: family position confirmed ── */
+      .hero-bg-img { object-position: 80% center; }
 
       /* ── No badge ── */
       .hero-badge { display: none; }
@@ -427,8 +429,8 @@
       .hero-trust-strip {
         position: static;
         flex: none;
-        padding: 16px 0 52px;
-        background: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
+        padding: 20px 0 64px;
+        background: linear-gradient(to bottom, transparent 0%, transparent 45%, #ffffff 100%);
       }
       .hero-trust-strip .container {
         display: flex;
