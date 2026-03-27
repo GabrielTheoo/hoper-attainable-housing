@@ -200,7 +200,7 @@
     }
     .mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: all; }
     .mobile-menu a { display: block; padding: 12px 0; font-size: 16px; font-weight: 500; border-bottom: 1px solid var(--border); }
-    .mobile-menu .mobile-cta { margin-top: 20px; width: 100%; justify-content: center; }
+    .mobile-menu .mobile-cta { display: flex; margin-top: 20px; width: 100%; justify-content: center; text-align: center; }
 
     /* ══════════════════════════════════════════════
        HERO — full-bleed photo + glassmorphism
@@ -372,20 +372,20 @@
       .nav-actions { display: none; }
       .hamburger   { display: flex; }
 
-      /* ── Overlay: transparent top → solid black (gradiente subido) ── */
+      /* ── Overlay: opaque before 50% to hide image cutoff ── */
       .hero-overlay {
         background: linear-gradient(
           to bottom,
           transparent   0%,
-          transparent  14%,
-          rgba(0,0,0,0.75) 40%,
-          rgba(0,0,0,1.00) 54%,
+          transparent  12%,
+          rgba(0,0,0,0.70) 34%,
+          rgba(0,0,0,1.00) 46%,
           rgba(0,0,0,1.00) 100%
         );
       }
 
-      /* ── Photo: family position confirmed ── */
-      .hero-bg-img { object-position: 80% center; }
+      /* ── Photo: 50% height, family position ── */
+      .hero-bg-img { object-position: 80% center; height: 50%; }
 
       /* ── No badge ── */
       .hero-badge { display: none; }
