@@ -34,7 +34,7 @@
 
     /* ── RESET ───────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       font-family: 'Montserrat', sans-serif;
       color: var(--black);
@@ -173,7 +173,8 @@
     }
     .nav-actions .btn-secondary:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
 
-    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; pointer-events: all; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; pointer-events: all; outline: none; -webkit-tap-highlight-color: transparent; }
+    .hamburger:focus, .hamburger:focus-visible { outline: none; }
     .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: all .3s; }
     .navbar.glass .hamburger span { background: var(--black); }
 
@@ -188,7 +189,8 @@
     }
 
     .mobile-menu {
-      position: fixed; top: 90px; left: 0; right: 0;
+      position: fixed; top: 103px; left: 16px; right: 16px;
+      border-radius: 16px;
       background: rgba(255,255,255,0.96); backdrop-filter: blur(20px);
       padding: 20px 20px 32px;
       border-bottom: 1px solid var(--border);
@@ -791,6 +793,8 @@
     }
     @media (max-width: 560px) {
       .faq-banner-left { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .faq-banner-actions { flex-direction: column; gap: 10px; }
+      .faq-banner-actions .btn { width: 100%; flex: none; justify-content: center; }
     }
 
     /* ══════════════════════════════════════════════
