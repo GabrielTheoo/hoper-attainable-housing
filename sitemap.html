@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hoper – Site Map</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', 'Segoe UI', sans-serif;
+      background: #F5F5F5;
+      color: #1A1A1A;
+      min-height: 100vh;
+      padding: 40px 24px 80px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1A1A1A;
+      letter-spacing: -0.5px;
+    }
+
+    header span {
+      font-size: 14px;
+      font-weight: 500;
+      color: #888;
+      margin-left: 4px;
+    }
+
+    .sitemap-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* ROOT NODE */
+    .root-node {
+      background: #EB7F1D;
+      color: #fff;
+      border-radius: 14px;
+      padding: 20px 40px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      box-shadow: 0 4px 20px rgba(235,127,29,0.35);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* CONNECTOR LINE DOWN FROM ROOT */
+    .connector-down {
+      width: 2px;
+      height: 40px;
+      background: #D0D0D0;
+    }
+
+    /* HORIZONTAL BAR */
+    .h-bar-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .h-bar {
+      height: 2px;
+      background: #D0D0D0;
+      width: 100%;
+      position: absolute;
+      top: 0;
+    }
+
+    /* SECTION COLUMNS */
+    .sections-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
+      padding-top: 40px;
+      position: relative;
+    }
+
+    .sections-row::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      background: #D0D0D0;
+    }
+
+    /* SECTION CARD */
+    .section-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      min-width: 140px;
+      max-width: 200px;
+      position: relative;
+    }
+
+    /* vertical connector up from section card */
+    .section-col::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 40px;
+      background: #D0D0D0;
+    }
+
+    .section-card {
+      border-radius: 12px;
+      padding: 14px 18px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      width: 100%;
+      cursor: default;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.1px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .section-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .section-card.orange {
+      background: #FFF3E8;
+      border: 2px solid #EB7F1D;
+      color: #EB7F1D;
+    }
+
+    .section-card.dark {
+      background: #1A1A1A;
+      border: 2px solid #1A1A1A;
+      color: #fff;
+    }
+
+    .section-card.green {
+      background: #E8F5EE;
+      border: 2px solid #2D8A54;
+      color: #2D8A54;
+    }
+
+    .section-card.blue {
+      background: #E8F0FB;
+      border: 2px solid #2B5CB8;
+      color: #2B5CB8;
+    }
+
+    .section-card.gray {
+      background: #EFEFEF;
+      border: 2px solid #999;
+      color: #555;
+    }
+
+    /* SUB-PAGES */
+    .sub-connector {
+      width: 2px;
+      height: 24px;
+      background: #D0D0D0;
+    }
+
+    .sub-pages {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+    }
+
+    .sub-page {
+      background: #fff;
+      border: 1.5px solid #E0E0E0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #444;
+      text-align: center;
+      width: 100%;
+      position: relative;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .sub-page:hover {
+      border-color: #EB7F1D;
+      color: #EB7F1D;
+    }
+
+    .sub-connector-between {
+      width: 2px;
+      height: 12px;
+      background: #D0D0D0;
+    }
+
+    /* ROUTE BADGE */
+    .route {
+      font-size: 10px;
+      font-weight: 500;
+      color: #AAA;
+      margin-top: 4px;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* LEGEND */
+    .legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 60px;
+      justify-content: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+    }
+
+    .dot-orange { background: #FFF3E8; border: 2px solid #EB7F1D; }
+    .dot-dark   { background: #1A1A1A; }
+    .dot-green  { background: #E8F5EE; border: 2px solid #2D8A54; }
+    .dot-blue   { background: #E8F0FB; border: 2px solid #2B5CB8; }
+    .dot-gray   { background: #EFEFEF; border: 2px solid #999; }
+    .dot-white  { background: #fff; border: 2px solid #E0E0E0; }
+
+    .page-count {
+      font-size: 13px;
+      color: #999;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      background: rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg class="logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 6L6 20H10V38H18V28H26V38H34V20H38L22 6Z" fill="#EB7F1D"/>
+    <path d="M22 6L6 20H10V38H18V28H26V38H34V20H38L22 6Z" fill="none" stroke="#EB7F1D" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+  <div>
+    <h1>Hoper <span>— Attainable Housing</span></h1>
+  </div>
+</header>
+
+<div class="sitemap-wrapper">
+
+  <!-- ROOT -->
+  <div class="root-node">Homepage</div>
+  <div class="connector-down"></div>
+
+  <!-- SECTIONS ROW -->
+  <div class="sections-row">
+
+    <!-- PROGRAMS -->
+    <div class="section-col">
+      <div class="section-card green">
+        <div class="tag">Programs</div><br/>
+        Program Pages
+        <div class="route">/programs</div>
+      </div>
+    </div>
+
+    <!-- USE CASES -->
+    <div class="section-col">
+      <div class="section-card orange">
+        <div class="tag">Audiences</div><br/>
+        Use Cases
+        <div class="route">/use-cases</div>
+      </div>
+      <div class="sub-connector"></div>
+      <div class="sub-pages">
+        <div class="sub-page">
+          Homebuyers
+          <div class="route">/use-cases/homebuyers</div>
+        </div>
+        <div class="sub-connector-between"></div>
+        <div class="sub-page">
+          Loan Officers
+          <div class="route">/use-cases/loan-officers</div>
+        </div>
+        <div class="sub-connector-between"></div>
+        <div class="sub-page">
+          Real Estate Agents
+          <div class="route">/use-cases/real-estate-agents</div>
+        </div>
+        <div class="sub-connector-between"></div>
+        <div class="sub-page">
+          Home Builders
+          <div class="route">/use-cases/home-builders</div>
+        </div>
+        <div class="sub-connector-between"></div>
+        <div class="sub-page">
+          Manufactured Homes
+          <div class="route">/use-cases/manufactured-homes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESOURCES -->
+    <div class="section-col">
+      <div class="section-card blue">
+        <div class="tag">Content</div><br/>
+        Resources
+        <div class="route">/resources</div>
+      </div>
+      <div class="sub-connector"></div>
+      <div class="sub-pages">
+        <div class="sub-page">
+          Eligibility Hub
+          <div class="route">/resources/eligibility-hub</div>
+        </div>
+        <div class="sub-connector-between"></div>
+        <div class="sub-page">
+          Blogs
+          <div class="route">/resources/blogs</div>
+        </div>
+        <div class="sub-connector-between"></div>
+        <div class="sub-page">
+          FAQs
+          <div class="route">/resources/faqs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GENERAL -->
+    <div class="section-col">
+      <div class="section-card gray">
+        <div class="tag">Legal</div><br/>
+        General
+        <div class="route">/general</div>
+      </div>
+    </div>
+
+    <!-- COMPANY -->
+    <div class="section-col">
+      <div class="section-card dark">
+        <div class="tag" style="background:rgba(255,255,255,0.15);color:#fff;">About</div><br/>
+        Company
+        <div class="route" style="color:#aaa;">/company</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot dot-green"></div> Programs</div>
+  <div class="legend-item"><div class="legend-dot dot-orange"></div> Use Cases (Audiences)</div>
+  <div class="legend-item"><div class="legend-dot dot-blue"></div> Resources / Content</div>
+  <div class="legend-item"><div class="legend-dot dot-gray"></div> Legal / General</div>
+  <div class="legend-item"><div class="legend-dot dot-dark"></div> Institutional</div>
+  <div class="legend-item"><div class="legend-dot dot-white"></div> Sub-page</div>
+</div>
+
+</body>
+</html>

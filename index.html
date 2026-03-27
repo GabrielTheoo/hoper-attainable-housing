@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hoper – Homeownership Is Closer Than You Think</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    /* ── TOKENS ──────────────────────────────────── */
+    :root {
+      --orange:       #EB7F1E;
+      --orange-dark:  #C96C12;
+      --orange-light: #FDF2E9;
+      --orange-mid:   #F9D7BA;
+      --black:        #1A1A1A;
+      --gray-dark:    #383838;
+      --gray-mid:     #666;
+      --border:       #E8E8E8;
+      --bg:           #FFFFFF;
+      --bg-alt:       #F9F9F7;
+      --star:         #FBBC04;
+      --shadow-sm:  0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md:  0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg:  0 8px 40px rgba(0,0,0,0.12);
+      --shadow-xl:  0 20px 60px rgba(0,0,0,0.15);
+      --shadow-orange: 0 8px 32px rgba(235,127,30,0.28);
+      --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-pill: 999px;
+      --nav-h: 72px;
+      --max-w: 1200px;
+    }
+
+    /* ── RESET ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--black);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+    /* ── BUTTONS ─────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: var(--r-pill);
+      font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 600;
+      line-height: 1.25; transition: all 0.22s ease; white-space: nowrap;
+    }
+    .btn-primary { background: var(--orange); color: #fff; box-shadow: var(--shadow-orange); }
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 14px 40px rgba(235,127,30,.38); }
+    .btn-secondary { background: transparent; color: var(--black); border: 2px solid var(--black); }
+    .btn-secondary:hover { background: var(--black); color: #fff; transform: translateY(-2px); }
+    .btn-ghost { background: transparent; color: var(--orange); padding: 0; font-weight: 600; font-size: 14px; gap: 4px; }
+    .btn-ghost i { transition: transform 0.2s; }
+    .btn-ghost:hover i { transform: translateX(4px); }
+    .btn-white { background: #fff; color: var(--orange); font-weight: 700; }
+    .btn-white:hover { background: rgba(255,255,255,.92); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+    .btn-white-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.5); }
+    .btn-white-outline:hover { border-color: #fff; background: rgba(255,255,255,.12); }
+
+    /* ── SCROLL ANIMATIONS ───────────────────────── */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: .1s; }
+    .fade-up.d2 { transition-delay: .2s; }
+    .fade-up.d3 { transition-delay: .3s; }
+    .fade-up.d4 { transition-delay: .4s; }
+    .fade-in { opacity: 0; transition: opacity .8s ease; }
+    .fade-in.visible { opacity: 1; }
+
+    /* ══════════════════════════════════════════════
+       NAVBAR — glass / transparent
+    ══════════════════════════════════════════════ */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: transparent;
+      z-index: 1000;
+      transition: background .35s ease, backdrop-filter .35s ease, border-color .35s ease, box-shadow .35s ease;
+    }
+    .navbar.glass {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 1px 24px rgba(0,0,0,0.06);
+    }
+    .navbar .container {
+      height: 100%; display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center; gap: 24px;
+    }
+    .nav-logo { display: flex; align-items: center; justify-self: start; }
+    .nav-logo img, .nav-logo svg { height: 32px; width: auto; }
+    .nav-logo .logo-svg { height: 32px; width: auto; }
+
+    .nav-links { display: flex; align-items: center; gap: 4px; justify-content: center; }
+    .nav-links a {
+      font-size: 15px; font-weight: 500; color: var(--gray-dark);
+      padding: 8px 12px; border-radius: var(--r-sm);
+      transition: color .2s, background .2s;
+    }
+    .nav-links a:hover { color: var(--orange); background: var(--orange-light); }
+
+    .nav-actions { display: flex; align-items: center; gap: 12px; justify-self: end; }
+    .nav-cta { padding: 10px 22px; font-size: 14px; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--black); border-radius: 2px; transition: all .3s; }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-actions .btn-secondary { display: none; }
+    }
+
+    .mobile-menu {
+      position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(20px);
+      padding: 20px 20px 32px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-lg); z-index: 999;
+      transform: translateY(-10px); opacity: 0; pointer-events: none;
+      transition: all .3s ease;
+    }
+    .mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 16px; font-weight: 500; border-bottom: 1px solid var(--border); }
+    .mobile-menu .mobile-cta { margin-top: 20px; width: 100%; justify-content: center; }
+
+    /* ══════════════════════════════════════════════
+       HERO — full-bleed photo + glass overlay
+    ══════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      background: var(--black);
+    }
+
+    /* Photo fills the full section */
+    .hero-bg-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%;
+      z-index: 0;
+    }
+
+    /* Gradient: dark left → transparent right */
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(
+        to right,
+        rgba(15,15,15,0.90) 0%,
+        rgba(15,15,15,0.75) 38%,
+        rgba(15,15,15,0.32) 65%,
+        rgba(15,15,15,0.0) 100%
+      );
+    }
+    /* Extra bottom fade so the strip blends */
+    .hero-overlay::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,15,15,0.55) 0%, transparent 40%);
+    }
+
+    .hero .container {
+      position: relative; z-index: 2;
+      display: block;
+      padding-top: calc(var(--nav-h) + 100px);
+      padding-bottom: 140px;
+    }
+    .hero-content { max-width: 580px; }
+
+    /* Badge — glass pill */
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff; font-size: 13px; font-weight: 600;
+      padding: 8px 16px; border-radius: var(--r-pill); margin-bottom: 24px;
+    }
+    .hero-badge i { color: var(--orange); }
+
+    .hero h1 {
+      font-size: clamp(40px, 5.5vw, 62px); font-weight: 800;
+      line-height: 1.1; color: #fff;
+      margin-bottom: 22px; letter-spacing: -1px;
+    }
+    .hero-sub {
+      font-size: 17px; line-height: 1.78; color: rgba(255,255,255,0.76);
+      margin-bottom: 36px; max-width: 500px;
+    }
+    .hero-sub strong { color: #fff; font-weight: 600; }
+
+    .hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    /* Secondary btn adapts to dark bg */
+    .hero .btn-secondary {
+      border-color: rgba(255,255,255,0.45); color: #fff; background: transparent;
+    }
+    .hero .btn-secondary:hover {
+      background: rgba(255,255,255,0.12); border-color: #fff; color: #fff; transform: translateY(-2px);
+    }
+
+    /* Navbar white links when transparent (over photo) */
+    .navbar:not(.glass) .nav-links a { color: rgba(255,255,255,0.88); }
+    .navbar:not(.glass) .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .navbar:not(.glass) .btn-secondary { border-color: rgba(255,255,255,0.5); color: #fff; }
+    .navbar:not(.glass) .btn-secondary:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+
+    /* Bottom trust strip */
+    .hero-trust-strip {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+      background: rgba(235,127,30,0.92);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .hero-trust-strip .container {
+      display: flex; align-items: stretch;
+      padding-top: 0; padding-bottom: 0;
+    }
+    .trust-strip-item {
+      display: flex; align-items: center; gap: 10px;
+      flex: 1; padding: 18px 24px;
+      font-size: 13px; font-weight: 600; color: #fff; line-height: 1.35;
+      border-right: 1px solid rgba(255,255,255,0.18);
+    }
+    .trust-strip-item:last-child { border-right: none; }
+    .trust-strip-item i { flex-shrink: 0; opacity: 0.9; }
+
+    @media (max-width: 960px) {
+      .hero .container { padding-bottom: 180px; }
+      .hero-trust-strip .container { flex-wrap: wrap; }
+      .trust-strip-item { flex: 1 1 50%; border-bottom: 1px solid rgba(255,255,255,0.18); }
+      .trust-strip-item:nth-child(even) { border-right: none; }
+      .trust-strip-item:nth-last-child(-n+2) { border-bottom: none; }
+    }
+    @media (max-width: 580px) {
+      .hero h1 { font-size: 36px; }
+      .hero .container { padding-bottom: 280px; }
+      .trust-strip-item { flex: 1 1 100%; border-right: none; }
+      .trust-strip-item:last-child { border-bottom: none; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn { justify-content: center; }
+    }
+
+    /* ══════════════════════════════════════════════
+       SHARED SECTION HELPERS
+    ══════════════════════════════════════════════ */
+    section { padding: 96px 0; }
+    .section-label {
+      display: inline-block; font-size: 12px; font-weight: 600;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 16px;
+    }
+    .section-headline {
+      font-size: clamp(28px, 4vw, 44px); font-weight: 700;
+      line-height: 1.25; color: var(--black); letter-spacing: -.3px;
+    }
+    .section-sub { font-size: 18px; line-height: 1.75; color: var(--gray-mid); margin-top: 16px; }
+
+    /* ══════════════════════════════════════════════
+       FEATURES
+    ══════════════════════════════════════════════ */
+    .features { background: var(--bg-alt); }
+    .features-header { text-align: center; margin-bottom: 64px; }
+    .features-header .section-sub { max-width: 540px; margin: 16px auto 0; }
+    .features-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+    .features-grid .feature-card:nth-child(1),
+    .features-grid .feature-card:nth-child(2) { grid-column: span 3; }
+    .features-grid .feature-card:nth-child(3),
+    .features-grid .feature-card:nth-child(4),
+    .features-grid .feature-card:nth-child(5) { grid-column: span 2; }
+    .feature-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--r-lg);
+      padding: 32px; display: flex; flex-direction: column;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(235,127,30,.3); }
+    .feature-icon-wrap {
+      width: 52px; height: 52px; background: var(--orange-light); border-radius: var(--r-md);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange); margin-bottom: 20px;
+    }
+    .feature-card h3 { font-size: 20px; font-weight: 700; line-height: 1.3; color: var(--black); margin-bottom: 12px; }
+    .feature-card p { font-size: 15px; line-height: 1.7; color: var(--gray-mid); flex: 1; margin-bottom: 20px; }
+    @media (max-width: 900px) {
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .features-grid .feature-card:nth-child(1),
+      .features-grid .feature-card:nth-child(2),
+      .features-grid .feature-card:nth-child(3),
+      .features-grid .feature-card:nth-child(4),
+      .features-grid .feature-card:nth-child(5) { grid-column: span 1; }
+    }
+    @media (max-width: 580px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .features-grid .feature-card:nth-child(n) { grid-column: span 1; }
+    }
+
+    /* ══════════════════════════════════════════════
+       COMPARISON — strong redesign
+    ══════════════════════════════════════════════ */
+    .comparison { background: var(--bg); }
+    .comparison-header { text-align: center; margin-bottom: 64px; }
+    .comparison-header .section-headline { max-width: 680px; margin: 0 auto; }
+    .comparison-sub {
+      font-size: clamp(18px, 2.5vw, 26px); font-weight: 400;
+      color: var(--gray-dark); line-height: 1.5; margin-top: 16px;
+    }
+    .comparison-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 20px; margin-bottom: 48px; align-items: stretch;
+    }
+
+    /* WITHOUT — muted, weak */
+    .comparison-col.without {
+      background: #F7F7F7; border: 2px solid #E0E0E0;
+      border-radius: var(--r-xl); padding: 40px;
+      position: relative; overflow: hidden;
+    }
+    .without-title {
+      font-size: 22px; font-weight: 700; color: #888;
+      margin-bottom: 24px; position: relative;
+    }
+    .without-list { display: flex; flex-direction: column; gap: 14px; position: relative; }
+    .without-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 16px; color: #777; line-height: 1.5;
+    }
+    .without-x {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #E0E0E0; display: flex; align-items: center; justify-content: center;
+      color: #aaa; flex-shrink: 0; margin-top: 1px;
+    }
+    .without-outcome {
+      margin-top: 24px; padding-top: 20px; border-top: 1px solid #DDD;
+      font-size: 15px; font-weight: 600; color: #999;
+      line-height: 1.55; position: relative;
+    }
+
+    /* WITH HOPER — powerful, dark, orange */
+    .comparison-col.with {
+      background: var(--black); border: 2px solid var(--orange);
+      border-radius: var(--r-xl); padding: 40px;
+      position: relative; overflow: hidden;
+      box-shadow: 0 0 0 6px rgba(235,127,30,.12), var(--shadow-xl);
+    }
+    .comparison-col.with::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(235,127,30,.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .with-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--orange); color: #fff;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 5px 12px;
+      border-radius: var(--r-pill); margin-bottom: 16px;
+    }
+    .with-title {
+      font-size: 28px; font-weight: 800; color: #fff;
+      margin-bottom: 24px;
+    }
+    .with-list { display: flex; flex-direction: column; gap: 14px; }
+    .with-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 16px; color: rgba(255,255,255,.88); line-height: 1.5;
+    }
+    .with-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--orange); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .with-outcome {
+      margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.1);
+      font-size: 15px; font-weight: 600; color: rgba(255,255,255,.9);
+      line-height: 1.55;
+    }
+    .with-outcome strong { color: var(--orange); }
+
+    .comparison-cta { text-align: center; }
+    @media (max-width: 680px) { .comparison-grid { grid-template-columns: 1fr; } }
+
+    /* ══════════════════════════════════════════════
+       GUIDANCE (dark)
+    ══════════════════════════════════════════════ */
+    .guidance { background: var(--black); }
+    .guidance .container {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .guidance .section-label { color: var(--orange); }
+    .guidance .section-headline { color: #fff; }
+    .guidance-sub { font-size: 17px; color: rgba(255,255,255,.65); line-height: 1.75; margin-top: 16px; margin-bottom: 32px; }
+    .guidance-checklist { display: flex; flex-direction: column; gap: 16px; }
+    .guidance-item { display: flex; align-items: flex-start; gap: 16px; font-size: 15px; line-height: 1.65; color: rgba(255,255,255,.82); }
+    .guidance-check {
+      width: 24px; height: 24px; background: var(--orange); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
+    .guidance-actions { margin-top: 36px; }
+
+    /* Guidance photo card */
+    .guidance-photo-wrap { position: relative; border-radius: var(--r-xl); overflow: visible; }
+    .guidance-photo {
+      width: 100%; height: 420px;
+      object-fit: cover; border-radius: var(--r-xl);
+      box-shadow: var(--shadow-xl);
+    }
+    .guidance-stat-pill {
+      position: absolute; background: var(--orange); color: #fff;
+      border-radius: var(--r-lg); padding: 16px 22px;
+      box-shadow: var(--shadow-orange);
+    }
+    .guidance-stat-pill.pill-top {
+      top: -20px; right: -20px;
+      text-align: center;
+    }
+    .guidance-stat-pill.pill-bottom {
+      bottom: -20px; left: -20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .pill-num { font-size: 26px; font-weight: 800; }
+    .pill-lbl { font-size: 11px; font-weight: 600; opacity: .85; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+    .pill-icon { width: 36px; height: 36px; background: rgba(255,255,255,.2); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; }
+
+    @media (max-width: 960px) { .guidance .container { grid-template-columns: 1fr; gap: 48px; } }
+
+    /* ══════════════════════════════════════════════
+       WHY HOPER — with photo
+    ══════════════════════════════════════════════ */
+    .why { background: var(--bg); }
+    .why .container {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .why-photo-wrap { position: relative; border-radius: var(--r-xl); overflow: visible; order: -1; }
+    .why-photo { width: 100%; height: 480px; object-fit: cover; border-radius: var(--r-xl); box-shadow: var(--shadow-xl); }
+    .why-photo-tag {
+      position: absolute; bottom: -18px; right: -18px;
+      background: #fff; border-radius: var(--r-lg);
+      padding: 16px 20px; box-shadow: var(--shadow-lg);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .why-photo-tag-icon { width: 44px; height: 44px; background: var(--orange-light); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; color: var(--orange); }
+    .why-photo-tag-text strong { display: block; font-size: 18px; font-weight: 800; color: var(--black); line-height: 1; }
+    .why-photo-tag-text span { font-size: 12px; color: var(--gray-mid); font-weight: 500; }
+
+    .why-content { }
+    .why-benefits { display: flex; flex-direction: column; gap: 20px; margin-top: 36px; }
+    .why-benefit {
+      display: flex; gap: 16px; padding: 20px;
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .why-benefit:hover { border-color: var(--orange); box-shadow: 0 4px 20px rgba(235,127,30,.08); }
+    .why-benefit-icon {
+      width: 44px; height: 44px; background: var(--orange-light);
+      border-radius: var(--r-md); display: flex; align-items: center; justify-content: center;
+      color: var(--orange); flex-shrink: 0;
+    }
+    .why-benefit-text strong { display: block; font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+    .why-benefit-text p { font-size: 14px; line-height: 1.65; color: var(--gray-mid); }
+    .why-cta { margin-top: 32px; }
+
+    @media (max-width: 960px) {
+      .why .container { grid-template-columns: 1fr; gap: 40px; }
+      .why-photo-wrap { order: 0; }
+    }
+
+    /* ══════════════════════════════════════════════
+       AUDIENCE CARDS
+    ══════════════════════════════════════════════ */
+    .audience { background: var(--bg-alt); }
+    .audience-header { text-align: center; margin-bottom: 64px; }
+    .audience-header .section-headline { color: var(--orange); }
+    .audience-header .section-sub { max-width: 620px; margin: 16px auto 0; }
+    .audience-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+    .audience-card {
+      background: var(--orange-light); border: 1.5px solid rgba(235,127,30,.18);
+      border-radius: var(--r-lg); padding: 28px 24px;
+      display: flex; flex-direction: column;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+    .audience-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-orange); border-color: var(--orange); }
+    .audience-card-icon {
+      width: 48px; height: 48px; background: #fff; border-radius: var(--r-md);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange); margin-bottom: 16px; box-shadow: var(--shadow-sm);
+    }
+    .audience-card h4 { font-size: 16px; font-weight: 700; color: var(--black); margin-bottom: 8px; }
+    .audience-card p { font-size: 13px; line-height: 1.7; color: var(--gray-dark); flex: 1; margin-bottom: 16px; }
+    @media (max-width: 1024px) { .audience-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .audience-grid { grid-template-columns: 1fr; } }
+
+    /* ══════════════════════════════════════════════
+       TESTIMONIALS — infinite scroll columns
+    ══════════════════════════════════════════════ */
+    .testimonials { background: var(--bg); overflow: hidden; }
+    .testimonials-header { text-align: center; margin-bottom: 48px; }
+    .testimonials-header .section-sub { max-width: 560px; margin: 16px auto 0; }
+    .rating-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px; }
+    .stars { display: flex; gap: 2px; }
+    .stars svg { color: var(--star); }
+    .rating-score { font-size: 18px; font-weight: 700; }
+    .rating-count { font-size: 14px; color: var(--gray-mid); }
+
+    /* The columns container */
+    .t-columns {
+      display: flex; gap: 20px; justify-content: center;
+      mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+      max-height: 680px; overflow: hidden;
+    }
+
+    .t-col { display: flex; flex-direction: column; gap: 20px; flex: 0 0 calc(33.333% - 14px); }
+    .t-col:nth-child(2) { display: none; }
+    .t-col:nth-child(3) { display: none; }
+    @media (min-width: 768px) { .t-col:nth-child(2) { display: flex; } }
+    @media (min-width: 1024px) { .t-col:nth-child(3) { display: flex; } }
+
+    /* Scroll animations */
+    .t-track { display: flex; flex-direction: column; gap: 20px; will-change: transform; }
+    .t-track.scroll-up   { animation: scrollUp   var(--dur, 20s) linear infinite; }
+    .t-track.scroll-down { animation: scrollDown var(--dur, 20s) linear infinite; }
+
+    @keyframes scrollUp   { 0% { transform: translateY(0); }  100% { transform: translateY(-50%); } }
+    @keyframes scrollDown { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+
+    .t-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px;
+      transition: box-shadow .25s, transform .25s;
+      cursor: default;
+    }
+    .t-card:hover { box-shadow: var(--shadow-lg); transform: scale(1.02) translateY(-4px); }
+    .t-stars { display: flex; gap: 2px; margin-bottom: 14px; }
+    .t-stars svg { color: var(--star); }
+    .t-text {
+      font-size: 14px; line-height: 1.75; color: var(--gray-dark);
+      margin-bottom: 18px; font-style: italic;
+    }
+    .t-author { display: flex; align-items: center; gap: 12px; }
+    .t-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      object-fit: cover; ring: 2px solid var(--border);
+      flex-shrink: 0;
+    }
+    .t-name { font-size: 14px; font-weight: 700; color: var(--black); line-height: 1.3; }
+    .t-role { font-size: 12px; color: var(--gray-mid); font-weight: 500; }
+
+    /* ══════════════════════════════════════════════
+       FAQ BANNER
+    ══════════════════════════════════════════════ */
+    .faq-banner {
+      background: var(--bg-alt);
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-banner-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 40px;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--r-xl); padding: 40px 48px;
+      box-shadow: var(--shadow-md);
+    }
+    .faq-banner-left {
+      display: flex; align-items: center; gap: 24px; flex: 1;
+    }
+    .faq-banner-icon-wrap {
+      width: 72px; height: 72px; flex-shrink: 0;
+      background: var(--orange-light); border-radius: var(--r-lg);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange);
+    }
+    .faq-banner-title {
+      font-size: clamp(22px, 3vw, 30px); font-weight: 700;
+      color: var(--black); margin-bottom: 6px;
+    }
+    .faq-banner-sub {
+      font-size: 15px; line-height: 1.65; color: var(--gray-mid);
+      max-width: 480px;
+    }
+    .faq-banner-actions {
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+    @media (max-width: 900px) {
+      .faq-banner-inner { flex-direction: column; align-items: flex-start; padding: 32px; }
+      .faq-banner-actions { width: 100%; }
+      .faq-banner-actions .btn { flex: 1; justify-content: center; }
+    }
+    @media (max-width: 560px) {
+      .faq-banner-left { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+
+    /* ══════════════════════════════════════════════
+       CTA
+    ══════════════════════════════════════════════ */
+    .cta-section { background: var(--orange); padding: 96px 0; }
+    .cta-inner { text-align: center; max-width: 680px; margin: 0 auto; }
+    .cta-inner h2 { font-size: clamp(28px,4vw,44px); font-weight: 700; line-height: 1.25; color: #fff; margin-bottom: 20px; }
+    .cta-inner p { font-size: 18px; color: rgba(255,255,255,.85); line-height: 1.75; margin-bottom: 36px; }
+    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ══════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════ */
+    .footer { background: var(--black); color: rgba(255,255,255,.65); padding: 80px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px; margin-bottom: 64px; }
+    .footer-logo { display: flex; align-items: center; margin-bottom: 16px; }
+    .footer-logo .logo-svg path { fill: #fff !important; }
+    .footer-brand p { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,.45); max-width: 240px; }
+    .footer-social { display: flex; gap: 12px; margin-top: 20px; }
+    .social-link {
+      width: 36px; height: 36px; background: rgba(255,255,255,.08);
+      border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.55); transition: background .2s, color .2s;
+    }
+    .social-link:hover { background: var(--orange); color: #fff; }
+    .footer-col h5 { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul li a { font-size: 14px; color: rgba(255,255,255,.5); transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--orange); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,.3); }
+    @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
+    @media (max-width: 500px) { .footer-grid { grid-template-columns: 1fr; } }
+
+    /* ══════════════════════════════════════════════
+       SCROLL TOP
+    ══════════════════════════════════════════════ */
+    .scroll-top {
+      position: fixed; bottom: 24px; right: 24px;
+      width: 44px; height: 44px; background: var(--orange); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-orange); opacity: 0; transform: translateY(12px);
+      transition: opacity .3s, transform .3s; z-index: 99;
+    }
+    .scroll-top.show { opacity: 1; transform: translateY(0); }
+    .scroll-top:hover { background: var(--orange-dark); }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════ NAVBAR ════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="/" class="nav-logo">
+      <svg class="logo-svg" height="32" viewBox="0 0 205 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#lc)">
+          <path d="M42.7436 32.4518H10.3127V25.847L4.91211 31.2475V42.6643C4.91211 42.9613 5.15514 43.2043 5.45217 43.2043H9.77268C10.0697 43.2043 10.3127 42.9613 10.3127 42.6643V38.3924C10.3127 38.0954 10.5558 37.8524 10.8528 37.8524H42.2035C42.5005 37.8524 42.7436 38.0954 42.7436 38.3924V42.6643C42.7436 42.9613 42.9866 43.2043 43.2836 43.2043H47.6041C47.9012 43.2043 48.1442 42.9613 48.1442 42.6643V31.2745L42.7436 25.874V32.4518Z" fill="#1A1A1A"/>
+          <path d="M52.8723 26.1251L26.9034 0.156625C26.7954 0.0486145 26.655 -0.0026906 26.5145 9.66525e-06C26.3741 9.66525e-06 26.2337 0.0513148 26.1257 0.156625L0.159433 26.1251C-0.0511913 26.3357 -0.0511913 26.6787 0.159433 26.8893L3.21349 29.9433C3.42412 30.1539 3.76706 30.1539 3.97768 29.9433L26.5145 7.40685L49.0514 29.9433C49.262 30.1539 49.6049 30.1539 49.8156 29.9433L52.8696 26.8893C53.0803 26.6787 53.0803 26.3357 52.8696 26.1251H52.8723Z" fill="#EB7F1E"/>
+          <path d="M92.4564 11.1413V42.8533C92.4564 43.018 92.3213 43.153 92.1566 43.153H86.756C86.5913 43.153 86.4563 43.018 86.4563 42.8533V29.306H69.7467V42.8533C69.7467 43.018 69.6117 43.153 69.4469 43.153H64.0463C63.8816 43.153 63.7466 43.018 63.7466 42.8533V11.1413C63.7466 10.9766 63.8816 10.8416 64.0463 10.8416H69.4469C69.6117 10.8416 69.7467 10.9766 69.7467 11.1413V24.1809H86.4563V11.1413C86.4563 10.9766 86.5913 10.8416 86.756 10.8416H92.1566C92.3213 10.8416 92.4564 10.9766 92.4564 11.1413Z" fill="#EB7F1E"/>
+          <path d="M98.5508 30.829C98.5508 23.4438 104.089 18.2268 111.661 18.2268C119.233 18.2268 124.817 23.4438 124.817 30.829C124.817 38.2142 119.324 43.4771 111.661 43.4771C103.997 43.4771 98.5508 38.2142 98.5508 30.829ZM119 30.829C119 26.1197 115.863 23.1197 111.661 23.1197C107.459 23.1197 104.367 26.1197 104.367 30.829C104.367 35.5383 107.505 38.5383 111.661 38.5383C115.817 38.5383 119 35.5383 119 30.829Z" fill="#EB7F1E"/>
+          <path d="M156.529 30.829C156.529 38.4924 151.221 43.4771 144.019 43.4771C140.881 43.4771 138.111 42.4159 136.126 40.153V53.6976C136.126 53.8623 135.991 53.9973 135.826 53.9973H130.658C130.493 53.9973 130.358 53.8623 130.358 53.6976V18.8047C130.358 18.64 130.493 18.505 130.658 18.505H135.551C135.715 18.505 135.85 18.64 135.85 18.8047V21.7345C137.789 19.3799 140.652 18.2268 144.022 18.2268C151.223 18.2268 156.532 23.2115 156.532 30.829H156.529ZM150.667 30.829C150.667 26.1197 147.529 23.1197 143.373 23.1197C139.218 23.1197 136.034 26.1197 136.034 30.829C136.034 35.5383 139.22 38.5383 143.373 38.5383C147.527 38.5383 150.667 35.5383 150.667 30.829Z" fill="#EB7F1E"/>
+          <path d="M184.826 32.676H165.762C166.453 36.2754 169.456 38.5842 173.747 38.5842C176.398 38.5842 178.499 37.7795 180.214 36.1323C180.338 36.0135 180.538 36.0162 180.651 36.1485L183.362 39.2646C183.462 39.378 183.462 39.5482 183.362 39.6616C181.143 42.1647 177.748 43.4798 173.609 43.4798C165.346 43.4798 159.994 38.1737 159.991 30.8344C159.991 23.9271 165.467 18.3915 172.372 18.2349C179.758 18.0648 185.193 23.1359 185.193 30.9721C185.193 31.3582 185.161 31.9091 185.123 32.4032C185.112 32.5599 184.98 32.6814 184.823 32.6814L184.826 32.676ZM165.716 28.8443H179.704C179.242 25.2907 176.517 22.8443 172.734 22.8443C168.951 22.8443 166.272 25.2448 165.719 28.8443H165.716Z" fill="#EB7F1E"/>
+          <path d="M205 18.532V23.3682C205 23.5518 204.835 23.6922 204.654 23.6652C204.295 23.6112 203.979 23.5842 203.661 23.5842C199.275 23.5842 196.505 26.1683 196.505 31.2016V42.856C196.505 43.0207 196.37 43.1557 196.205 43.1557H191.037C190.872 43.1557 190.737 43.0207 190.737 42.856V18.8074C190.737 18.6427 190.872 18.5077 191.037 18.5077H195.93C196.094 18.5077 196.229 18.6427 196.229 18.8074V22.1071C197.849 19.5878 200.741 18.2943 204.695 18.2322C204.862 18.2322 205 18.3673 205 18.5347V18.532Z" fill="#EB7F1E"/>
+        </g>
+        <defs><clipPath id="lc"><rect width="205" height="54" fill="white"/></clipPath></defs>
+      </svg>
+    </a>
+
+    <div class="nav-links">
+      <a href="/programs">Program</a>
+      <a href="/use-cases">Use Cases</a>
+      <a href="/resources">Resources</a>
+      <a href="/company">Company</a>
+    </div>
+
+    <div class="nav-actions">
+      <a href="/resources/eligibility-hub" class="btn btn-secondary nav-cta">See if you qualify</a>
+      <a href="/programs" class="btn btn-primary nav-cta">Get started</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/programs">Program</a>
+  <a href="/use-cases">Use Cases</a>
+  <a href="/resources">Resources</a>
+  <a href="/company">Company</a>
+  <a href="/programs" class="btn btn-primary mobile-cta">Get started with Hoper</a>
+</div>
+
+<main>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero" id="home">
+  <!-- Full-bleed background photo -->
+  <img class="hero-bg-img" src="Frame%20427319444.png" alt="Happy family in their new home" loading="eager">
+  <!-- Gradient overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Main content -->
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge fade-up">
+        <i data-lucide="sparkles" style="width:14px;height:14px;"></i>
+        Earn up to $13,000 toward your closing costs
+      </div>
+      <h1 class="fade-up d1">
+        Homeownership<br>Is Closer Than<br>You Think
+      </h1>
+      <p class="hero-sub fade-up d2">
+        Eligible homebuyers can earn up to <strong>$13,000 toward closing costs</strong>, receive financial mentorship, and lower long-term energy costs with a fully owned solar system — all without changing their mortgage rate.
+      </p>
+      <div class="hero-actions fade-up d3">
+        <a href="/resources/eligibility-hub" class="btn btn-primary">
+          Check Your Eligibility
+          <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+        </a>
+        <a href="/programs" class="btn btn-secondary">Learn About Hoper</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom trust strip -->
+  <div class="hero-trust-strip fade-up d4">
+    <div class="container">
+      <div class="trust-strip-item">
+        <i data-lucide="shield-check" style="width:18px;height:18px;"></i>
+        No additional credit score requirement
+      </div>
+      <div class="trust-strip-item">
+        <i data-lucide="percent" style="width:18px;height:18px;"></i>
+        Your mortgage rate stays the same
+      </div>
+      <div class="trust-strip-item">
+        <i data-lucide="map-pin" style="width:18px;height:18px;"></i>
+        Available in most states
+      </div>
+      <div class="trust-strip-item">
+        <i data-lucide="sun" style="width:18px;height:18px;"></i>
+        New &amp; fully owned solar system
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ FEATURES ════════════════════ -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="features-header">
+      <span class="section-label fade-up">The Hoper Program</span>
+      <h2 class="section-headline fade-up d1">Start Earning Toward Your Home Purchase</h2>
+      <p class="section-sub fade-up d2">We remove doubt and friction from the homebuying process through the Hoper Research Program.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon-wrap"><i data-lucide="graduation-cap" style="width:24px;height:24px;"></i></div>
+        <h3>Prepare for Your Home Purchase</h3>
+        <p>Get online, self-paced, pre-closing financial education. In less than 6 hours, you'll understand what it takes to buy a house and how to get there.</p>
+        <a href="/programs" class="btn btn-ghost">Enroll Now <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></a>
+      </div>
+      <div class="feature-card fade-up d1">
+        <div class="feature-icon-wrap"><i data-lucide="brain" style="width:24px;height:24px;"></i></div>
+        <h3>Benefit from Financial Advice</h3>
+        <p>Receive post-closing financial mentorship designed to help you master proven wealth-building strategies and move forward with confidence and clarity.</p>
+        <a href="/programs" class="btn btn-ghost">Ensure your success <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></a>
+      </div>
+      <div class="feature-card fade-up d2">
+        <div class="feature-icon-wrap"><i data-lucide="flask-conical" style="width:24px;height:24px;"></i></div>
+        <h3>Participate in Valuable Research</h3>
+        <p>Participate in a structured initiative studying how education, mentorship, and stronger financial positioning improve long-term homeowner success.</p>
+        <a href="/programs" class="btn btn-ghost">Start Earning <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></a>
+      </div>
+      <div class="feature-card fade-up d3">
+        <div class="feature-icon-wrap"><i data-lucide="badge-dollar-sign" style="width:24px;height:24px;"></i></div>
+        <h3>Earn 3.5% — Up to $13,000</h3>
+        <p>Earn income by participating in a homeownership research program and use it toward closing costs, strengthening financial reserves, or reducing debt — helping you enter homeownership on stronger footing.</p>
+        <a href="/programs" class="btn btn-ghost">Start Earning <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></a>
+      </div>
+      <div class="feature-card fade-up d4">
+        <div class="feature-icon-wrap"><i data-lucide="sun" style="width:24px;height:24px;"></i></div>
+        <h3>Lower Long-Term Housing Costs</h3>
+        <p>Lower utility expenses through a fully owned solar energy system, helping you create more predictable monthly housing costs.</p>
+        <a href="/programs" class="btn btn-ghost">How it works <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ COMPARISON ════════════════════ -->
+<section class="comparison" id="comparison">
+  <div class="container">
+    <div class="comparison-header">
+      <h2 class="section-headline fade-up">Don't Let Go of the Dream of Homeownership</h2>
+      <p class="comparison-sub fade-up d1">Buying a home is one thing. Doing so prepared for the future is another.</p>
+    </div>
+
+    <div class="comparison-grid">
+      <!-- WITHOUT -->
+      <div class="comparison-col without fade-up">
+        <div class="without-title">Without a structured plan</div>
+        <div class="without-list">
+          <div class="without-item">
+            <div class="without-x"><i data-lucide="x" style="width:12px;height:12px;"></i></div>
+            Stretching to cover closing costs
+          </div>
+          <div class="without-item">
+            <div class="without-x"><i data-lucide="x" style="width:12px;height:12px;"></i></div>
+            Draining savings just to make the numbers work
+          </div>
+          <div class="without-item">
+            <div class="without-x"><i data-lucide="x" style="width:12px;height:12px;"></i></div>
+            Entering ownership without a long-term financial strategy
+          </div>
+        </div>
+        <div class="without-outcome">
+          Higher monthly payments + Lower cash reserves = More stress, less joy, and more financial risks.
+        </div>
+      </div>
+
+      <!-- WITH HOPER -->
+      <div class="comparison-col with fade-up d1">
+        <div class="with-badge">
+          <i data-lucide="star" style="width:12px;height:12px;fill:#fff;"></i>
+          The Hoper Way
+        </div>
+        <div class="with-title">With Hoper</div>
+        <div class="with-list">
+          <div class="with-item">
+            <div class="with-check"><i data-lucide="check" style="width:12px;height:12px;color:#fff;"></i></div>
+            Earn up to $13,000 toward closing
+          </div>
+          <div class="with-item">
+            <div class="with-check"><i data-lucide="check" style="width:12px;height:12px;color:#fff;"></i></div>
+            Follow a proven financial education framework
+          </div>
+          <div class="with-item">
+            <div class="with-check"><i data-lucide="check" style="width:12px;height:12px;color:#fff;"></i></div>
+            Lower and stabilize long-term housing costs
+          </div>
+        </div>
+        <div class="with-outcome">
+          Lower monthly payments + Higher cash reserves = <strong>Less stress, more joy, and the peace that comes with financial confidence.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison-cta fade-up">
+      <a href="/resources/eligibility-hub" class="btn btn-primary" style="padding:16px 40px;font-size:17px;">
+        Enroll Now
+        <i data-lucide="arrow-right" style="width:17px;height:17px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ GUIDANCE ════════════════════ -->
+<section class="guidance" id="guidance">
+  <div class="container">
+    <div class="fade-up">
+      <span class="section-label">Homebuying is complicated</span>
+      <h2 class="section-headline">Guidance Before and<br>After You Close</h2>
+      <p class="guidance-sub">
+        Hoper supports you with structured education before closing and financial mentorship after you move in — helping you navigate both the purchase and the long-term realities of ownership.
+      </p>
+      <div class="guidance-checklist">
+        <div class="guidance-item">
+          <div class="guidance-check"><i data-lucide="check" style="width:13px;height:13px;color:#fff;"></i></div>
+          Understand exactly what lenders evaluate and how to strengthen your profile
+        </div>
+        <div class="guidance-item">
+          <div class="guidance-check"><i data-lucide="check" style="width:13px;height:13px;color:#fff;"></i></div>
+          Get clear on your numbers, reserves, and financial position
+        </div>
+        <div class="guidance-item">
+          <div class="guidance-check"><i data-lucide="check" style="width:13px;height:13px;color:#fff;"></i></div>
+          Follow a defined path from pre-approval to closing
+        </div>
+        <div class="guidance-item">
+          <div class="guidance-check"><i data-lucide="check" style="width:13px;height:13px;color:#fff;"></i></div>
+          Enter ownership with a plan for long-term stability
+        </div>
+      </div>
+      <div class="guidance-actions">
+        <a href="/company" class="btn btn-primary">
+          Learn More About Hoper
+          <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="guidance-photo-wrap fade-in">
+      <img
+        class="guidance-photo"
+        src="https://s3-alpha-sig.figma.com/img/3904/9dbf/cd300cd37add57c8e5d643bc7a79c454?Expires=1775433600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=WN2ECHVBo39Z0M89loQcHaJ~MXf7QMQNUcDeiN~z10ISyqUnOzEljOVoSHpL1gPFZlGZH9eqW2xUUGFpeecyj0dQxSUAxjN46WLeV7KnjKDI-uDwyuULXi916ABKyF2jfRYa1lIKJ17968CG~djKYMjX0MHb7udXuzHq2CRvO2IyiMvkj9qh3BJrViegqiZ8a3m4n-P6~032Y5yo63D3lyfGNX0U5L8Vu1PkoxDj-aXR2r4yxS2ojsJ7IfsJDHXLt3veZut662fANdFbq5vbEOCitCRMcnFCsTg99Muf0qvcpFzXvlN91lHLhg4rkswMufJuWXCddPMIykOoJO5VWw__"
+        alt="Couple reviewing homebuying documents with advisor"
+        loading="lazy"
+      />
+      <div class="guidance-stat-pill pill-top">
+        <div class="pill-num">$13K</div>
+        <div class="pill-lbl">Max earnings</div>
+      </div>
+      <div class="guidance-stat-pill pill-bottom">
+        <div class="pill-icon"><i data-lucide="sun" style="width:18px;height:18px;color:#fff;"></i></div>
+        <div>
+          <div style="font-size:14px;font-weight:700;">Solar included</div>
+          <div style="font-size:11px;opacity:.8;">Fully owned system</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ WHY HOPER ════════════════════ -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="why-photo-wrap fade-in">
+      <img
+        class="why-photo"
+        src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=700&q=80"
+        alt="Happy family in front of their new home"
+        loading="lazy"
+      />
+      <div class="why-photo-tag">
+        <div class="why-photo-tag-icon">
+          <i data-lucide="dollar-sign" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="why-photo-tag-text">
+          <strong>3.5%</strong>
+          <span>Earned at closing</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-content fade-up">
+      <span class="section-label">Why Homebuyers Choose Hoper</span>
+      <h2 class="section-headline">Build a Sustainable Future and Prosper Financially</h2>
+      <div class="why-benefits">
+        <div class="why-benefit">
+          <div class="why-benefit-icon"><i data-lucide="dollar-sign" style="width:20px;height:20px;"></i></div>
+          <div class="why-benefit-text">
+            <strong>Earn income when you buy or refinance</strong>
+            <p>Receive up to 3.5% of your home's purchase price (up to $13,000) as earned income to reduce closing costs, strengthen reserves, or improve your overall financial position.</p>
+          </div>
+        </div>
+        <div class="why-benefit">
+          <div class="why-benefit-icon"><i data-lucide="home" style="width:20px;height:20px;"></i></div>
+          <div class="why-benefit-text">
+            <strong>Build equity instead of paying rent</strong>
+            <p>Homeownership helps families build a future of equity and long-term financial stability.</p>
+          </div>
+        </div>
+        <div class="why-benefit">
+          <div class="why-benefit-icon"><i data-lucide="zap" style="width:20px;height:20px;"></i></div>
+          <div class="why-benefit-text">
+            <strong>Lower and more predictable housing costs</strong>
+            <p>Fully owned solar helps lower utility costs and stabilize monthly housing expenses.</p>
+          </div>
+        </div>
+        <div class="why-benefit">
+          <div class="why-benefit-icon"><i data-lucide="users" style="width:20px;height:20px;"></i></div>
+          <div class="why-benefit-text">
+            <strong>Continued support after closing</strong>
+            <p>Getting you into a home is step one — the real goal is long-term stability and financial progress.</p>
+          </div>
+        </div>
+      </div>
+      <div class="why-cta">
+        <a href="/resources/eligibility-hub" class="btn btn-primary">
+          Check Your Eligibility
+          <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ AUDIENCE ════════════════════ -->
+<section class="audience" id="audience">
+  <div class="container">
+    <div class="audience-header">
+      <span class="section-label fade-up">Built For Everyone</span>
+      <h2 class="section-headline fade-up d1">Built for You — No Matter What Role<br>You Play in the Transaction</h2>
+      <p class="section-sub fade-up d2">Hoper strengthens the financial position of everyone involved in the homebuying process — aligning buyers and industry partners around stronger outcomes.</p>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card fade-up">
+        <div class="audience-card-icon"><i data-lucide="home" style="width:22px;height:22px;"></i></div>
+        <h4>For Homebuyers</h4>
+        <p>Earn income at closing. Reduce out-of-pocket costs. Build long-term stability through financial education and solar ownership.</p>
+        <a href="/use-cases/homebuyers" class="btn btn-ghost">See How It Works <i data-lucide="arrow-right" style="width:13px;height:13px;"></i></a>
+      </div>
+      <div class="audience-card fade-up d1">
+        <div class="audience-card-icon"><i data-lucide="briefcase" style="width:22px;height:22px;"></i></div>
+        <h4>For Loan Officers</h4>
+        <p>Differentiate your FHA offering. Strengthen borrower qualification. Provide measurable financial value without layering additional debt.</p>
+        <a href="/use-cases/loan-officers" class="btn btn-ghost">See Loan Officer Details <i data-lucide="arrow-right" style="width:13px;height:13px;"></i></a>
+      </div>
+      <div class="audience-card fade-up d2">
+        <div class="audience-card-icon"><i data-lucide="key" style="width:22px;height:22px;"></i></div>
+        <h4>For Real Estate Agents</h4>
+        <p>Help clients compete with stronger financial positioning. Increase closing confidence. Offer something other buyers don't have.</p>
+        <a href="/use-cases/real-estate-agents" class="btn btn-ghost">Explore Agent Benefits <i data-lucide="arrow-right" style="width:13px;height:13px;"></i></a>
+      </div>
+      <div class="audience-card fade-up d3">
+        <div class="audience-card-icon"><i data-lucide="building-2" style="width:22px;height:22px;"></i></div>
+        <h4>For Builders</h4>
+        <p>Help buyers qualify more confidently. Reduce transaction friction. Offer new construction with built-in long-term energy savings.</p>
+        <a href="/use-cases/home-builders" class="btn btn-ghost">Explore Builder Benefits <i data-lucide="arrow-right" style="width:13px;height:13px;"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ TESTIMONIALS — infinite scroll ════════════════════ -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="testimonials-header">
+      <span class="section-label fade-up">Social Proof</span>
+      <h2 class="section-headline fade-up d1">Real People. Real Progress</h2>
+      <p class="section-sub fade-up d2">Whether you're buying your first home or exploring your options, Hoper helps you move forward with earned income, long-term energy savings, and a structure designed for stability.</p>
+      <div class="rating-row fade-up d3">
+        <div class="stars">
+          <i data-lucide="star" style="width:18px;height:18px;fill:#FBBC04;stroke:#FBBC04;"></i>
+          <i data-lucide="star" style="width:18px;height:18px;fill:#FBBC04;stroke:#FBBC04;"></i>
+          <i data-lucide="star" style="width:18px;height:18px;fill:#FBBC04;stroke:#FBBC04;"></i>
+          <i data-lucide="star" style="width:18px;height:18px;fill:#FBBC04;stroke:#FBBC04;"></i>
+          <i data-lucide="star" style="width:18px;height:18px;fill:#FBBC04;stroke:#FBBC04;"></i>
+        </div>
+        <span class="rating-score">4.9</span>
+        <span class="rating-count">214 Google reviews</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columns outside .container so they bleed full width -->
+  <div class="t-columns" id="tColumns"></div>
+</section>
+
+<!-- ════════════════════ ANY QUESTIONS ════════════════════ -->
+<section class="faq-banner">
+  <div class="container">
+    <div class="faq-banner-inner fade-up">
+      <div class="faq-banner-left">
+        <div class="faq-banner-icon-wrap">
+          <i data-lucide="message-circle-question" style="width:36px;height:36px;"></i>
+        </div>
+        <div>
+          <h2 class="faq-banner-title">Any Questions?</h2>
+          <p class="faq-banner-sub">Find answers to common questions about eligibility, the program, and how Hoper works. Can't find what you're looking for? We're here to help.</p>
+        </div>
+      </div>
+      <div class="faq-banner-actions">
+        <a href="/resources/faqs" class="btn btn-primary">
+          Read the FAQs
+          <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+        </a>
+        <a href="/company" class="btn btn-secondary">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ CTA ════════════════════ -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <h2 class="fade-up">Homeownership Shouldn't Feel Out of Reach</h2>
+      <p class="fade-up d1">Whether you're buying your first home or exploring your options, Hoper helps you move forward with earned income, long-term energy savings, and a structure designed for stability.</p>
+      <div class="cta-actions fade-up d2">
+        <a href="/resources/eligibility-hub" class="btn btn-white">
+          Check Your Eligibility
+          <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+        </a>
+        <a href="/programs" class="btn btn-white-outline">Learn About Hoper</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <!-- White version of the logo for dark footer -->
+          <svg height="28" viewBox="0 0 205 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#lf)">
+              <path d="M42.7436 32.4518H10.3127V25.847L4.91211 31.2475V42.6643C4.91211 42.9613 5.15514 43.2043 5.45217 43.2043H9.77268C10.0697 43.2043 10.3127 42.9613 10.3127 42.6643V38.3924C10.3127 38.0954 10.5558 37.8524 10.8528 37.8524H42.2035C42.5005 37.8524 42.7436 38.0954 42.7436 38.3924V42.6643C42.7436 42.9613 42.9866 43.2043 43.2836 43.2043H47.6041C47.9012 43.2043 48.1442 42.9613 48.1442 42.6643V31.2745L42.7436 25.874V32.4518Z" fill="white"/>
+              <path d="M52.8723 26.1251L26.9034 0.156625C26.7954 0.0486145 26.655 -0.0026906 26.5145 9.66525e-06C26.3741 9.66525e-06 26.2337 0.0513148 26.1257 0.156625L0.159433 26.1251C-0.0511913 26.3357 -0.0511913 26.6787 0.159433 26.8893L3.21349 29.9433C3.42412 30.1539 3.76706 30.1539 3.97768 29.9433L26.5145 7.40685L49.0514 29.9433C49.262 30.1539 49.6049 30.1539 49.8156 29.9433L52.8696 26.8893C53.0803 26.6787 53.0803 26.3357 52.8696 26.1251H52.8723Z" fill="#EB7F1E"/>
+              <path d="M92.4564 11.1413V42.8533C92.4564 43.018 92.3213 43.153 92.1566 43.153H86.756C86.5913 43.153 86.4563 43.018 86.4563 42.8533V29.306H69.7467V42.8533C69.7467 43.018 69.6117 43.153 69.4469 43.153H64.0463C63.8816 43.153 63.7466 43.018 63.7466 42.8533V11.1413C63.7466 10.9766 63.8816 10.8416 64.0463 10.8416H69.4469C69.6117 10.8416 69.7467 10.9766 69.7467 11.1413V24.1809H86.4563V11.1413C86.4563 10.9766 86.5913 10.8416 86.756 10.8416H92.1566C92.3213 10.8416 92.4564 10.9766 92.4564 11.1413Z" fill="#EB7F1E"/>
+              <path d="M98.5508 30.829C98.5508 23.4438 104.089 18.2268 111.661 18.2268C119.233 18.2268 124.817 23.4438 124.817 30.829C124.817 38.2142 119.324 43.4771 111.661 43.4771C103.997 43.4771 98.5508 38.2142 98.5508 30.829ZM119 30.829C119 26.1197 115.863 23.1197 111.661 23.1197C107.459 23.1197 104.367 26.1197 104.367 30.829C104.367 35.5383 107.505 38.5383 111.661 38.5383C115.817 38.5383 119 35.5383 119 30.829Z" fill="#EB7F1E"/>
+              <path d="M156.529 30.829C156.529 38.4924 151.221 43.4771 144.019 43.4771C140.881 43.4771 138.111 42.4159 136.126 40.153V53.6976C136.126 53.8623 135.991 53.9973 135.826 53.9973H130.658C130.493 53.9973 130.358 53.8623 130.358 53.6976V18.8047C130.358 18.64 130.493 18.505 130.658 18.505H135.551C135.715 18.505 135.85 18.64 135.85 18.8047V21.7345C137.789 19.3799 140.652 18.2268 144.022 18.2268C151.223 18.2268 156.532 23.2115 156.532 30.829H156.529ZM150.667 30.829C150.667 26.1197 147.529 23.1197 143.373 23.1197C139.218 23.1197 136.034 26.1197 136.034 30.829C136.034 35.5383 139.22 38.5383 143.373 38.5383C147.527 38.5383 150.667 35.5383 150.667 30.829Z" fill="#EB7F1E"/>
+              <path d="M184.826 32.676H165.762C166.453 36.2754 169.456 38.5842 173.747 38.5842C176.398 38.5842 178.499 37.7795 180.214 36.1323C180.338 36.0135 180.538 36.0162 180.651 36.1485L183.362 39.2646C183.462 39.378 183.462 39.5482 183.362 39.6616C181.143 42.1647 177.748 43.4798 173.609 43.4798C165.346 43.4798 159.994 38.1737 159.991 30.8344C159.991 23.9271 165.467 18.3915 172.372 18.2349C179.758 18.0648 185.193 23.1359 185.193 30.9721C185.193 31.3582 185.161 31.9091 185.123 32.4032C185.112 32.5599 184.98 32.6814 184.823 32.6814L184.826 32.676ZM165.716 28.8443H179.704C179.242 25.2907 176.517 22.8443 172.734 22.8443C168.951 22.8443 166.272 25.2448 165.719 28.8443H165.716Z" fill="#EB7F1E"/>
+              <path d="M205 18.532V23.3682C205 23.5518 204.835 23.6922 204.654 23.6652C204.295 23.6112 203.979 23.5842 203.661 23.5842C199.275 23.5842 196.505 26.1683 196.505 31.2016V42.856C196.505 43.0207 196.37 43.1557 196.205 43.1557H191.037C190.872 43.1557 190.737 43.0207 190.737 42.856V18.8074C190.737 18.6427 190.872 18.5077 191.037 18.5077H195.93C196.094 18.5077 196.229 18.6427 196.229 18.8074V22.1071C197.849 19.5878 200.741 18.2943 204.695 18.2322C204.862 18.2322 205 18.3673 205 18.5347V18.532Z" fill="#EB7F1E"/>
+            </g>
+            <defs><clipPath id="lf"><rect width="205" height="54" fill="white"/></clipPath></defs>
+          </svg>
+        </div>
+        <p>Bridging the gap from rental poverty to energy-efficient home ownership through education, advocacy, and research.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
+          <a href="#" class="social-link" aria-label="Twitter"><i data-lucide="twitter" style="width:16px;height:16px;"></i></a>
+          <a href="#" class="social-link" aria-label="Facebook"><i data-lucide="facebook" style="width:16px;height:16px;"></i></a>
+          <a href="#" class="social-link" aria-label="Instagram"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Programs</h5>
+        <ul>
+          <li><a href="/programs">How It Works</a></li>
+          <li><a href="/resources/eligibility-hub">Check Eligibility</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Use Cases</h5>
+        <ul>
+          <li><a href="/use-cases/homebuyers">Homebuyers</a></li>
+          <li><a href="/use-cases/loan-officers">Loan Officers</a></li>
+          <li><a href="/use-cases/real-estate-agents">Real Estate Agents</a></li>
+          <li><a href="/use-cases/home-builders">Home Builders</a></li>
+          <li><a href="/use-cases/manufactured-homes">Manufactured Homes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="/resources/eligibility-hub">Eligibility Hub</a></li>
+          <li><a href="/resources/blogs">Blog</a></li>
+          <li><a href="/resources/faqs">FAQs</a></li>
+          <li><a href="/company">About Hoper</a></li>
+          <li><a href="/general">Legal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Hoper — Attainable House Advocates. All rights reserved.</p>
+      <p>Designed for aspiring homeowners.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" aria-label="Back to top">
+  <i data-lucide="chevron-up" style="width:20px;height:20px;"></i>
+</button>
+
+<script>
+// ── Init Lucide ─────────────────────────
+lucide.createIcons();
+
+// ── Navbar glass on scroll ──────────────
+const navbar = document.getElementById('navbar');
+const scrollTopBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  navbar.classList.toggle('glass', y > 30);
+  scrollTopBtn.classList.toggle('show', y > 400);
+}, { passive: true });
+scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// ── Mobile menu ─────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+let menuOpen = false;
+hamburger.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mobileMenu.classList.toggle('open', menuOpen);
+  const [s1,s2,s3] = hamburger.querySelectorAll('span');
+  if (menuOpen) {
+    s1.style.transform = 'rotate(45deg) translate(5px,5px)';
+    s2.style.opacity = '0';
+    s3.style.transform = 'rotate(-45deg) translate(5px,-5px)';
+  } else {
+    s1.style.transform = s3.style.transform = '';
+    s2.style.opacity = '';
+  }
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  menuOpen = false;
+  mobileMenu.classList.remove('open');
+  hamburger.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; });
+}));
+
+// ── Scroll reveal ───────────────────────
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }});
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-up, .fade-in').forEach(el => revObs.observe(el));
+
+// ── Testimonials infinite scroll ────────
+const testimonials = [
+  { text: "The Hoper program changed everything for us. We closed with $11,200 in earned income — money we put straight toward our closing costs. We couldn't have done it otherwise.", name: "Maria & Carlos Reyes", role: "First-Time Homebuyers", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&h=80&q=80" },
+  { text: "As a loan officer, Hoper makes my FHA borrowers stronger before they even apply. The pre-closing education means less surprises, more closed deals.", name: "David Thornton", role: "Senior Loan Officer", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&h=80&q=80" },
+  { text: "The solar system alone saves us over $200 a month. But what really set Hoper apart was the financial mentorship we got after moving in. We finally have a wealth plan.", name: "Jasmine Williams", role: "Homeowner, Texas", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&h=80&q=80" },
+  { text: "My buyers who go through Hoper come to the table more confident and more prepared. The difference is night and day compared to buyers without it.", name: "Robert Sanchez", role: "Real Estate Agent", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80" },
+  { text: "I was skeptical at first, but Hoper delivered. The 6-hour education course gave me clarity I had been searching for years. We closed 3 months later.", name: "Tanya Brooks", role: "Homeowner, Georgia", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80" },
+  { text: "Offering Hoper-qualified buyers is a competitive advantage. My clients walk in with better reserves and stronger offers. That's a win for everyone.", name: "Alicia Kwan", role: "Home Builder Partner", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&h=80&q=80" },
+  { text: "We were about $8,000 short for closing. Hoper bridged that gap completely. We moved in with money still in our savings account — that peace of mind is priceless.", name: "Kevin & Sandra Osei", role: "First-Time Homebuyers, Ohio", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&h=80&q=80" },
+  { text: "The structured research program felt purposeful. We weren't just buying a home — we were part of something that could help future buyers too. That meant a lot.", name: "Priya Nair", role: "Homeowner, Florida", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&h=80&q=80" },
+  { text: "Hoper helped me qualify a borrower I would have had to turn away before. The earned income improved their debt ratio and they closed successfully. Game-changer.", name: "Marcus Jefferson", role: "Mortgage Broker", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=80&h=80&q=80" },
+];
+
+function makeCard(t) {
+  return `<div class="t-card">
+    <div class="t-stars">
+      <i data-lucide="star" style="width:13px;height:13px;fill:#FBBC04;stroke:#FBBC04;"></i>
+      <i data-lucide="star" style="width:13px;height:13px;fill:#FBBC04;stroke:#FBBC04;"></i>
+      <i data-lucide="star" style="width:13px;height:13px;fill:#FBBC04;stroke:#FBBC04;"></i>
+      <i data-lucide="star" style="width:13px;height:13px;fill:#FBBC04;stroke:#FBBC04;"></i>
+      <i data-lucide="star" style="width:13px;height:13px;fill:#FBBC04;stroke:#FBBC04;"></i>
+    </div>
+    <p class="t-text">"${t.text}"</p>
+    <div class="t-author">
+      <img class="t-avatar" src="${t.img}" alt="${t.name}" loading="lazy"/>
+      <div><div class="t-name">${t.name}</div><div class="t-role">${t.role}</div></div>
+    </div>
+  </div>`;
+}
+
+const cols = [
+  { data: [0,1,2], dir: 'up',   dur: '18s' },
+  { data: [3,4,5], dir: 'down', dur: '22s' },
+  { data: [6,7,8], dir: 'up',   dur: '20s' },
+];
+
+const container = document.getElementById('tColumns');
+cols.forEach((col, ci) => {
+  const colDiv = document.createElement('div');
+  colDiv.className = 't-col';
+  // build a track with doubled content for seamless loop
+  const track = document.createElement('div');
+  track.className = `t-track scroll-${col.dir}`;
+  track.style.setProperty('--dur', col.dur);
+  const cards = col.data.map(i => makeCard(testimonials[i])).join('');
+  track.innerHTML = cards + cards; // duplicate for infinite loop
+  colDiv.appendChild(track);
+  container.appendChild(colDiv);
+});
+
+// Re-init icons for dynamically created content
+lucide.createIcons();
+</script>
+</body>
+</html>
