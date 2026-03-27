@@ -354,64 +354,89 @@
       .trust-strip-item { flex: 1 1 calc(50% - 10px); white-space: normal; }
     }
     @media (max-width: 580px) {
-      /*
-        Mobile hero pattern: photo clearly visible at top (~28% of screen),
-        smooth gradient transition to solid dark below where content lives.
-        Trust strip in normal flow — no overlap possible.
-      */
+      /* ── Navbar: logo + hamburger only ── */
+      .navbar { padding: 24px 0; }
+      .navbar .container {
+        height: 55px;
+        border-radius: 14px;
+        background: rgba(0,0,0,0.37);
+        padding: 0 20px;
+        max-width: calc(100% - 57px);
+        grid-template-columns: auto 1fr auto;
+      }
+      .nav-links   { display: none; }
+      .nav-actions { display: none; }
+      .hamburger   { display: flex; }
 
-      /*
-        Gradient: photo clearly visible in the top ~16% of the screen,
-        then rapid fade to near-solid dark by 30% — so content at 30vh
-        is always on a dark, readable background.
-      */
+      /* ── Overlay: photo visible at top, solid black from 53% ── */
       .hero-overlay {
         background: linear-gradient(
           to bottom,
-          rgba(10,10,10,0.06) 0%,
-          rgba(10,10,10,0.06) 16%,
-          rgba(10,10,10,0.95) 30%,
-          rgba(10,10,10,1.00) 44%
+          transparent  0%,
+          transparent 20%,
+          rgba(0,0,0,0.85) 48%,
+          rgba(0,0,0,1.00) 60%,
+          rgba(0,0,0,1.00) 100%
         );
       }
 
-      /* Photo: positioned to show the full family */
-      .hero-bg-img { object-position: 55% 18%; }
+      /* ── Photo: show family (left portion of landscape photo) ── */
+      .hero-bg-img { object-position: 55% center; }
 
-      /* Content pushed into the dark zone, compact vertical rhythm */
+      /* ── No badge ── */
+      .hero-badge { display: none; }
+
+      /* ── Container: flex column, content pinned to bottom ── */
       .hero .container {
-        flex: none;
-        align-items: flex-start;
-        padding-top: 30vh;   /* photo visible above this line */
-        padding-bottom: 16px;
-        padding-left: 20px;
-        padding-right: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-bottom: 28px;
+        padding-left: 25px;
+        padding-right: 25px;
       }
-      .hero-badge { margin-bottom: 12px; font-size: 12px; }
-      .hero h1    { font-size: 30px; letter-spacing: -0.5px; margin-bottom: 12px; }
-      .hero-sub   { font-size: 14px; line-height: 1.6; margin-bottom: 18px; }
-      .hero-actions { flex-direction: column; align-items: stretch; }
-      .hero-actions .btn { justify-content: center; padding: 13px 24px; }
 
-      /* Trust strip in normal flow, compact pills in 2 columns */
+      /* ── H1 ── */
+      .hero h1 {
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.5px;
+        margin-bottom: 12px;
+      }
+
+      /* ── Subtitle ── */
+      .hero-sub {
+        font-size: 13px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+
+      /* ── Buttons: stacked, full-width ── */
+      .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+      .hero-actions .btn {
+        justify-content: center;
+        height: 46px;
+        padding: 0 20px;
+        font-size: 14px;
+      }
+
+      /* ── Trust strip: pills hidden, arrow + gradient to white ── */
+      .trust-strip-pills { display: none; }
       .hero-trust-strip {
         position: static;
-        padding: 0 0 20px;
+        flex: none;
+        padding: 16px 0 52px;
+        background: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
       }
       .hero-trust-strip .container {
-        padding-left: 20px;
-        padding-right: 20px;
-        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        gap: 0;
       }
-      .trust-strip-pills { flex-wrap: wrap; gap: 8px; }
-      .trust-strip-item  {
-        flex: 1 1 calc(50% - 4px);
-        white-space: normal;
-        font-size: 11px;
-        padding: 10px 12px;
-      }
-
-      /* Scroll arrow: full-width so justify-content:center works */
       .hero-scroll-arrow { width: 100%; }
     }
 
