@@ -29,7 +29,7 @@
       --shadow-orange: 0 8px 32px rgba(235,127,30,0.28);
       --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-pill: 999px;
       --nav-h: 90px;
-      --max-w: 1200px;
+      --max-w: 1440px;
     }
 
     /* ── RESET ───────────────────────────────────── */
@@ -51,7 +51,7 @@
       width: 100%;
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 40px;
     }
     @media (max-width: 768px) { .container { padding: 0 20px; } }
 
@@ -108,11 +108,17 @@
     .navbar {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 1000;
-      padding: 16px 48px;
+      /*
+        Dynamic side padding:
+        – at ≤1440px viewports: 16px gap (pill floats with minimal margin)
+        – at >1440px viewports: (vw−1440)/2 + 16px, so the pill's logo
+          aligns with the hero text at any width
+      */
+      padding: 16px max(16px, calc((100vw - 1440px) / 2 + 16px));
       pointer-events: none;
       transition: padding .35s ease;
     }
-    /* The pill itself */
+    /* The pill — no max-width constraint, fills wrapper */
     .navbar .container {
       pointer-events: all;
       height: 58px;
@@ -135,7 +141,13 @@
       box-shadow: 0 4px 28px rgba(0,0,0,0.10);
       border-color: rgba(255,255,255,0.5);
     }
-    .navbar.glass .logo-svg path:not([fill="#EB7F1E"]) { fill: var(--black); }
+    /* Logo: all paths white in dark pill; only 2nd path (orange roof) stays orange */
+    .nav-logo .logo-svg path { fill: white; }
+    .nav-logo .logo-svg g > path:nth-child(2) { fill: var(--orange); }
+    /* Glass state: wordmark dark, roof stays orange */
+    .navbar.glass .nav-logo .logo-svg path { fill: var(--black); }
+    .navbar.glass .nav-logo .logo-svg g > path:nth-child(2) { fill: var(--orange); }
+
     .navbar.glass .nav-links a { color: var(--gray-dark); }
     .navbar.glass .nav-links a:hover { color: var(--orange); background: var(--orange-light); }
     .navbar.glass .btn-secondary { border-color: var(--black); color: var(--black); }
@@ -171,8 +183,8 @@
       .nav-actions .btn-secondary { display: none; }
     }
     @media (max-width: 600px) {
-      .navbar { padding: 12px 20px; }
-      .navbar .container { padding: 0 20px; border-radius: 20px; }
+      .navbar { padding: 12px 16px; }
+      .navbar .container { padding: 0 16px; border-radius: 20px; }
     }
 
     .mobile-menu {
@@ -196,6 +208,7 @@
       position: relative; overflow: hidden;
       display: flex; flex-direction: column;
       background: var(--black);
+      padding: 0; /* override section { padding: 96px 0 } */
     }
 
     .hero-bg-img {
@@ -225,9 +238,9 @@
       flex: 1;
       display: flex; align-items: center;
       padding-top: calc(var(--nav-h) + 16px);
-      padding-bottom: 130px;
-      padding-left: 80px;
-      padding-right: 80px;
+      padding-bottom: 160px;
+      padding-left: 56px;
+      padding-right: 56px;
     }
     .hero-content { max-width: 620px; }
 
@@ -273,13 +286,39 @@
 
     /* ── Bottom trust pills (glassmorphism) */
     .hero-trust-strip {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-      padding: 20px 0;
+      position: absolute; bottom: 56px; left: 0; right: 0; z-index: 3;
+      padding: 0;
     }
     .hero-trust-strip .container {
-      display: flex; align-items: center; gap: 12px;
+      display: flex; flex-direction: column; gap: 14px;
       padding-top: 0; padding-bottom: 0;
-      padding-left: 80px; padding-right: 80px;
+      padding-left: 56px; padding-right: 56px;
+    }
+    .trust-strip-pills {
+      display: flex; align-items: center; gap: 12px;
+      width: 100%;
+    }
+
+    /* ── Scroll-down arrow */
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(9px); opacity: 1; }
+    }
+    @keyframes arrowFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .hero-scroll-arrow {
+      display: flex; justify-content: center; align-items: center;
+      opacity: 0;
+      animation:
+        arrowFadeIn 0.5s ease 1.5s forwards,
+        scrollBounce 2s ease-in-out 2s infinite;
+    }
+    .hero-scroll-arrow svg {
+      width: 30px; height: 30px;
+      stroke: rgba(255,255,255,0.65); stroke-width: 2;
+      fill: none; stroke-linecap: round; stroke-linejoin: round;
     }
     .trust-strip-item {
       display: flex; align-items: center; gap: 10px;
@@ -296,29 +335,84 @@
       opacity: 0; transform: translateY(20px);
       animation: heroStripIn 0.7s cubic-bezier(0.22,1,0.36,1) both;
     }
-    .trust-strip-item:nth-child(1) { animation-delay: 0.65s; }
-    .trust-strip-item:nth-child(2) { animation-delay: 0.80s; }
-    .trust-strip-item:nth-child(3) { animation-delay: 0.95s; }
-    .trust-strip-item:nth-child(4) { animation-delay: 1.10s; }
+    .trust-strip-pills .trust-strip-item:nth-child(1) { animation-delay: 0.65s; }
+    .trust-strip-pills .trust-strip-item:nth-child(2) { animation-delay: 0.80s; }
+    .trust-strip-pills .trust-strip-item:nth-child(3) { animation-delay: 0.95s; }
+    .trust-strip-pills .trust-strip-item:nth-child(4) { animation-delay: 1.10s; }
     .trust-strip-item i { flex-shrink: 0; opacity: 0.85; }
 
     @media (max-width: 1100px) {
-      .hero .container { padding-left: 48px; padding-right: 48px; }
-      .hero-trust-strip .container { padding-left: 48px; padding-right: 48px; }
+      .hero .container { padding-left: 40px; padding-right: 40px; }
+      .hero-trust-strip .container { padding-left: 40px; padding-right: 40px; }
       .trust-strip-item { font-size: 12px; padding: 12px 16px; white-space: normal; }
     }
     @media (max-width: 960px) {
-      .hero .container { padding-bottom: 180px; padding-left: 32px; padding-right: 32px; }
-      .hero-trust-strip .container { flex-wrap: wrap; gap: 10px; padding-left: 32px; padding-right: 32px; }
+      .hero .container { padding-bottom: 220px; padding-left: 28px; padding-right: 28px; }
+      .hero-trust-strip { bottom: 40px; }
+      .hero-trust-strip .container { gap: 12px; padding-left: 28px; padding-right: 28px; }
+      .trust-strip-pills { flex-wrap: wrap; gap: 10px; }
       .trust-strip-item { flex: 1 1 calc(50% - 10px); white-space: normal; }
     }
     @media (max-width: 580px) {
-      .hero h1 { font-size: 38px; letter-spacing: -1px; }
-      .hero .container { padding-bottom: 260px; padding-left: 24px; padding-right: 24px; }
-      .hero-trust-strip .container { padding-left: 24px; padding-right: 24px; }
-      .trust-strip-item { flex: 1 1 100%; }
+      /*
+        Mobile hero pattern: photo clearly visible at top (~28% of screen),
+        smooth gradient transition to solid dark below where content lives.
+        Trust strip in normal flow — no overlap possible.
+      */
+
+      /*
+        Gradient: photo clearly visible in the top ~16% of the screen,
+        then rapid fade to near-solid dark by 30% — so content at 30vh
+        is always on a dark, readable background.
+      */
+      .hero-overlay {
+        background: linear-gradient(
+          to bottom,
+          rgba(10,10,10,0.06) 0%,
+          rgba(10,10,10,0.06) 16%,
+          rgba(10,10,10,0.95) 30%,
+          rgba(10,10,10,1.00) 44%
+        );
+      }
+
+      /* Photo: positioned to show the full family */
+      .hero-bg-img { object-position: 55% 18%; }
+
+      /* Content pushed into the dark zone, compact vertical rhythm */
+      .hero .container {
+        flex: none;
+        align-items: flex-start;
+        padding-top: 30vh;   /* photo visible above this line */
+        padding-bottom: 16px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .hero-badge { margin-bottom: 12px; font-size: 12px; }
+      .hero h1    { font-size: 30px; letter-spacing: -0.5px; margin-bottom: 12px; }
+      .hero-sub   { font-size: 14px; line-height: 1.6; margin-bottom: 18px; }
       .hero-actions { flex-direction: column; align-items: stretch; }
-      .hero-actions .btn { justify-content: center; }
+      .hero-actions .btn { justify-content: center; padding: 13px 24px; }
+
+      /* Trust strip in normal flow, compact pills in 2 columns */
+      .hero-trust-strip {
+        position: static;
+        padding: 0 0 20px;
+      }
+      .hero-trust-strip .container {
+        padding-left: 20px;
+        padding-right: 20px;
+        gap: 10px;
+      }
+      .trust-strip-pills { flex-wrap: wrap; gap: 8px; }
+      .trust-strip-item  {
+        flex: 1 1 calc(50% - 4px);
+        white-space: normal;
+        font-size: 11px;
+        padding: 10px 12px;
+      }
+
+      /* Scroll arrow: full-width so justify-content:center works */
+      .hero-scroll-arrow { width: 100%; }
     }
 
     /* ══════════════════════════════════════════════
@@ -800,21 +894,28 @@
   <!-- Bottom trust pills -->
   <div class="hero-trust-strip">
     <div class="container">
-      <div class="trust-strip-item">
-        <i data-lucide="shield-check" style="width:18px;height:18px;"></i>
-        No additional credit score requirement
+      <div class="trust-strip-pills">
+        <div class="trust-strip-item">
+          <i data-lucide="shield-check" style="width:18px;height:18px;"></i>
+          No additional credit score requirement
+        </div>
+        <div class="trust-strip-item">
+          <i data-lucide="percent" style="width:18px;height:18px;"></i>
+          Your mortgage rate stays the same
+        </div>
+        <div class="trust-strip-item">
+          <i data-lucide="map-pin" style="width:18px;height:18px;"></i>
+          Available in most states
+        </div>
+        <div class="trust-strip-item">
+          <i data-lucide="sun" style="width:18px;height:18px;"></i>
+          New &amp; fully owned solar system
+        </div>
       </div>
-      <div class="trust-strip-item">
-        <i data-lucide="percent" style="width:18px;height:18px;"></i>
-        Your mortgage rate stays the same
-      </div>
-      <div class="trust-strip-item">
-        <i data-lucide="map-pin" style="width:18px;height:18px;"></i>
-        Available in most states
-      </div>
-      <div class="trust-strip-item">
-        <i data-lucide="sun" style="width:18px;height:18px;"></i>
-        New &amp; fully owned solar system
+      <div class="hero-scroll-arrow">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
       </div>
     </div>
   </div>
