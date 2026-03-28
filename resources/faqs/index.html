@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQs — Hoper</title>
+  <meta name="description" content="Answers to your most common questions about the Hoper program, eligibility, costs, and solar benefits.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    :root{--orange:#EB7F1E;--orange-dark:#C96C12;--orange-light:#FDF2E9;--orange-mid:#F9D7BA;--black:#1A1A1A;--gray-dark:#383838;--gray-mid:#666;--border:#E8E8E8;--bg:#FFFFFF;--bg-alt:#F9F9F7;--star:#FBBC04;--shadow-sm:0 1px 3px rgba(0,0,0,0.08);--shadow-md:0 4px 16px rgba(0,0,0,0.08);--shadow-lg:0 8px 40px rgba(0,0,0,0.12);--shadow-xl:0 20px 60px rgba(0,0,0,0.15);--shadow-orange:0 8px 32px rgba(235,127,30,0.28);--r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:24px;--r-pill:999px;--nav-h:90px;--max-w:1440px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;overflow-x:hidden;}
+    body{font-family:'Montserrat',sans-serif;color:var(--black);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    img{display:block;max-width:100%;object-fit:cover;}a{text-decoration:none;color:inherit;}ul{list-style:none;}button{cursor:pointer;font-family:inherit;border:none;background:none;}
+    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 40px;}@media(max-width:768px){.container{padding:0 20px;}}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--r-pill);font-family:'Montserrat',sans-serif;font-size:16px;font-weight:600;line-height:1.25;transition:all 0.22s ease;white-space:nowrap;}
+    .btn-primary{background:var(--orange);color:#fff;box-shadow:var(--shadow-orange);}.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);}
+    .btn-white{background:#fff;color:var(--orange);font-weight:700;}.btn-white:hover{background:rgba(255,255,255,.92);transform:translateY(-2px);}
+    .btn-white-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);}.btn-white-outline:hover{border-color:#fff;background:rgba(255,255,255,.12);}
+    .btn-secondary{background:transparent;color:var(--black);border:2px solid var(--black);}.btn-secondary:hover{background:var(--black);color:#fff;transform:translateY(-2px);}
+    .fade-up{opacity:0;transform:translateY(40px);transition:opacity .75s cubic-bezier(0.22,1,0.36,1),transform .75s cubic-bezier(0.22,1,0.36,1);}.fade-up.visible{opacity:1;transform:translateY(0);}
+    .fade-up.d1{transition-delay:.1s;}.fade-up.d2{transition-delay:.22s;}.fade-up.d3{transition-delay:.34s;}.fade-up.d4{transition-delay:.46s;}
+    .fade-in{opacity:0;transition:opacity .9s cubic-bezier(0.22,1,0.36,1);}.fade-in.visible{opacity:1;}
+    .fade-left{opacity:0;transform:translateX(-36px);transition:opacity .75s cubic-bezier(0.22,1,0.36,1),transform .75s cubic-bezier(0.22,1,0.36,1);}.fade-left.visible{opacity:1;transform:translateX(0);}
+    .fade-right{opacity:0;transform:translateX(36px);transition:opacity .75s cubic-bezier(0.22,1,0.36,1),transform .75s cubic-bezier(0.22,1,0.36,1);}.fade-right.visible{opacity:1;transform:translateX(0);}
+
+    /* NAVBAR */
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px max(16px,calc((100vw - 1440px) / 2 + 16px));pointer-events:none;}
+    .navbar .container{pointer-events:all;height:58px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;max-width:none;padding:0 40px;border-radius:28px;background:rgba(15,15,15,0.28);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);box-shadow:0 4px 16px rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.10);transition:background .35s ease,box-shadow .35s ease;}
+    .navbar.glass .container{background:rgba(255,255,255,0.80);backdrop-filter:blur(24px) saturate(200%);box-shadow:0 4px 28px rgba(0,0,0,0.10);border-color:rgba(255,255,255,0.5);}
+    .nav-logo .logo-svg path{fill:white;}.nav-logo .logo-svg g > path:nth-child(2){fill:var(--orange);}
+    .navbar.glass .nav-logo .logo-svg path{fill:var(--black);}.navbar.glass .nav-logo .logo-svg g > path:nth-child(2){fill:var(--orange);}
+    .navbar.glass .nav-links a{color:var(--gray-dark);}.navbar.glass .nav-links a:hover{color:var(--orange);background:var(--orange-light);}
+    .nav-logo{display:flex;align-items:center;justify-self:start;}.nav-logo .logo-svg{height:30px;width:auto;}
+    .nav-links{display:flex;align-items:center;gap:4px;justify-content:center;}
+    .nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.88);padding:7px 12px;border-radius:var(--r-sm);transition:color .2s,background .2s;}
+    .nav-links a:hover{color:#fff;background:rgba(255,255,255,0.12);}
+    .nav-actions{display:flex;align-items:center;gap:10px;justify-self:end;}
+    .nav-cta{padding:9px 20px;font-size:14px;}
+    .nav-actions .btn-secondary{border-color:rgba(255,255,255,0.45);color:#fff;background:transparent;font-size:14px;}
+    .hamburger{display:none;flex-direction:column;gap:5px;padding:8px;pointer-events:all;outline:none;}
+    .hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s;}
+    .navbar.glass .hamburger span{background:var(--black);}
+    @media(max-width:900px){.nav-links{display:none;}.hamburger{display:flex;}.nav-actions .btn-secondary{display:none;}}
+    @media(max-width:600px){.navbar{padding:12px 16px;}.navbar .container{padding:0 16px;border-radius:20px;}}
+    .mobile-menu{position:fixed;top:103px;left:16px;right:16px;border-radius:16px;background:rgba(255,255,255,0.96);backdrop-filter:blur(20px);padding:20px 20px 32px;border-bottom:1px solid var(--border);box-shadow:var(--shadow-lg);z-index:999;transform:translateY(-10px);opacity:0;pointer-events:none;transition:all .3s ease;}
+    .mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:all;}
+    .mobile-menu a{display:block;padding:12px 0;font-size:16px;font-weight:500;border-bottom:1px solid var(--border);}
+    .mobile-menu .mobile-cta{display:flex;margin-top:20px;width:100%;justify-content:center;}
+
+    /* PAGE HERO */
+    .page-hero{min-height:360px;background:var(--black);position:relative;overflow:hidden;display:flex;align-items:center;padding-top:calc(var(--nav-h) + 40px);padding-bottom:64px;}
+    .page-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.22;}
+    .page-hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(10,10,10,0.96) 0%,rgba(235,127,30,0.15) 100%);}
+    .page-hero .container{position:relative;z-index:2;}
+    .page-hero-label{color:var(--orange);font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+    .page-hero-label::before{content:'';display:block;width:24px;height:2px;background:var(--orange);}
+    .page-hero h1{font-size:clamp(36px,5vw,64px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:700px;}
+    .page-hero-sub{font-size:18px;color:rgba(255,255,255,0.72);line-height:1.75;max-width:580px;}
+    section{padding:96px 0;}
+    .section-label{display:inline-block;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange);margin-bottom:16px;}
+    .section-headline{font-size:clamp(28px,4vw,44px);font-weight:700;line-height:1.25;color:var(--black);letter-spacing:-.3px;}
+
+    /* FAQ SECTIONS */
+    .faq-section{background:var(--bg);}
+    .faq-section.alt{background:var(--bg-alt);}
+    .faq-header{margin-bottom:48px;}
+    .faq-header .section-headline{margin-bottom:0;}
+    .faq-group{max-width:860px;}
+    .faq-item{border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:12px;overflow:hidden;transition:box-shadow .2s,border-color .2s;}
+    .faq-item.open{border-color:rgba(235,127,30,.4);box-shadow:0 4px 20px rgba(235,127,30,.1);}
+    .faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 28px;text-align:left;background:transparent;font-size:16px;font-weight:600;color:var(--black);transition:background .2s;}
+    .faq-question:hover{background:var(--orange-light);}
+    .faq-item.open .faq-question{background:var(--orange-light);}
+    .faq-icon{flex-shrink:0;width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .3s;color:var(--gray-mid);}
+    .faq-item.open .faq-icon{background:var(--orange);border-color:var(--orange);color:#fff;transform:rotate(45deg);}
+    .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;}
+    .faq-item.open .faq-answer{max-height:400px;}
+    .faq-answer-inner{padding:0 28px 24px;font-size:15px;line-height:1.75;color:var(--gray-dark);}
+
+    /* CONTACT CTA */
+    .contact-section{background:var(--black);padding:96px 0;}
+    .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+    .contact-text .section-label{color:var(--orange);}
+    .contact-text .section-headline{color:#fff;margin-bottom:20px;}
+    .contact-text p{font-size:17px;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:36px;}
+    .contact-actions{display:flex;gap:16px;flex-wrap:wrap;}
+    .contact-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:40px;}
+    .contact-card h3{font-size:22px;font-weight:700;color:#fff;margin-bottom:24px;}
+    .contact-row{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;}
+    .contact-row:last-child{margin-bottom:0;}
+    .contact-icon{width:44px;height:44px;border-radius:50%;background:rgba(235,127,30,.15);display:flex;align-items:center;justify-content:center;color:var(--orange);flex-shrink:0;}
+    .contact-row-text strong{display:block;font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;}
+    .contact-row-text span{font-size:14px;color:rgba(255,255,255,.55);}
+    @media(max-width:900px){.contact-inner{grid-template-columns:1fr;gap:40px;}}
+
+    /* CTA SECTION */
+    .cta-section{background:var(--orange);padding:96px 0;}
+    .cta-inner{display:flex;align-items:center;justify-content:space-between;gap:40px;}
+    .cta-text h2{font-size:clamp(28px,4vw,44px);font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.5px;margin-bottom:12px;}
+    .cta-text p{font-size:17px;color:rgba(255,255,255,.8);line-height:1.65;}
+    .cta-actions{display:flex;gap:16px;flex-shrink:0;}
+    @media(max-width:768px){.cta-inner{flex-direction:column;}.cta-actions{width:100%;}
+    .cta-actions .btn{width:100%;justify-content:center;}}
+
+    /* FOOTER */
+    footer{background:var(--black);padding:60px 0 32px;}
+    .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+    .footer-brand p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.75;margin-top:20px;max-width:260px;}
+    .footer-col h4{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;}
+    .footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.6);padding:4px 0;transition:color .2s;}
+    .footer-col a:hover{color:var(--orange);}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid rgba(255,255,255,.08);}
+    .footer-bottom p{font-size:13px;color:rgba(255,255,255,.3);}
+    .footer-logo-svg{height:30px;width:auto;}
+    @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px;}}
+    @media(max-width:600px){.footer-grid{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;gap:12px;text-align:center;}}
+
+    /* SCROLL TOP */
+    #scrollTop{position:fixed;bottom:32px;right:32px;width:48px;height:48px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-orange);opacity:0;transform:translateY(16px);transition:all .3s;pointer-events:none;z-index:900;}
+    #scrollTop.show{opacity:1;transform:translateY(0);pointer-events:all;}
+    #scrollTop:hover{background:var(--orange-dark);transform:translateY(-3px);}
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="../../index.html" class="nav-logo" aria-label="Hoper home">
+      <svg class="logo-svg" viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><clipPath id="lc"><rect width="120" height="36"/></clipPath></defs>
+        <g clip-path="url(#lc)">
+          <path d="M14 18L22 10L30 18V30H25V22H19V30H14V18Z"/>
+          <path d="M22 6L36 18H32L22 9L12 18H8L22 6Z" fill="#EB7F1E"/>
+          <path d="M44 10H48V18H56V10H60V30H56V22H48V30H44V10Z"/>
+          <path d="M66 20C66 14.48 70.03 10 75.5 10C80.97 10 85 14.48 85 20C85 25.52 80.97 30 75.5 30C70.03 30 66 25.52 66 20ZM81 20C81 16.69 78.54 14 75.5 14C72.46 14 70 16.69 70 20C70 23.31 72.46 26 75.5 26C78.54 26 81 23.31 81 20Z"/>
+          <path d="M90 10H99C103.42 10 106 12.69 106 16.5C106 20.31 103.42 23 99 23H94V30H90V10ZM99 19C101.21 19 102 17.93 102 16.5C102 15.07 101.21 14 99 14H94V19H99Z"/>
+          <path d="M110 10H120V14H114V18H120V22H114V26H120V30H110V10Z"/>
+        </g>
+      </svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../../programs/index.html">Program</a></li>
+      <li><a href="../../use-cases/index.html">Use Cases</a></li>
+      <li><a href="../../resources/eligibility-hub/index.html" style="color:var(--orange);">Resources</a></li>
+      <li><a href="../../company/index.html">About</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="../../resources/eligibility-hub/index.html" class="btn btn-primary nav-cta">Check Eligibility</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../../programs/index.html">Program</a>
+  <a href="../../use-cases/index.html">Use Cases</a>
+  <a href="../../resources/eligibility-hub/index.html">Eligibility Hub</a>
+  <a href="../../resources/blogs/index.html">Blog</a>
+  <a href="../../resources/faqs/index.html" style="color:var(--orange);">FAQs</a>
+  <a href="../../company/index.html">About</a>
+  <div class="mobile-cta">
+    <a href="../../resources/eligibility-hub/index.html" class="btn btn-primary">Check Eligibility</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('../../Images/home-leisure-concept-portrait-beautiful-young-woman-reading-digital-tablet-sitting.jpg');"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="container">
+    <div class="page-hero-label fade-in">Resources / FAQs</div>
+    <h1 class="fade-up">Frequently Asked Questions</h1>
+    <p class="page-hero-sub fade-up d1">Everything you want to know about how Hoper works, who qualifies, and what to expect — answered plainly.</p>
+  </div>
+</section>
+
+<!-- FAQ: ABOUT THE PROGRAM -->
+<section class="faq-section" id="about">
+  <div class="container">
+    <div class="faq-header fade-up">
+      <span class="section-label">About the Program</span>
+      <h2 class="section-headline">How Hoper Works</h2>
+    </div>
+    <div class="faq-group" id="group-about">
+
+      <div class="faq-item fade-up d1">
+        <button class="faq-question" aria-expanded="false">
+          What exactly is Hoper?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Hoper is a homeownership education and advocacy program that connects aspiring homebuyers with specialized loan officers, real estate agents, and financial tools. We help you understand your current position, close any gaps in your application, and navigate the process from first inquiry to closing day — including identifying grants, down payment assistance, and solar energy incentives that can reduce your total cost of homeownership.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d2">
+        <button class="faq-question" aria-expanded="false">
+          Is Hoper a lender or a loan product?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">No. Hoper is not a lender and does not originate loans. We are an education, advocacy, and referral platform. Our licensed partner loan officers and real estate agents handle the financing and transaction side. Think of Hoper as your personal guide — we make sure you're prepared and connected to the right professionals before and during your homebuying journey.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d3">
+        <button class="faq-question" aria-expanded="false">
+          How does Hoper make money if the program is free to buyers?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Hoper is compensated through referral relationships with our network of participating loan officers, real estate agents, and home builders. When we connect you to a partner professional who helps you close on a home, that professional may share a portion of their earned commission or fee with us. This never adds cost to your side of the transaction — your pricing and loan terms are determined entirely by the lender and market conditions.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d4">
+        <button class="faq-question" aria-expanded="false">
+          What states does Hoper currently serve?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Hoper currently operates in most U.S. states. Our partner network is expanding, so if your state isn't currently covered, we recommend checking back or submitting an eligibility inquiry — we often have solutions in progress for new markets. Use our Eligibility Hub to see whether your state is supported right now.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ: ELIGIBILITY -->
+<section class="faq-section alt" id="eligibility">
+  <div class="container">
+    <div class="faq-header fade-up">
+      <span class="section-label">Eligibility</span>
+      <h2 class="section-headline">Who Can Use Hoper?</h2>
+    </div>
+    <div class="faq-group" id="group-eligibility">
+
+      <div class="faq-item fade-up d1">
+        <button class="faq-question" aria-expanded="false">
+          What credit score do I need to qualify?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Many of our partner programs begin considering applicants at a 580 credit score, and in some cases FHA loans can be accessible below that threshold with compensating factors. A higher score (620+) opens up more loan products and better rates. If your score isn't there yet, our credit coaching resources can help you build it — many buyers see meaningful improvements within 3–6 months of focused effort.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d2">
+        <button class="faq-question" aria-expanded="false">
+          Do I need to be a first-time homebuyer?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">No. While many of our down payment assistance programs are specifically designed for first-time buyers (defined as someone who hasn't owned a primary residence in the past 3 years), Hoper serves repeat buyers, manufactured home buyers, and move-up buyers as well. Our network of loan officers can identify the best products for your specific situation regardless of prior homeownership history.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d3">
+        <button class="faq-question" aria-expanded="false">
+          Does income level affect my eligibility?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Some down payment assistance and grant programs have income limits based on your area median income (AMI), typically targeting buyers at 80%–120% AMI. However, the Hoper program itself has no income cap — we help buyers across a wide income spectrum. Our partners will identify which assistance programs you qualify for based on your household income and the purchase location.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d4">
+        <button class="faq-question" aria-expanded="false">
+          Can I use Hoper to buy a manufactured or mobile home?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. Hoper has specific resources and partner lenders who specialize in manufactured home financing — including FHA Title I, Title II, and chattel loans. The home typically needs to meet HUD standards (built after June 15, 1976), and permanent foundation requirements vary by loan type. Visit our Manufactured Homes page for full details on what qualifies.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ: THE MONEY -->
+<section class="faq-section" id="money">
+  <div class="container">
+    <div class="faq-header fade-up">
+      <span class="section-label">The Money</span>
+      <h2 class="section-headline">Costs, Grants & Down Payments</h2>
+    </div>
+    <div class="faq-group" id="group-money">
+
+      <div class="faq-item fade-up d1">
+        <button class="faq-question" aria-expanded="false">
+          How much of a down payment do I need?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Minimum down payments depend on the loan type: FHA loans require 3.5% with a 580+ score, conventional loans can start at 3%, VA and USDA loans offer 0% down for qualifying buyers. When you combine these with down payment assistance programs, many Hoper buyers close with little to no money out of pocket beyond closing costs — and sometimes those are covered too.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d2">
+        <button class="faq-question" aria-expanded="false">
+          What are down payment assistance programs and do I qualify?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Down payment assistance (DPA) programs are grants or forgivable second loans offered by state housing finance agencies, local governments, and nonprofits. They can cover anywhere from 1% to 5% of the purchase price — sometimes more. Eligibility is based on income, location, purchase price, and loan type. Hoper's partner loan officers are experts at identifying and stacking multiple DPA programs for maximum benefit.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d3">
+        <button class="faq-question" aria-expanded="false">
+          How does the $13,000 solar incentive work?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">The federal Residential Clean Energy Credit allows homeowners to claim 30% of the cost of a qualified solar panel installation as a tax credit — which on an average residential system often amounts to $10,000–$13,000 or more. When combined with new construction homes where solar is included by the builder, or where solar is financed into the mortgage, buyers can capture this credit in the year of purchase. Our team helps you understand how this applies to your specific situation.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ: SOLAR -->
+<section class="faq-section alt" id="solar">
+  <div class="container">
+    <div class="faq-header fade-up">
+      <span class="section-label">Solar</span>
+      <h2 class="section-headline">Solar Energy & New Homes</h2>
+    </div>
+    <div class="faq-group" id="group-solar">
+
+      <div class="faq-item fade-up d1">
+        <button class="faq-question" aria-expanded="false">
+          Do I have to buy a home with solar panels?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">No. Solar is one of the financial advantages we highlight for qualifying buyers, but it is not required to participate in any Hoper program. Many of our partner home builders include solar as a standard feature in their communities — which is a significant value-add. But Hoper works with resale homes, traditional new construction, and manufactured homes regardless of whether solar is involved.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d2">
+        <button class="faq-question" aria-expanded="false">
+          How much can solar save me each month?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Typical residential solar systems save homeowners between $150 and $250 per month on electricity costs, depending on system size, local utility rates, and energy usage. Over a 25-year lifespan — which is the standard warranty period for quality panels — that's $45,000 to $75,000 in cumulative savings. When solar is financed into your mortgage, many buyers find the monthly energy savings offset or exceed the increase in their mortgage payment.</div>
+        </div>
+      </div>
+
+      <div class="faq-item fade-up d3">
+        <button class="faq-question" aria-expanded="false">
+          Does a solar system add value to my home?
+          <span class="faq-icon"><i data-lucide="plus" size="14"></i></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. Studies from Lawrence Berkeley National Laboratory and Zillow indicate that owned solar systems increase home resale value by an average of $15,000–$20,000, depending on system size and market. Unlike leased solar, owned systems transfer with the home and are factored into comparable sales by appraisers. This makes solar a strong long-term wealth-building asset in addition to its monthly savings benefit.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-text fade-left">
+        <span class="section-label">Still Have Questions?</span>
+        <h2 class="section-headline">We're Here to Help</h2>
+        <p>Our team answers questions every day about eligibility, programs, and next steps. Reach out — there's no pressure and no commitment required to have a conversation.</p>
+        <div class="contact-actions">
+          <a href="../../resources/eligibility-hub/index.html" class="btn btn-primary">Check Your Eligibility</a>
+        </div>
+      </div>
+      <div class="contact-card fade-right">
+        <h3>Get in Touch</h3>
+        <div class="contact-row">
+          <div class="contact-icon"><i data-lucide="mail" size="18"></i></div>
+          <div class="contact-row-text">
+            <strong>Email Us</strong>
+            <span>support@attainablehouseadvocates.com</span>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon"><i data-lucide="phone" size="18"></i></div>
+          <div class="contact-row-text">
+            <strong>Call or Text</strong>
+            <span>Available during business hours</span>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon"><i data-lucide="map-pin" size="18"></i></div>
+          <div class="contact-row-text">
+            <strong>Coverage</strong>
+            <span>Most U.S. states — and growing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text fade-left">
+        <h2>Ready to Find Out If You Qualify?</h2>
+        <p>It takes about 2 minutes. No credit pull, no commitment — just clarity on where you stand and what's possible.</p>
+      </div>
+      <div class="cta-actions fade-right">
+        <a href="../../resources/eligibility-hub/index.html" class="btn btn-white">Check My Eligibility</a>
+        <a href="../../programs/index.html" class="btn btn-white-outline">Learn How It Works</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <svg class="footer-logo-svg" viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><clipPath id="lf"><rect width="120" height="36"/></clipPath></defs>
+          <g clip-path="url(#lf)">
+            <path d="M14 18L22 10L30 18V30H25V22H19V30H14V18Z" fill="#EB7F1E"/>
+            <path d="M22 6L36 18H32L22 9L12 18H8L22 6Z" fill="#EB7F1E"/>
+            <path d="M44 10H48V18H56V10H60V30H56V22H48V30H44V10Z" fill="#EB7F1E"/>
+            <path d="M66 20C66 14.48 70.03 10 75.5 10C80.97 10 85 14.48 85 20C85 25.52 80.97 30 75.5 30C70.03 30 66 25.52 66 20ZM81 20C81 16.69 78.54 14 75.5 14C72.46 14 70 16.69 70 20C70 23.31 72.46 26 75.5 26C78.54 26 81 23.31 81 20Z" fill="#EB7F1E"/>
+            <path d="M90 10H99C103.42 10 106 12.69 106 16.5C106 20.31 103.42 23 99 23H94V30H90V10ZM99 19C101.21 19 102 17.93 102 16.5C102 15.07 101.21 14 99 14H94V19H99Z" fill="#EB7F1E"/>
+            <path d="M110 10H120V14H114V18H120V22H114V26H120V30H110V10Z" fill="#EB7F1E"/>
+          </g>
+        </svg>
+        <p>Attainable House Advocates — helping families achieve homeownership through education, advocacy, and smart financial planning.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Program</h4>
+        <a href="../../programs/index.html">How It Works</a>
+        <a href="../../resources/eligibility-hub/index.html">Check Eligibility</a>
+        <a href="../../resources/faqs/index.html">FAQs</a>
+      </div>
+      <div class="footer-col">
+        <h4>Use Cases</h4>
+        <a href="../../use-cases/homebuyers/index.html">Homebuyers</a>
+        <a href="../../use-cases/loan-officers/index.html">Loan Officers</a>
+        <a href="../../use-cases/real-estate-agents/index.html">Real Estate Agents</a>
+        <a href="../../use-cases/home-builders/index.html">Home Builders</a>
+        <a href="../../use-cases/manufactured-homes/index.html">Manufactured Homes</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../../resources/eligibility-hub/index.html">Eligibility Hub</a>
+        <a href="../../resources/blogs/index.html">Blog</a>
+        <a href="../../resources/faqs/index.html">FAQs</a>
+        <a href="../../company/index.html">About Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Attainable House Advocates. All rights reserved.</p>
+      <p>Not a lender. Educational purposes only.</p>
+    </div>
+  </div>
+</footer>
+
+<button id="scrollTop" aria-label="Scroll to top"><i data-lucide="chevron-up" size="20"></i></button>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+
+    // Navbar glass
+    const navbar = document.getElementById('navbar');
+    const onScroll = () => {
+      navbar.classList.toggle('glass', window.scrollY > 60);
+      document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+      const spans = hamburger.querySelectorAll('span');
+      if (open) {
+        spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+      } else {
+        spans[0].style.transform = ''; spans[1].style.opacity = ''; spans[2].style.transform = '';
+      }
+    });
+
+    // Scroll top
+    document.getElementById('scrollTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up, .fade-in, .fade-left, .fade-right').forEach(el => observer.observe(el));
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+
+        // Close all in same group
+        const group = btn.closest('.faq-group');
+        group.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+
+        // Toggle current
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

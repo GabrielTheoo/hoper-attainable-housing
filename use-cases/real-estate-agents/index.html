@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Real Estate Agents — Hoper</title>
+  <meta name="description" content="Help your clients compete with stronger financial positioning through the Hoper Program. Buyers arrive with earned income, education, and better reserves.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    :root{--orange:#EB7F1E;--orange-dark:#C96C12;--orange-light:#FDF2E9;--orange-mid:#F9D7BA;--black:#1A1A1A;--gray-dark:#383838;--gray-mid:#666;--border:#E8E8E8;--bg:#FFFFFF;--bg-alt:#F9F9F7;--star:#FBBC04;--shadow-sm:0 1px 3px rgba(0,0,0,0.08);--shadow-md:0 4px 16px rgba(0,0,0,0.08);--shadow-lg:0 8px 40px rgba(0,0,0,0.12);--shadow-xl:0 20px 60px rgba(0,0,0,0.15);--shadow-orange:0 8px 32px rgba(235,127,30,0.28);--r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:24px;--r-pill:999px;--nav-h:90px;--max-w:1440px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;overflow-x:hidden;}
+    body{font-family:'Montserrat',sans-serif;color:var(--black);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    img{display:block;max-width:100%;object-fit:cover;}a{text-decoration:none;color:inherit;}ul{list-style:none;}button{cursor:pointer;font-family:inherit;border:none;background:none;}
+    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 40px;}@media(max-width:768px){.container{padding:0 20px;}}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--r-pill);font-family:'Montserrat',sans-serif;font-size:16px;font-weight:600;line-height:1.25;transition:all 0.22s ease;white-space:nowrap;}
+    .btn-primary{background:var(--orange);color:#fff;box-shadow:var(--shadow-orange);}.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);}
+    .btn-secondary{background:transparent;color:var(--black);border:2px solid var(--black);}.btn-secondary:hover{background:var(--black);color:#fff;transform:translateY(-2px);}
+    .btn-white{background:#fff;color:var(--orange);font-weight:700;}.btn-white:hover{background:rgba(255,255,255,.92);transform:translateY(-2px);}
+    .btn-white-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);}.btn-white-outline:hover{border-color:#fff;background:rgba(255,255,255,.12);}
+    .fade-up{opacity:0;transform:translateY(40px);transition:opacity .75s cubic-bezier(0.22,1,0.36,1),transform .75s cubic-bezier(0.22,1,0.36,1);}.fade-up.visible{opacity:1;transform:translateY(0);}
+    .fade-up.d1{transition-delay:.1s;}.fade-up.d2{transition-delay:.22s;}.fade-up.d3{transition-delay:.34s;}.fade-up.d4{transition-delay:.46s;}
+    .fade-left{opacity:0;transform:translateX(-36px);transition:opacity .75s cubic-bezier(0.22,1,0.36,1),transform .75s cubic-bezier(0.22,1,0.36,1);}.fade-left.visible{opacity:1;transform:translateX(0);}
+    .fade-right{opacity:0;transform:translateX(36px);transition:opacity .75s cubic-bezier(0.22,1,0.36,1),transform .75s cubic-bezier(0.22,1,0.36,1);}.fade-right.visible{opacity:1;transform:translateX(0);}
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px max(16px,calc((100vw - 1440px) / 2 + 16px));pointer-events:none;}
+    .navbar .container{pointer-events:all;height:58px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;max-width:none;padding:0 40px;border-radius:28px;background:rgba(15,15,15,0.28);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);box-shadow:0 4px 16px rgba(0,0,0,0.22);border:1px solid rgba(255,255,255,0.10);transition:background .35s ease,box-shadow .35s ease;}
+    .navbar.glass .container{background:rgba(255,255,255,0.80);backdrop-filter:blur(24px) saturate(200%);box-shadow:0 4px 28px rgba(0,0,0,0.10);border-color:rgba(255,255,255,0.5);}
+    .nav-logo .logo-svg path{fill:white;}.nav-logo .logo-svg g > path:nth-child(2){fill:var(--orange);}
+    .navbar.glass .nav-logo .logo-svg path{fill:var(--black);}.navbar.glass .nav-logo .logo-svg g > path:nth-child(2){fill:var(--orange);}
+    .navbar.glass .nav-links a{color:var(--gray-dark);}.navbar.glass .nav-links a:hover{color:var(--orange);background:var(--orange-light);}
+    .nav-logo{display:flex;align-items:center;justify-self:start;}.nav-logo .logo-svg{height:30px;width:auto;}
+    .nav-links{display:flex;align-items:center;gap:4px;justify-content:center;}
+    .nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.88);padding:7px 12px;border-radius:var(--r-sm);transition:color .2s,background .2s;}
+    .nav-links a:hover{color:#fff;background:rgba(255,255,255,0.12);}
+    .nav-actions{display:flex;align-items:center;gap:10px;justify-self:end;}
+    .nav-cta{padding:9px 20px;font-size:14px;}
+    .nav-actions .btn-secondary{border-color:rgba(255,255,255,0.45);color:#fff;background:transparent;font-size:14px;}
+    .hamburger{display:none;flex-direction:column;gap:5px;padding:8px;pointer-events:all;outline:none;}
+    .hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s;}
+    .navbar.glass .hamburger span{background:var(--black);}
+    @media(max-width:900px){.nav-links{display:none;}.hamburger{display:flex;}.nav-actions .btn-secondary{display:none;}}
+    @media(max-width:600px){.navbar{padding:12px 16px;}.navbar .container{padding:0 16px;border-radius:20px;}}
+    .mobile-menu{position:fixed;top:103px;left:16px;right:16px;border-radius:16px;background:rgba(255,255,255,0.96);backdrop-filter:blur(20px);padding:20px 20px 32px;border-bottom:1px solid var(--border);box-shadow:var(--shadow-lg);z-index:999;transform:translateY(-10px);opacity:0;pointer-events:none;transition:all .3s ease;}
+    .mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:all;}
+    .mobile-menu a{display:block;padding:12px 0;font-size:16px;font-weight:500;border-bottom:1px solid var(--border);}
+    .mobile-menu .mobile-cta{display:flex;margin-top:20px;width:100%;justify-content:center;}
+    .page-hero{min-height:420px;background:var(--black);position:relative;overflow:hidden;display:flex;align-items:center;padding-top:calc(var(--nav-h) + 40px);padding-bottom:80px;}
+    .page-hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.25;}
+    .page-hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(10,10,10,0.92) 0%,rgba(10,10,10,0.75) 50%,rgba(10,10,10,0.4) 100%);}
+    .page-hero .container{position:relative;z-index:2;}
+    .page-hero-label{color:var(--orange);font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+    .page-hero-label::before{content:'';display:block;width:24px;height:2px;background:var(--orange);}
+    .page-hero h1{font-size:clamp(36px,5vw,64px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:700px;}
+    .page-hero-sub{font-size:18px;color:rgba(255,255,255,0.72);line-height:1.75;max-width:580px;margin-bottom:36px;}
+    .page-hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+    .page-hero .btn-secondary{border-color:rgba(255,255,255,0.42);color:#fff;}
+    section{padding:96px 0;}
+    .section-label{display:inline-block;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange);margin-bottom:16px;}
+    .section-headline{font-size:clamp(28px,4vw,44px);font-weight:700;line-height:1.25;color:var(--black);letter-spacing:-.3px;}
+    .section-sub{font-size:18px;line-height:1.75;color:var(--gray-mid);margin-top:16px;}
+    .features-section{background:var(--bg-alt);}
+    .features-header{text-align:center;margin-bottom:64px;}
+    .features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+    .feature-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s,border-color .25s;}
+    .feature-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:rgba(235,127,30,.3);}
+    .feature-icon{width:52px;height:52px;background:var(--orange-light);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--orange);margin-bottom:20px;}
+    .feature-card h3{font-size:18px;font-weight:700;color:var(--black);margin-bottom:12px;}
+    .feature-card p{font-size:14px;line-height:1.7;color:var(--gray-mid);flex:1;}
+    @media(max-width:640px){.features-grid{grid-template-columns:1fr;}}
+    .split-section{background:var(--bg);}
+    .split-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+    .split-photo{width:100%;height:480px;object-fit:cover;border-radius:var(--r-xl);box-shadow:var(--shadow-xl);}
+    .split-checklist{display:flex;flex-direction:column;gap:14px;margin-top:28px;}
+    .split-check-item{display:flex;align-items:flex-start;gap:14px;padding:16px;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg-alt);transition:border-color .2s;}
+    .split-check-item:hover{border-color:var(--orange);}
+    .check-dot{width:20px;height:20px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+    .split-check-item span{font-size:15px;font-weight:600;color:var(--black);line-height:1.5;}
+    @media(max-width:960px){.split-inner{grid-template-columns:1fr;gap:40px;}}
+    .testimonial-section{background:var(--black);padding:96px 0;}
+    .testimonial-card{max-width:760px;margin:0 auto;text-align:center;}
+    .t-quote{font-size:clamp(18px,2.5vw,24px);font-weight:500;line-height:1.6;color:#fff;margin-bottom:28px;font-style:italic;}
+    .t-stars{display:flex;gap:4px;justify-content:center;margin-bottom:20px;}.t-stars svg{color:var(--star);}
+    .t-author-name{font-size:16px;font-weight:700;color:#fff;}.t-author-role{font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;}
+    .cta-section{background:var(--orange);padding:96px 0;}
+    .cta-inner{text-align:center;max-width:680px;margin:0 auto;}
+    .cta-inner h2{font-size:clamp(28px,4vw,44px);font-weight:700;line-height:1.25;color:#fff;margin-bottom:20px;}
+    .cta-inner p{font-size:18px;color:rgba(255,255,255,.85);line-height:1.75;margin-bottom:36px;}
+    .cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+    .footer{background:var(--black);color:rgba(255,255,255,.65);padding:80px 0 32px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:64px;margin-bottom:64px;}
+    .footer-logo{display:flex;align-items:center;margin-bottom:16px;}.footer-logo .logo-svg path{fill:#fff !important;}
+    .footer-brand p{font-size:14px;line-height:1.75;color:rgba(255,255,255,.45);max-width:240px;}
+    .footer-social{display:flex;gap:12px;margin-top:20px;}
+    .social-link{width:36px;height:36px;background:rgba(255,255,255,.08);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);transition:background .2s,color .2s;}.social-link:hover{background:var(--orange);color:#fff;}
+    .footer-col h5{font-size:12px;font-weight:700;color:#fff;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:16px;}
+    .footer-col ul{display:flex;flex-direction:column;gap:12px;}
+    .footer-col ul li a{font-size:14px;color:rgba(255,255,255,.5);transition:color .2s;}.footer-col ul li a:hover{color:var(--orange);}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .footer-bottom p{font-size:13px;color:rgba(255,255,255,.3);}
+    @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:40px;}}@media(max-width:500px){.footer-grid{grid-template-columns:1fr;}}
+    .scroll-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;background:var(--orange);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-orange);opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s;z-index:99;}
+    .scroll-top.show{opacity:1;transform:translateY(0);}.scroll-top:hover{background:var(--orange-dark);}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="/" class="nav-logo">
+      <svg class="logo-svg" height="32" viewBox="0 0 205 54" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#lc)"><path d="M42.7436 32.4518H10.3127V25.847L4.91211 31.2475V42.6643C4.91211 42.9613 5.15514 43.2043 5.45217 43.2043H9.77268C10.0697 43.2043 10.3127 42.9613 10.3127 42.6643V38.3924C10.3127 38.0954 10.5558 37.8524 10.8528 37.8524H42.2035C42.5005 37.8524 42.7436 38.0954 42.7436 38.3924V42.6643C42.7436 42.9613 42.9866 43.2043 43.2836 43.2043H47.6041C47.9012 43.2043 48.1442 42.9613 48.1442 42.6643V31.2745L42.7436 25.874V32.4518Z" fill="white"/><path d="M52.8723 26.1251L26.9034 0.156625C26.7954 0.0486145 26.655 -0.0026906 26.5145 9.66525e-06C26.3741 9.66525e-06 26.2337 0.0513148 26.1257 0.156625L0.159433 26.1251C-0.0511913 26.3357 -0.0511913 26.6787 0.159433 26.8893L3.21349 29.9433C3.42412 30.1539 3.76706 30.1539 3.97768 29.9433L26.5145 7.40685L49.0514 29.9433C49.262 30.1539 49.6049 30.1539 49.8156 29.9433L52.8696 26.8893C53.0803 26.6787 53.0803 26.3357 52.8696 26.1251H52.8723Z" fill="#EB7F1E"/><path d="M92.4564 11.1413V42.8533C92.4564 43.018 92.3213 43.153 92.1566 43.153H86.756C86.5913 43.153 86.4563 43.018 86.4563 42.8533V29.306H69.7467V42.8533C69.7467 43.018 69.6117 43.153 69.4469 43.153H64.0463C63.8816 43.153 63.7466 43.018 63.7466 42.8533V11.1413C63.7466 10.9766 63.8816 10.8416 64.0463 10.8416H69.4469C69.6117 10.8416 69.7467 10.9766 69.7467 11.1413V24.1809H86.4563V11.1413C86.4563 10.9766 86.5913 10.8416 86.756 10.8416H92.1566C92.3213 10.8416 92.4564 10.9766 92.4564 11.1413Z" fill="white"/><path d="M98.5508 30.829C98.5508 23.4438 104.089 18.2268 111.661 18.2268C119.233 18.2268 124.817 23.4438 124.817 30.829C124.817 38.2142 119.324 43.4771 111.661 43.4771C103.997 43.4771 98.5508 38.2142 98.5508 30.829ZM119 30.829C119 26.1197 115.863 23.1197 111.661 23.1197C107.459 23.1197 104.367 26.1197 104.367 30.829C104.367 35.5383 107.505 38.5383 111.661 38.5383C115.817 38.5383 119 35.5383 119 30.829Z" fill="white"/><path d="M156.529 30.829C156.529 38.4924 151.221 43.4771 144.019 43.4771C140.881 43.4771 138.111 42.4159 136.126 40.153V53.6976C136.126 53.8623 135.991 53.9973 135.826 53.9973H130.658C130.493 53.9973 130.358 53.8623 130.358 53.6976V18.8047C130.358 18.64 130.493 18.505 130.658 18.505H135.551C135.715 18.505 135.85 18.64 135.85 18.8047V21.7345C137.789 19.3799 140.652 18.2268 144.022 18.2268C151.223 18.2268 156.532 23.2115 156.532 30.829H156.529ZM150.667 30.829C150.667 26.1197 147.529 23.1197 143.373 23.1197C139.218 23.1197 136.034 26.1197 136.034 30.829C136.034 35.5383 139.22 38.5383 143.373 38.5383C147.527 38.5383 150.667 35.5383 150.667 30.829Z" fill="white"/><path d="M184.826 32.676H165.762C166.453 36.2754 169.456 38.5842 173.747 38.5842C176.398 38.5842 178.499 37.7795 180.214 36.1323C180.338 36.0135 180.538 36.0162 180.651 36.1485L183.362 39.2646C183.462 39.378 183.462 39.5482 183.362 39.6616C181.143 42.1647 177.748 43.4798 173.609 43.4798C165.346 43.4798 159.994 38.1737 159.991 30.8344C159.991 23.9271 165.467 18.3915 172.372 18.2349C179.758 18.0648 185.193 23.1359 185.193 30.9721C185.193 31.3582 185.161 31.9091 185.123 32.4032C185.112 32.5599 184.98 32.6814 184.823 32.6814L184.826 32.676ZM165.716 28.8443H179.704C179.242 25.2907 176.517 22.8443 172.734 22.8443C168.951 22.8443 166.272 25.2448 165.719 28.8443H165.716Z" fill="white"/><path d="M205 18.532V23.3682C205 23.5518 204.835 23.6922 204.654 23.6652C204.295 23.6112 203.979 23.5842 203.661 23.5842C199.275 23.5842 196.505 26.1683 196.505 31.2016V42.856C196.505 43.0207 196.37 43.1557 196.205 43.1557H191.037C190.872 43.1557 190.737 43.0207 190.737 42.856V18.8074C190.737 18.6427 190.872 18.5077 191.037 18.5077H195.93C196.094 18.5077 196.229 18.6427 196.229 18.8074V22.1071C197.849 19.5878 200.741 18.2943 204.695 18.2322C204.862 18.2322 205 18.3673 205 18.5347V18.532Z" fill="white"/></g><defs><clipPath id="lc"><rect width="205" height="54" fill="white"/></clipPath></defs></svg>
+    </a>
+    <div class="nav-links">
+      <a href="/programs">Program</a>
+      <a href="/use-cases" style="color:var(--orange);">Use Cases</a>
+      <a href="/resources">Resources</a>
+      <a href="/company">Company</a>
+    </div>
+    <div class="nav-actions">
+      <a href="/resources/eligibility-hub" class="btn btn-secondary nav-cta">See if you qualify</a>
+      <a href="/programs" class="btn btn-primary nav-cta">Get started</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/programs">Program</a><a href="/use-cases">Use Cases</a><a href="/resources">Resources</a><a href="/company">Company</a>
+  <a href="/programs" class="btn btn-primary mobile-cta">Get started with Hoper</a>
+</div>
+
+<main>
+<section class="page-hero">
+  <img class="page-hero-bg" src="../../Images/black-female-real-estate-agent-showing-couple-where-sign-contract-meeting-office.jpg" alt="Real estate agent with clients">
+  <div class="page-hero-overlay"></div>
+  <div class="container">
+    <p class="page-hero-label">Use Cases / Real Estate Agents</p>
+    <h1>Help Your Clients Compete with Stronger Financial Positioning</h1>
+    <p class="page-hero-sub">Buyers enrolled in Hoper arrive with earned income, financial education, and stronger reserves — giving them a real edge in today's market.</p>
+    <div class="page-hero-actions">
+      <a href="/resources/eligibility-hub" class="btn btn-primary">Refer a Client <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+      <a href="/programs" class="btn btn-secondary">How It Works</a>
+    </div>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="container">
+    <div class="features-header">
+      <span class="section-label fade-up">The Advantage</span>
+      <h2 class="section-headline fade-up d1">How Hoper Benefits Agents</h2>
+      <p class="section-sub fade-up d2">When your clients close stronger, your reputation grows. Hoper gives you a genuine differentiator.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon"><i data-lucide="trending-up" style="width:24px;height:24px;"></i></div>
+        <h3>Better-Positioned Buyers</h3>
+        <p>Hoper-enrolled clients arrive at closing with up to $13,000 in earned income, stronger reserves, and better financial preparation — making your job easier.</p>
+      </div>
+      <div class="feature-card fade-up d1">
+        <div class="feature-icon"><i data-lucide="handshake" style="width:24px;height:24px;"></i></div>
+        <h3>Fewer Transaction Surprises</h3>
+        <p>Clients who complete Hoper's pre-closing education understand the process and arrive prepared — reducing last-minute anxiety and questions.</p>
+      </div>
+      <div class="feature-card fade-up d2">
+        <div class="feature-icon"><i data-lucide="award" style="width:24px;height:24px;"></i></div>
+        <h3>A Meaningful Value-Add</h3>
+        <p>Offering Hoper to your clients sets you apart. It's a tangible benefit that earns trust and generates referrals.</p>
+      </div>
+      <div class="feature-card fade-up d3">
+        <div class="feature-icon"><i data-lucide="sun" style="width:24px;height:24px;"></i></div>
+        <h3>Built-In Home Value Feature</h3>
+        <p>Every Hoper home comes with a fully owned solar system — a feature that adds long-term value and lowers monthly costs from day one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="split-section">
+  <div class="container">
+    <div class="split-inner">
+      <div class="fade-left">
+        <img class="split-photo" src="../../Images/black-person-signing-job-contract.jpg" alt="Client signing contract">
+      </div>
+      <div class="fade-right">
+        <span class="section-label">What Clients Receive</span>
+        <h2 class="section-headline" style="margin-top:8px;">Your Clients Get More</h2>
+        <p class="section-sub">Everything that makes a buyer more competitive and a closing more confident.</p>
+        <div class="split-checklist">
+          <div class="split-check-item">
+            <div class="check-dot"><i data-lucide="check" style="width:12px;height:12px;color:#fff;"></i></div>
+            <span>Up to $13,000 in earned income at closing</span>
+          </div>
+          <div class="split-check-item">
+            <div class="check-dot"><i data-lucide="check" style="width:12px;height:12px;color:#fff;"></i></div>
+            <span>6-hour pre-closing financial education</span>
+          </div>
+          <div class="split-check-item">
+            <div class="check-dot"><i data-lucide="check" style="width:12px;height:12px;color:#fff;"></i></div>
+            <span>Fully owned solar energy system at closing</span>
+          </div>
+          <div class="split-check-item">
+            <div class="check-dot"><i data-lucide="check" style="width:12px;height:12px;color:#fff;"></i></div>
+            <span>Post-closing financial mentorship program</span>
+          </div>
+          <div class="split-check-item">
+            <div class="check-dot"><i data-lucide="check" style="width:12px;height:12px;color:#fff;"></i></div>
+            <span>No rate change, no second lien, no hidden costs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial-section">
+  <div class="container">
+    <div class="testimonial-card fade-up">
+      <div class="t-stars">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="t-quote">"I started recommending Hoper to all my first-time buyer clients. They come to closing day knowing exactly what to expect — and they have the funds to close confidently. It's made me a better agent."</p>
+      <div class="t-author-name">Robert Sanchez</div>
+      <div class="t-author-role">Real Estate Agent, Florida</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner fade-up">
+      <h2>Ready to Offer Hoper to Your Clients?</h2>
+      <p>Help your FHA-eligible buyers access earned income, education, and solar — at no cost to you or them.</p>
+      <div class="cta-actions">
+        <a href="/resources/eligibility-hub" class="btn btn-white">Check Client Eligibility <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="/programs" class="btn btn-white-outline">View the Program</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg class="logo-svg" height="32" viewBox="0 0 205 54" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#lf)"><path d="M42.7436 32.4518H10.3127V25.847L4.91211 31.2475V42.6643C4.91211 42.9613 5.15514 43.2043 5.45217 43.2043H9.77268C10.0697 43.2043 10.3127 42.9613 10.3127 42.6643V38.3924C10.3127 38.0954 10.5558 37.8524 10.8528 37.8524H42.2035C42.5005 37.8524 42.7436 38.0954 42.7436 38.3924V42.6643C42.7436 42.9613 42.9866 43.2043 43.2836 43.2043H47.6041C47.9012 43.2043 48.1442 42.9613 48.1442 42.6643V31.2745L42.7436 25.874V32.4518Z" fill="#EB7F1E"/><path d="M52.8723 26.1251L26.9034 0.156625C26.7954 0.0486145 26.655 -0.0026906 26.5145 9.66525e-06C26.3741 9.66525e-06 26.2337 0.0513148 26.1257 0.156625L0.159433 26.1251C-0.0511913 26.3357 -0.0511913 26.6787 0.159433 26.8893L3.21349 29.9433C3.42412 30.1539 3.76706 30.1539 3.97768 29.9433L26.5145 7.40685L49.0514 29.9433C49.262 30.1539 49.6049 30.1539 49.8156 29.9433L52.8696 26.8893C53.0803 26.6787 53.0803 26.3357 52.8696 26.1251H52.8723Z" fill="#EB7F1E"/><path d="M92.4564 11.1413V42.8533C92.4564 43.018 92.3213 43.153 92.1566 43.153H86.756C86.5913 43.153 86.4563 43.018 86.4563 42.8533V29.306H69.7467V42.8533C69.7467 43.018 69.6117 43.153 69.4469 43.153H64.0463C63.8816 43.153 63.7466 43.018 63.7466 42.8533V11.1413C63.7466 10.9766 63.8816 10.8416 64.0463 10.8416H69.4469C69.6117 10.8416 69.7467 10.9766 69.7467 11.1413V24.1809H86.4563V11.1413C86.4563 10.9766 86.5913 10.8416 86.756 10.8416H92.1566C92.3213 10.8416 92.4564 10.9766 92.4564 11.1413Z" fill="#EB7F1E"/><path d="M98.5508 30.829C98.5508 23.4438 104.089 18.2268 111.661 18.2268C119.233 18.2268 124.817 23.4438 124.817 30.829C124.817 38.2142 119.324 43.4771 111.661 43.4771C103.997 43.4771 98.5508 38.2142 98.5508 30.829ZM119 30.829C119 26.1197 115.863 23.1197 111.661 23.1197C107.459 23.1197 104.367 26.1197 104.367 30.829C104.367 35.5383 107.505 38.5383 111.661 38.5383C115.817 38.5383 119 35.5383 119 30.829Z" fill="#EB7F1E"/><path d="M156.529 30.829C156.529 38.4924 151.221 43.4771 144.019 43.4771C140.881 43.4771 138.111 42.4159 136.126 40.153V53.6976C136.126 53.8623 135.991 53.9973 135.826 53.9973H130.658C130.493 53.9973 130.358 53.8623 130.358 53.6976V18.8047C130.358 18.64 130.493 18.505 130.658 18.505H135.551C135.715 18.505 135.85 18.64 135.85 18.8047V21.7345C137.789 19.3799 140.652 18.2268 144.022 18.2268C151.223 18.2268 156.532 23.2115 156.532 30.829H156.529ZM150.667 30.829C150.667 26.1197 147.529 23.1197 143.373 23.1197C139.218 23.1197 136.034 26.1197 136.034 30.829C136.034 35.5383 139.22 38.5383 143.373 38.5383C147.527 38.5383 150.667 35.5383 150.667 30.829Z" fill="#EB7F1E"/><path d="M184.826 32.676H165.762C166.453 36.2754 169.456 38.5842 173.747 38.5842C176.398 38.5842 178.499 37.7795 180.214 36.1323C180.338 36.0135 180.538 36.0162 180.651 36.1485L183.362 39.2646C183.462 39.378 183.462 39.5482 183.362 39.6616C181.143 42.1647 177.748 43.4798 173.609 43.4798C165.346 43.4798 159.994 38.1737 159.991 30.8344C159.991 23.9271 165.467 18.3915 172.372 18.2349C179.758 18.0648 185.193 23.1359 185.193 30.9721C185.193 31.3582 185.161 31.9091 185.123 32.4032C185.112 32.5599 184.98 32.6814 184.823 32.6814L184.826 32.676ZM165.716 28.8443H179.704C179.242 25.2907 176.517 22.8443 172.734 22.8443C168.951 22.8443 166.272 25.2448 165.719 28.8443H165.716Z" fill="#EB7F1E"/><path d="M205 18.532V23.3682C205 23.5518 204.835 23.6922 204.654 23.6652C204.295 23.6112 203.979 23.5842 203.661 23.5842C199.275 23.5842 196.505 26.1683 196.505 31.2016V42.856C196.505 43.0207 196.37 43.1557 196.205 43.1557H191.037C190.872 43.1557 190.737 43.0207 190.737 42.856V18.8074C190.737 18.6427 190.872 18.5077 191.037 18.5077H195.93C196.094 18.5077 196.229 18.6427 196.229 18.8074V22.1071C197.849 19.5878 200.741 18.2943 204.695 18.2322C204.862 18.2322 205 18.3673 205 18.5347V18.532Z" fill="#EB7F1E"/></g><defs><clipPath id="lf"><rect width="205" height="54" fill="white"/></clipPath></defs></svg>
+        </div>
+        <p>Bridging the gap from rental poverty to energy-efficient home ownership through education, advocacy, and research.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
+          <a href="#" class="social-link" aria-label="Twitter"><i data-lucide="twitter" style="width:16px;height:16px;"></i></a>
+          <a href="#" class="social-link" aria-label="Facebook"><i data-lucide="facebook" style="width:16px;height:16px;"></i></a>
+          <a href="#" class="social-link" aria-label="Instagram"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Programs</h5><ul><li><a href="/programs">How It Works</a></li><li><a href="/resources/eligibility-hub">Check Eligibility</a></li></ul></div>
+      <div class="footer-col"><h5>Use Cases</h5><ul><li><a href="/use-cases/homebuyers">Homebuyers</a></li><li><a href="/use-cases/loan-officers">Loan Officers</a></li><li><a href="/use-cases/real-estate-agents">Real Estate Agents</a></li><li><a href="/use-cases/home-builders">Home Builders</a></li><li><a href="/use-cases/manufactured-homes">Manufactured Homes</a></li></ul></div>
+      <div class="footer-col"><h5>Resources</h5><ul><li><a href="/resources/eligibility-hub">Eligibility Hub</a></li><li><a href="/resources/blogs">Blog</a></li><li><a href="/resources/faqs">FAQs</a></li><li><a href="/company">About Hoper</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Hoper — Attainable House Advocates. All rights reserved.</p>
+      <p>Designed for aspiring homeowners.</p>
+    </div>
+  </div>
+</footer>
+<button class="scroll-top" id="scrollTop" aria-label="Back to top"><i data-lucide="chevron-up" style="width:20px;height:20px;"></i></button>
+<script>
+  lucide.createIcons();
+  const navbar=document.getElementById('navbar'),scrollTopBtn=document.getElementById('scrollTop');
+  window.addEventListener('scroll',()=>{const y=window.scrollY;navbar.classList.toggle('glass',y>30);scrollTopBtn.classList.toggle('show',y>400);},{passive:true});
+  scrollTopBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobileMenu');
+  let menuOpen=false;
+  hamburger.addEventListener('click',()=>{menuOpen=!menuOpen;mobileMenu.classList.toggle('open',menuOpen);const[s1,s2,s3]=hamburger.querySelectorAll('span');if(menuOpen){s1.style.transform='rotate(45deg) translate(5px,5px)';s2.style.opacity='0';s3.style.transform='rotate(-45deg) translate(5px,-5px)';}else{s1.style.transform=s3.style.transform='';s2.style.opacity='';}});
+  mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menuOpen=false;mobileMenu.classList.remove('open');hamburger.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';});}));
+  const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fade-up,.fade-in,.fade-left,.fade-right').forEach(el=>revObs.observe(el));
+</script>
+</body>
+</html>
