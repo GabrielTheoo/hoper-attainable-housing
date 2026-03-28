@@ -1,0 +1,18 @@
+Index 20: elem=76765562-8a71-143d-fe3d-2d82e154ec99, styles=['hero-section'], type=Section
+Index 58: elem=9a6d5e36-6598-e5f7-43a1-bc8855c39d01, styles=['section-base', 'section-white'], type=Section
+Index 110: elem=584dff7b-68dd-d93b-3771-f895feafc0d7, styles=['section-base', 'section-dark'], type=Section
+Index 179: elem=640bf517-84f4-5968-95f2-8994251c79c7, styles=['section-base', 'section-white'], type=Section
+Index 191: elem=3da3ea17-c8f6-b73c-c281-065e2aedc354, styles=['section-base', 'section-white'], type=Section
+Index 234: elem=baf8fbcd-6431-f26a-68c6-fa3c7b55bee6, styles=['section-base', 'section-gray'], type=Section
+Index 272: elem=d331d75e-a681-f513-487e-6a7f8c92b28f, styles=['testimonials-section'], type=Section
+Index 274: elem=63fdf026-7f47-3208-3103-dcb602a24230, styles=['testimonials-header'], type=Block
+Index 308: elem=2cd74e90-7f0b-7c17-b4af-b9ab3f0b4f79, styles=['faq-banner-section'], type=Section
+Index 310: elem=db1a9b5e-9feb-cbed-fc31-36d6fef0cf5e, styles=['faq-banner-inner'], type=Block
+Index 311: elem=31054744-a29d-74a9-97f3-a86ec16e7c80, styles=['faq-banner-left'], type=Block
+Index 312: elem=89f45c76-aa3d-95c5-33ac-9eac3d098957, styles=['faq-banner-icon-wrap'], type=Block
+Index 315: elem=c4e320a5-8db4-281f-a5e4-086c4239263c, styles=['faq-banner-text-wrap'], type=Block
+Index 316: elem=9568ea60-da93-9123-3f0f-66e3b1a6b67c, styles=['faq-banner-title'], type=Heading
+Index 318: elem=77ba59d5-f831-907b-de9d-24d90f38a620, styles=['faq-banner-sub'], type=Paragraph
+Index 326: elem=503e42fa-c0e5-3011-b40b-5252266dcb8d, styles=['faq-banner-actions'], type=Block
+Index 335: elem=48c650da-73a5-6a99-48a9-f6adf423d5aa, styles=['cta-section'], type=Section
+Index 346: elem=309c3b25-f0aa-63a5-eec2-0cf27ad8fd83, styles=['footer-section'], type=Section

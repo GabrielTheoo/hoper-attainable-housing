@@ -1,0 +1,10 @@
+Index 20: elem=76765562-8a71-143d-fe3d-2d82e154ec99, styles=['hero-section'], type=Section
+Index 58: elem=9a6d5e36-6598-e5f7-43a1-bc8855c39d01, styles=['section-base', 'section-white'], type=Section
+Index 110: elem=584dff7b-68dd-d93b-3771-f895feafc0d7, styles=['section-base', 'section-dark'], type=Section
+Index 178: elem=640bf517-84f4-5968-95f2-8994251c79c7, styles=['section-base', 'section-white'], type=Section
+Index 190: elem=3da3ea17-c8f6-b73c-c281-065e2aedc354, styles=['section-base', 'section-white'], type=Section
+Index 233: elem=baf8fbcd-6431-f26a-68c6-fa3c7b55bee6, styles=['section-base', 'section-gray'], type=Section
+Index 271: elem=d331d75e-a681-f513-487e-6a7f8c92b28f, styles=['testimonials-section'], type=Section
+Index 307: elem=2cd74e90-7f0b-7c17-b4af-b9ab3f0b4f79, styles=['faq-banner-section'], type=Section
+Index 334: elem=48c650da-73a5-6a99-48a9-f6adf423d5aa, styles=['cta-section'], type=Section
+Index 345: elem=309c3b25-f0aa-63a5-eec2-0cf27ad8fd83, styles=['footer-section'], type=Section
