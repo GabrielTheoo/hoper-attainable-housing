@@ -205,6 +205,7 @@
     .scroll-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; background: var(--orange); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-orange); opacity: 0; transform: translateY(12px); transition: opacity .3s, transform .3s; z-index: 99; }
     .scroll-top.show { opacity: 1; transform: translateY(0); }
     .scroll-top:hover { background: var(--orange-dark); }
+    @media(max-width:768px){.hero-pills{display:none}}
   </style>
 </head>
 <body>
@@ -258,7 +259,7 @@
     <p class="page-hero-label fade-up">The HOPER Program</p>
     <h1 class="fade-up d1">A Clear Path to Sustainable Homeownership</h1>
     <p class="page-hero-sub fade-up d2">Earn up to $13,000 toward closing and gain the tools, education, and mentorship to thrive as a financially stable homeowner.</p>
-    <div class="page-hero-actions fade-up d3" style="flex-wrap:wrap;gap:10px;margin-bottom:24px;">
+    <div class="page-hero-actions hero-pills fade-up d3" style="flex-wrap:wrap;gap:10px;margin-bottom:24px;">
       <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;color:#fff;">No income limits or second liens</span>
       <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;color:#fff;">No rate increases</span>
       <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;color:#fff;">Earn up to 3.5% (up to $13,000)</span>
@@ -288,28 +289,28 @@
       <h2 class="section-headline fade-up d1">The 5-Step Path to Stronger Homeownership</h2>
       <p class="section-sub fade-up d2">A simple, structured process designed for long-term success.</p>
     </div>
-    <div class="steps-grid" style="grid-template-columns:repeat(3,1fr);">
-      <div class="step-card fade-up">
+    <div class="steps-grid" style="grid-template-columns:repeat(6,1fr);">
+      <div class="step-card fade-up" style="grid-column:span 3">
         <div class="step-num">01</div>
         <h3>Enroll in Hoper &amp; Complete Pre-Closing Education</h3>
         <p>(4-6 Hours | $149) Join Hoper and build a clear understanding of your mortgage, costs, and long-term financial plan before you buy.</p>
       </div>
-      <div class="step-card fade-up d1">
+      <div class="step-card fade-up d1" style="grid-column:span 3">
         <div class="step-num">02</div>
         <h3>Commit to Post-Closing Financial Mentorship</h3>
         <p>(8 Hours | $99) Enroll before closing and complete the course after you move in.</p>
       </div>
-      <div class="step-card fade-up d2">
+      <div class="step-card fade-up d2" style="grid-column:span 2">
         <div class="step-num">03</div>
         <h3>Earn Up to 3.5% of Your Purchase Price</h3>
         <p>Unlock up to $13,000 before closing.</p>
       </div>
-      <div class="step-card fade-up d3">
+      <div class="step-card fade-up d3" style="grid-column:span 2">
         <div class="step-num">04</div>
         <h3>Close on Your New Home with Confidence</h3>
         <p>Finalize your purchase knowing you've prepared and strengthened your position.</p>
       </div>
-      <div class="step-card fade-up d4">
+      <div class="step-card fade-up d4" style="grid-column:span 2">
         <div class="step-num">05</div>
         <h3>Save More Over Time</h3>
         <p>Reduce long-term energy costs with fully owned solar and benefit from potential tax advantages.</p>
@@ -329,28 +330,28 @@
       <h2 class="section-headline fade-up d1">Built for Long-Term Homeownership Success</h2>
       <p class="section-sub fade-up d2">Hoper is designed to help you buy a home with confidence and succeed as a homeowner long after closing day.</p>
     </div>
-    <div class="included-grid">
-      <div class="included-card fade-up">
+    <div class="included-grid" style="grid-template-columns:repeat(6,1fr);">
+      <div class="included-card fade-up" style="grid-column:span 3">
         <div class="included-icon"><i data-lucide="graduation-cap" style="width:24px;height:24px;"></i></div>
         <h3>Pre-Closing Financial Education</h3>
         <p>Online, self-paced, less than 6 hours. Covers lender evaluation criteria, credit, reserves, and the homebuying process from pre-approval to closing.</p>
       </div>
-      <div class="included-card fade-up d1">
+      <div class="included-card fade-up d1" style="grid-column:span 3">
         <div class="included-icon"><i data-lucide="badge-dollar-sign" style="width:24px;height:24px;"></i></div>
         <h3>Earned Income at Closing</h3>
         <p>3.5% of purchase price, up to $13,000 in earned income. Applied toward closing costs, reserves, or debt reduction at closing.</p>
       </div>
-      <div class="included-card fade-up d2">
+      <div class="included-card fade-up d2" style="grid-column:span 2">
         <div class="included-icon"><i data-lucide="sun" style="width:24px;height:24px;"></i></div>
         <h3>Fully Owned Solar System</h3>
         <p>A new, fully owned solar energy system transferred to you at closing. Designed to lower monthly utility costs for years to come.</p>
       </div>
-      <div class="included-card fade-up d3">
+      <div class="included-card fade-up d3" style="grid-column:span 2">
         <div class="included-icon"><i data-lucide="brain" style="width:24px;height:24px;"></i></div>
         <h3>Post-Closing Mentorship</h3>
         <p>Structured financial mentorship program after move-in to help you build wealth, stay on track, and make the most of homeownership.</p>
       </div>
-      <div class="included-card fade-up d4">
+      <div class="included-card fade-up d4" style="grid-column:span 2">
         <div class="included-icon"><i data-lucide="flask-conical" style="width:24px;height:24px;"></i></div>
         <h3>Research Participation</h3>
         <p>Your participation helps advance research on how education and mentorship improve long-term homeowner outcomes for families across the U.S.</p>
@@ -442,10 +443,7 @@
         </div>
         <p>Bridging the gap from rental poverty to energy-efficient home ownership through education, advocacy, and research.</p>
         <div class="footer-social">
-          <a href="#" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
-          <a href="#" class="social-link" aria-label="Twitter"><i data-lucide="twitter" style="width:16px;height:16px;"></i></a>
-          <a href="#" class="social-link" aria-label="Facebook"><i data-lucide="facebook" style="width:16px;height:16px;"></i></a>
-          <a href="#" class="social-link" aria-label="Instagram"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a href="#" class="social-link" aria-label="Twitter/X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg></a><a href="#" class="social-link" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="#" class="social-link" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         </div>
       </div>
       <div class="footer-col">
