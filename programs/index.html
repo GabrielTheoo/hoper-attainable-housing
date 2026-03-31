@@ -7,8 +7,9 @@
   <meta name="description" content="Earn up to $13,000 toward closing with HOPER — plus pre-closing education and post-closing mentorship for long-term homeownership success.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"></noscript>
+
   <style>
     :root {
       --orange:       #EB7F1E;
@@ -212,7 +213,7 @@
 
 <nav class="navbar" id="navbar">
   <div class="container">
-    <a href="/hoper-attainable-housing/" class="nav-logo">
+    <a href="/hoper-attainable-housing/" class="nav-logo" aria-label="Hoper home">
       <svg class="logo-svg" height="32" viewBox="0 0 205 54" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#lc)">
           <path d="M42.7436 32.4518H10.3127V25.847L4.91211 31.2475V42.6643C4.91211 42.9613 5.15514 43.2043 5.45217 43.2043H9.77268C10.0697 43.2043 10.3127 42.9613 10.3127 42.6643V38.3924C10.3127 38.0954 10.5558 37.8524 10.8528 37.8524H42.2035C42.5005 37.8524 42.7436 38.0954 42.7436 38.3924V42.6643C42.7436 42.9613 42.9866 43.2043 43.2836 43.2043H47.6041C47.9012 43.2043 48.1442 42.9613 48.1442 42.6643V31.2745L42.7436 25.874V32.4518Z" fill="white"/>
@@ -253,7 +254,7 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <img class="page-hero-bg" src="../Images/solar-panel-gleams-clear-blue-sky-symbolizing-clean-energy-sustainability-bright-futu.jpg" alt="Solar panels">
+  <img class="page-hero-bg" src="../Images/solar-panel-gleams-clear-blue-sky-symbolizing-clean-energy-sustainability-bright-futu.jpg" alt="Solar panels" loading="eager" fetchpriority="high">
   <div class="page-hero-overlay"></div>
   <div class="container">
     <p class="page-hero-label fade-up">The HOPER Program</p>
@@ -484,6 +485,7 @@
   <i data-lucide="chevron-up" style="width:20px;height:20px;"></i>
 </button>
 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
   lucide.createIcons();
   const navbar = document.getElementById('navbar');
