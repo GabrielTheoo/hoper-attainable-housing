@@ -1,0 +1,1030 @@
+{
+  "version": "0.4",
+  "title": "Hoper – Homepage",
+  "type": "page",
+  "content": [
+    {
+      "id": "52590192",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_image": {
+          "url": "https://gabrieltheoo.github.io/hoper-attainable-housing/Frame%20427319444.webp"
+        },
+        "background_size": "cover",
+        "background_position": "center center",
+        "background_overlay_background": "classic",
+        "background_overlay_color": "rgba(10,10,10,0.65)",
+        "height": "100vh",
+        "padding": {
+          "unit": "px",
+          "top": "160",
+          "right": "40",
+          "bottom": "120",
+          "left": "40",
+          "isLinked": false
+        },
+        "custom_css": ".elementor-background-overlay{background:linear-gradient(to right,rgba(10,10,10,0.88) 0%,rgba(10,10,10,0.6) 55%,rgba(10,10,10,0.25) 100%) !important;}"
+      },
+      "elements": [
+        {
+          "id": "cf9017d7",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "6918f612",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<span style=\"display:inline-flex;align-items:center;gap:8px;background:rgba(235,127,30,0.15);border:1px solid rgba(235,127,30,0.4);color:#EB7F1E;font-size:13px;font-weight:600;font-family:Montserrat,sans-serif;padding:8px 16px;border-radius:999px;\">✶ Earn up to $13,000 toward your closing costs</span>"
+              },
+              "elements": []
+            },
+            {
+              "id": "18b6c834",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 16
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "3cf0b06a",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Homeownership Is Closer Than You Think",
+                "header_size": "h1",
+                "title_color": "#FFFFFF",
+                "align": "left",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_weight": "800",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 60
+                },
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "dfaa1749",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>Eligible homebuyers can earn up to <strong>$13,000 toward closing costs</strong>, receive financial mentorship, and lower long-term energy costs with a fully owned solar system — all without changing their mortgage rate.</p>",
+                "text_color": "rgba(255,255,255,0.85)",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 18
+                },
+                "align": "left"
+              },
+              "elements": []
+            },
+            {
+              "id": "08f63d48",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 24
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "805e2cad",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:flex;gap:16px;flex-wrap:wrap;\"><a href=\"/check-eligibility\" style=\"display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#EB7F1E;color:#fff;border-radius:999px;font-family:Montserrat,sans-serif;font-size:16px;font-weight:600;text-decoration:none;box-shadow:0 8px 32px rgba(235,127,30,0.35);\">Check Your Eligibility →</a><a href=\"/programs\" style=\"display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.45);border-radius:999px;font-family:Montserrat,sans-serif;font-size:16px;font-weight:600;text-decoration:none;\">Learn About Hoper</a></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "7286ad2d",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 48
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "a349b7dc",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:flex;flex-wrap:wrap;gap:28px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.12);\"><div style=\"display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.85);font-size:14px;font-weight:500;font-family:Montserrat,sans-serif;\"><span style=\"color:#EB7F1E;font-size:16px;\">✓</span>No additional credit score requirement</div><div style=\"display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.85);font-size:14px;font-weight:500;font-family:Montserrat,sans-serif;\"><span style=\"color:#EB7F1E;font-size:16px;\">✓</span>Your mortgage rate stays the same</div><div style=\"display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.85);font-size:14px;font-weight:500;font-family:Montserrat,sans-serif;\"><span style=\"color:#EB7F1E;font-size:16px;\">✓</span>Available in most states</div><div style=\"display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.85);font-size:14px;font-weight:500;font-family:Montserrat,sans-serif;\"><span style=\"color:#EB7F1E;font-size:16px;\">✓</span>New &amp; fully owned solar system</div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "af48052d",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "96",
+          "right": "40",
+          "bottom": "96",
+          "left": "40",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "bad539bc",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "240e6efa",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"text-align:center;\"><p style=\"font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#EB7F1E;margin-bottom:8px;display:flex;align-items:center;gap:8px;font-family:Montserrat,sans-serif;\"><span style=\"display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;\"></span>The Hoper Program</p></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "ba1a3b2b",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Start Earning Toward Your Home Purchase",
+                "header_size": "h2",
+                "title_color": "#1A1A1A",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_weight": "700",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 44
+                },
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_animation": "fadeInUp"
+              },
+              "elements": []
+            },
+            {
+              "id": "e6c0640a",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>We remove doubt and friction from the homebuying process through the Hoper Research Program.</p>",
+                "text_color": "#666666",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 18
+                },
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "c1ea56d5",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 48
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "c2e08dd7",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:24px;\"><div style=\"background:#fff;border:1px solid #E8E8E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;height:100%;\"><div style=\"width:52px;height:52px;background:#FDF2E9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;\">🎓</div><h3 style=\"font-size:18px;font-weight:700;color:#1A1A1A;margin:0;line-height:1.3;font-family:Montserrat,sans-serif;\">Prepare for Your Home Purchase</h3><p style=\"font-size:15px;line-height:1.7;color:#666666;margin:0;flex:1;font-family:Montserrat,sans-serif;\">Get online, self-paced, pre-closing financial education. In less than 6 hours, you'll understand what it takes to buy a house and how to get there.</p><a href=\"/programs\" style=\"color:#EB7F1E;font-weight:600;font-size:14px;text-decoration:none;font-family:Montserrat,sans-serif;\">Enroll Now →</a></div><div style=\"background:#fff;border:1px solid #E8E8E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;height:100%;\"><div style=\"width:52px;height:52px;background:#FDF2E9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;\">🧠</div><h3 style=\"font-size:18px;font-weight:700;color:#1A1A1A;margin:0;line-height:1.3;font-family:Montserrat,sans-serif;\">Benefit from Financial Advice</h3><p style=\"font-size:15px;line-height:1.7;color:#666666;margin:0;flex:1;font-family:Montserrat,sans-serif;\">Receive post-closing financial mentorship designed to help you master proven wealth-building strategies and move forward with confidence and clarity.</p><a href=\"/programs\" style=\"color:#EB7F1E;font-weight:600;font-size:14px;text-decoration:none;font-family:Montserrat,sans-serif;\">Ensure your success →</a></div><div style=\"background:#fff;border:1px solid #E8E8E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;height:100%;\"><div style=\"width:52px;height:52px;background:#FDF2E9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;\">🔬</div><h3 style=\"font-size:18px;font-weight:700;color:#1A1A1A;margin:0;line-height:1.3;font-family:Montserrat,sans-serif;\">Participate in Valuable Research</h3><p style=\"font-size:15px;line-height:1.7;color:#666666;margin:0;flex:1;font-family:Montserrat,sans-serif;\">Participate in a structured initiative studying how education, mentorship, and stronger financial positioning improve long-term homeowner success.</p><a href=\"/programs\" style=\"color:#EB7F1E;font-weight:600;font-size:14px;text-decoration:none;font-family:Montserrat,sans-serif;\">Start Earning →</a></div></div><div style=\"display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:66.6%;margin:24px auto 0;\"><div style=\"background:#fff;border:1px solid #E8E8E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;height:100%;\"><div style=\"width:52px;height:52px;background:#FDF2E9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;\">💰</div><h3 style=\"font-size:18px;font-weight:700;color:#1A1A1A;margin:0;line-height:1.3;font-family:Montserrat,sans-serif;\">Earn 3.5% — Up to $13,000</h3><p style=\"font-size:15px;line-height:1.7;color:#666666;margin:0;flex:1;font-family:Montserrat,sans-serif;\">Earn income by participating in a homeownership research program and use it toward closing costs, strengthening financial reserves, or reducing debt.</p><a href=\"/programs\" style=\"color:#EB7F1E;font-weight:600;font-size:14px;text-decoration:none;font-family:Montserrat,sans-serif;\">Start Earning →</a></div><div style=\"background:#fff;border:1px solid #E8E8E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;height:100%;\"><div style=\"width:52px;height:52px;background:#FDF2E9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;\">☀️</div><h3 style=\"font-size:18px;font-weight:700;color:#1A1A1A;margin:0;line-height:1.3;font-family:Montserrat,sans-serif;\">Lower Long-Term Housing Costs</h3><p style=\"font-size:15px;line-height:1.7;color:#666666;margin:0;flex:1;font-family:Montserrat,sans-serif;\">Lower utility expenses through a fully owned solar energy system, helping you create more predictable monthly housing costs.</p><a href=\"/programs\" style=\"color:#EB7F1E;font-weight:600;font-size:14px;text-decoration:none;font-family:Montserrat,sans-serif;\">How it works →</a></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "afc80969",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#F9F9F7",
+        "padding": {
+          "unit": "px",
+          "top": "96",
+          "right": "40",
+          "bottom": "96",
+          "left": "40",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "af245f1e",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "41e7b40c",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Don't Let Go of the Dream of Homeownership",
+                "header_size": "h2",
+                "title_color": "#1A1A1A",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_weight": "700",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 44
+                },
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_animation": "fadeInUp"
+              },
+              "elements": []
+            },
+            {
+              "id": "326d6331",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>Buying a home is one thing. Doing so prepared for the future is another.</p>",
+                "text_color": "#666666",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 18
+                },
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "97ce94bc",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 48
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "6e1f97a5",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:960px;margin:0 auto;\"><div style=\"background:rgba(26,26,26,0.03);border:1px solid #E8E8E8;border-radius:20px;padding:40px;\"><div style=\"font-size:13px;font-weight:700;color:#666666;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px;font-family:Montserrat,sans-serif;\">Without a structured plan</div><div style=\"display:flex;flex-direction:column;gap:16px;margin-bottom:28px;\"><div style=\"display:flex;align-items:center;gap:12px;font-size:15px;color:#1A1A1A;font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#FFE5E5;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#E53935;font-size:11px;flex-shrink:0;\">✗</span>Stretching to cover closing costs</div><div style=\"display:flex;align-items:center;gap:12px;font-size:15px;color:#1A1A1A;font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#FFE5E5;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#E53935;font-size:11px;flex-shrink:0;\">✗</span>Draining savings just to make the numbers work</div><div style=\"display:flex;align-items:center;gap:12px;font-size:15px;color:#1A1A1A;font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#FFE5E5;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#E53935;font-size:11px;flex-shrink:0;\">✗</span>Entering ownership without a long-term financial strategy</div></div><div style=\"background:#F9F9F7;border-radius:12px;padding:20px;font-size:14px;color:#666666;line-height:1.65;font-family:Montserrat,sans-serif;\">Higher monthly payments + Lower cash reserves = More stress, less joy, and more financial risks.</div></div><div style=\"background:#1A1A1A;border-radius:20px;padding:40px;\"><div style=\"display:inline-flex;align-items:center;gap:6px;background:#EB7F1E;color:#fff;font-size:12px;font-weight:700;font-family:Montserrat,sans-serif;padding:6px 14px;border-radius:999px;margin-bottom:20px;\">★ The Hoper Way</div><div style=\"font-size:22px;font-weight:800;color:#fff;margin-bottom:24px;font-family:Montserrat,sans-serif;\">With Hoper</div><div style=\"display:flex;flex-direction:column;gap:16px;margin-bottom:28px;\"><div style=\"display:flex;align-items:flex-start;gap:12px;font-size:15px;color:rgba(255,255,255,0.9);font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#EB7F1E;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0;margin-top:1px;\">✓</span>Earn up to $13,000 toward closing</div><div style=\"display:flex;align-items:flex-start;gap:12px;font-size:15px;color:rgba(255,255,255,0.9);font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#EB7F1E;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0;margin-top:1px;\">✓</span>Follow a proven financial education framework</div><div style=\"display:flex;align-items:flex-start;gap:12px;font-size:15px;color:rgba(255,255,255,0.9);font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#EB7F1E;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0;margin-top:1px;\">✓</span>Lower and stabilize long-term housing costs</div></div><div style=\"background:rgba(255,255,255,0.08);border-radius:12px;padding:20px;font-size:14px;color:rgba(255,255,255,0.8);line-height:1.65;font-family:Montserrat,sans-serif;\">Lower monthly payments + Higher cash reserves = <strong style=\"color:#fff;\">Less stress, more joy, and the peace that comes with financial confidence.</strong></div></div></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "c49f820c",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 40
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "b657e781",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"text-align:center;\"><a href=\"/check-eligibility\" style=\"display:inline-flex;align-items:center;gap:8px;padding:16px 40px;background:#EB7F1E;color:#fff;border-radius:999px;font-family:Montserrat,sans-serif;font-size:17px;font-weight:600;text-decoration:none;box-shadow:0 8px 32px rgba(235,127,30,0.35);\">Enroll Now →</a></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "48686fd9",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "96",
+          "right": "40",
+          "bottom": "96",
+          "left": "40",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "b64e452b",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "eff2023b",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<p style=\"font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#EB7F1E;margin-bottom:8px;display:flex;align-items:center;gap:8px;font-family:Montserrat,sans-serif;\"><span style=\"display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;\"></span>Homebuying is complicated</p>"
+              },
+              "elements": []
+            },
+            {
+              "id": "20298b39",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Guidance Before and After You Close",
+                "header_size": "h2",
+                "title_color": "#1A1A1A",
+                "align": "left",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_weight": "700",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 40
+                },
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_animation": "fadeInLeft"
+              },
+              "elements": []
+            },
+            {
+              "id": "b68df361",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>Hoper supports you with structured education before closing and financial mentorship after you move in — helping you navigate both the purchase and the long-term realities of ownership.</p>",
+                "text_color": "#666666",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 17
+                },
+                "align": "left"
+              },
+              "elements": []
+            },
+            {
+              "id": "3648dbe3",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 24
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "a2eb25c0",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:flex;flex-direction:column;gap:14px;\"><div style=\"display:flex;align-items:flex-start;gap:12px;font-size:15px;color:#1A1A1A;font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#EB7F1E;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0;margin-top:1px;\">✓</span>Understand exactly what lenders evaluate and how to strengthen your profile</div><div style=\"display:flex;align-items:flex-start;gap:12px;font-size:15px;color:#1A1A1A;font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#EB7F1E;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0;margin-top:1px;\">✓</span>Get clear on your numbers, reserves, and financial position</div><div style=\"display:flex;align-items:flex-start;gap:12px;font-size:15px;color:#1A1A1A;font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#EB7F1E;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0;margin-top:1px;\">✓</span>Follow a defined path from pre-approval to closing</div><div style=\"display:flex;align-items:flex-start;gap:12px;font-size:15px;color:#1A1A1A;font-family:Montserrat,sans-serif;\"><span style=\"width:24px;height:24px;background:#EB7F1E;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0;margin-top:1px;\">✓</span>Enter ownership with a plan for long-term stability</div></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "f77edc5c",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 32
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "2bbc9876",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<a href=\"/company\" style=\"display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#EB7F1E;color:#fff;border-radius:999px;font-family:Montserrat,sans-serif;font-size:16px;font-weight:600;text-decoration:none;box-shadow:0 8px 32px rgba(235,127,30,0.35);\">Learn More About Hoper →</a>"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "4ec7abb9",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "53e4f1f6",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"position:relative;\"><img src=\"https://s3-alpha-sig.figma.com/img/3904/9dbf/cd300cd37add57c8e5d643bc7a79c454\" alt=\"Couple reviewing homebuying documents\" style=\"width:100%;height:520px;object-fit:cover;border-radius:24px;display:block;\"><div style=\"position:absolute;top:24px;right:24px;background:#fff;border-radius:14px;padding:16px 20px;box-shadow:0 8px 40px rgba(0,0,0,0.12);text-align:center;\"><div style=\"font-size:28px;font-weight:800;color:#EB7F1E;font-family:Montserrat,sans-serif;\">$13K</div><div style=\"font-size:12px;color:#666666;font-weight:500;font-family:Montserrat,sans-serif;\">Max earnings</div></div><div style=\"position:absolute;bottom:24px;left:24px;background:rgba(26,26,26,0.85);backdrop-filter:blur(12px);border-radius:14px;padding:14px 20px;display:flex;align-items:center;gap:12px;color:#fff;\"><span style=\"font-size:22px;\">☀️</span><div><div style=\"font-size:14px;font-weight:700;font-family:Montserrat,sans-serif;\">Solar included</div><div style=\"font-size:11px;opacity:.7;font-family:Montserrat,sans-serif;\">Fully owned system</div></div></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "56db66f7",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#F9F9F7",
+        "padding": {
+          "unit": "px",
+          "top": "96",
+          "right": "40",
+          "bottom": "96",
+          "left": "40",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "7e47fb4b",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "3d220f69",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"position:relative;\"><img src=\"https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=700&q=80\" alt=\"Happy family in front of their new home\" style=\"width:100%;height:520px;object-fit:cover;border-radius:24px;display:block;\"><div style=\"position:absolute;bottom:24px;right:24px;background:#fff;border-radius:14px;padding:14px 20px;box-shadow:0 8px 40px rgba(0,0,0,0.12);display:flex;align-items:center;gap:12px;\"><div style=\"width:40px;height:40px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;\">💲</div><div><div style=\"font-size:18px;font-weight:800;color:#1A1A1A;font-family:Montserrat,sans-serif;\">3.5%</div><div style=\"font-size:12px;color:#666666;font-family:Montserrat,sans-serif;\">Earned at closing</div></div></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "7ad9c5dd",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "aa7aaf71",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<p style=\"font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#EB7F1E;margin-bottom:8px;display:flex;align-items:center;gap:8px;font-family:Montserrat,sans-serif;\"><span style=\"display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;\"></span>Why Homebuyers Choose Hoper</p>"
+              },
+              "elements": []
+            },
+            {
+              "id": "7c962a82",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Build a Sustainable Future and Prosper Financially",
+                "header_size": "h2",
+                "title_color": "#1A1A1A",
+                "align": "left",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_weight": "700",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 40
+                },
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_animation": "fadeInRight"
+              },
+              "elements": []
+            },
+            {
+              "id": "eda52294",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 24
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "57dbce1b",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:flex;flex-direction:column;gap:24px;\"><div style=\"display:flex;align-items:flex-start;gap:16px;\"><div style=\"width:44px;height:44px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;\">💲</div><div><strong style=\"font-size:16px;font-weight:700;color:#1A1A1A;display:block;margin-bottom:6px;font-family:Montserrat,sans-serif;\">Earn income when you buy or refinance</strong><p style=\"font-size:14px;line-height:1.7;color:#666666;margin:0;font-family:Montserrat,sans-serif;\">Receive up to 3.5% of your home's purchase price (up to $13,000) as earned income to reduce closing costs, strengthen reserves, or improve your overall financial position.</p></div></div><div style=\"display:flex;align-items:flex-start;gap:16px;\"><div style=\"width:44px;height:44px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;\">🏠</div><div><strong style=\"font-size:16px;font-weight:700;color:#1A1A1A;display:block;margin-bottom:6px;font-family:Montserrat,sans-serif;\">Build equity instead of paying rent</strong><p style=\"font-size:14px;line-height:1.7;color:#666666;margin:0;font-family:Montserrat,sans-serif;\">Homeownership helps families build a future of equity and long-term financial stability.</p></div></div><div style=\"display:flex;align-items:flex-start;gap:16px;\"><div style=\"width:44px;height:44px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;\">⚡</div><div><strong style=\"font-size:16px;font-weight:700;color:#1A1A1A;display:block;margin-bottom:6px;font-family:Montserrat,sans-serif;\">Lower and more predictable housing costs</strong><p style=\"font-size:14px;line-height:1.7;color:#666666;margin:0;font-family:Montserrat,sans-serif;\">Fully owned solar helps lower utility costs and stabilize monthly housing expenses.</p></div></div><div style=\"display:flex;align-items:flex-start;gap:16px;\"><div style=\"width:44px;height:44px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;\">👥</div><div><strong style=\"font-size:16px;font-weight:700;color:#1A1A1A;display:block;margin-bottom:6px;font-family:Montserrat,sans-serif;\">Continued support after closing</strong><p style=\"font-size:14px;line-height:1.7;color:#666666;margin:0;font-family:Montserrat,sans-serif;\">Getting you into a home is step one — the real goal is long-term stability and financial progress.</p></div></div></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "43d045c9",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 32
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "3b6a25ea",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<a href=\"/check-eligibility\" style=\"display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#EB7F1E;color:#fff;border-radius:999px;font-family:Montserrat,sans-serif;font-size:16px;font-weight:600;text-decoration:none;box-shadow:0 8px 32px rgba(235,127,30,0.35);\">Check Your Eligibility →</a>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c0a3f27a",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "96",
+          "right": "40",
+          "bottom": "96",
+          "left": "40",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "bc9e2f0c",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "881e2173",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"text-align:center;\"><p style=\"font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#EB7F1E;margin-bottom:8px;display:flex;align-items:center;gap:8px;font-family:Montserrat,sans-serif;\"><span style=\"display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;\"></span>Built For Everyone</p></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "1372f8ac",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Built for You — No Matter What Role You Play in the Transaction",
+                "header_size": "h2",
+                "title_color": "#1A1A1A",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_weight": "700",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 44
+                },
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_animation": "fadeInUp"
+              },
+              "elements": []
+            },
+            {
+              "id": "ad1da3d4",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>Hoper strengthens the financial position of everyone involved in the homebuying process — aligning buyers and industry partners around stronger outcomes.</p>",
+                "text_color": "#666666",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 18
+                },
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "72b61f3a",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 48
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "97c2a9a9",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:grid;grid-template-columns:repeat(4,1fr);gap:24px;\"><div style=\"background:#fff;border:1px solid #E8E8E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;height:100%;\"><div style=\"width:48px;height:48px;background:#FDF2E9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;\">🏠</div><h4 style=\"font-size:19px;font-weight:700;color:#1A1A1A;margin:0;font-family:Montserrat,sans-serif;\">For Homebuyers</h4><p style=\"font-size:15px;line-height:1.7;color:#666666;margin:0;flex:1;font-family:Montserrat,sans-serif;\">Earn income at closing. Reduce out-of-pocket costs. Build long-term stability through financial education and solar ownership.</p><a href=\"/use-cases/homebuyers\" style=\"color:#EB7F1E;font-weight:600;font-size:14px;text-decoration:none;font-family:Montserrat,sans-serif;\">See How It Works →</a></div><div style=\"background:#fff;border:1px solid #E8E8E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;height:100%;\"><div style=\"width:48px;height:48px;background:#FDF2E9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;\">💼</div><h4 style=\"font-size:19px;font-weight:700;color:#1A1A1A;margin:0;font-family:Montserrat,sans-serif;\">For Loan Officers</h4><p style=\"font-size:15px;line-height:1.7;color:#666666;margin:0;flex:1;font-family:Montserrat,sans-serif;\">Differentiate your FHA offering. Strengthen borrower qualification. Provide measurable financial value without layering additional debt.</p><a href=\"/use-cases/loan-officers\" style=\"color:#EB7F1E;font-weight:600;font-size:14px;text-decoration:none;font-family:Montserrat,sans-serif;\">See Loan Officer Details →</a></div><div style=\"background:#fff;border:1px solid #E8E8E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;height:100%;\"><div style=\"width:48px;height:48px;background:#FDF2E9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;\">🔑</div><h4 style=\"font-size:19px;font-weight:700;color:#1A1A1A;margin:0;font-family:Montserrat,sans-serif;\">For Real Estate Agents</h4><p style=\"font-size:15px;line-height:1.7;color:#666666;margin:0;flex:1;font-family:Montserrat,sans-serif;\">Help clients compete with stronger financial positioning. Increase closing confidence. Offer something other buyers don't have.</p><a href=\"/use-cases/real-estate-agents\" style=\"color:#EB7F1E;font-weight:600;font-size:14px;text-decoration:none;font-family:Montserrat,sans-serif;\">Explore Agent Benefits →</a></div><div style=\"background:#fff;border:1px solid #E8E8E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;height:100%;\"><div style=\"width:48px;height:48px;background:#FDF2E9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;\">🏗️</div><h4 style=\"font-size:19px;font-weight:700;color:#1A1A1A;margin:0;font-family:Montserrat,sans-serif;\">For Builders</h4><p style=\"font-size:15px;line-height:1.7;color:#666666;margin:0;flex:1;font-family:Montserrat,sans-serif;\">Help buyers qualify more confidently. Reduce transaction friction. Offer new construction with built-in long-term energy savings.</p><a href=\"/use-cases/home-builders\" style=\"color:#EB7F1E;font-weight:600;font-size:14px;text-decoration:none;font-family:Montserrat,sans-serif;\">Explore Builder Benefits →</a></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1d6d6fba",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#F9F9F7",
+        "padding": {
+          "unit": "px",
+          "top": "96",
+          "right": "40",
+          "bottom": "96",
+          "left": "40",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "d5d415d9",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "44431255",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"text-align:center;\"><p style=\"font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#EB7F1E;margin-bottom:8px;display:flex;align-items:center;gap:8px;font-family:Montserrat,sans-serif;\"><span style=\"display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;\"></span>Social Proof</p></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "741eb37f",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Real People. Real Progress",
+                "header_size": "h2",
+                "title_color": "#1A1A1A",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_weight": "700",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 44
+                },
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_animation": "fadeInUp"
+              },
+              "elements": []
+            },
+            {
+              "id": "d16fefda",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>Whether you're buying your first home or exploring your options, Hoper helps you move forward with earned income, long-term energy savings, and a structure designed for stability.</p>",
+                "text_color": "#666666",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 18
+                },
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "28a07f17",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 20
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "c994f9cc",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"text-align:center;display:flex;align-items:center;justify-content:center;gap:12px;\"><span style=\"color:#FBBC04;font-size:24px;\">★★★★★</span><span style=\"font-size:22px;font-weight:800;color:#1A1A1A;font-family:Montserrat,sans-serif;\">4.9</span><span style=\"font-size:15px;color:#666666;font-family:Montserrat,sans-serif;\">214 Google reviews</span></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "8dcdaf5a",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 48
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "3edc9a5c",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:24px;\"><div style=\"background:#fff;border-radius:16px;padding:28px;border:1px solid #E8E8E8;\"><div style=\"color:#FBBC04;font-size:16px;margin-bottom:12px;\">★★★★★</div><p style=\"font-size:15px;line-height:1.7;color:#1A1A1A;margin:0 0 20px;font-family:Montserrat,sans-serif;\">\"Hoper made our dream of homeownership real. We earned $11,200 toward closing and the solar system has already cut our electricity bill in half.\"</p><div style=\"display:flex;align-items:center;gap:12px;\"><div style=\"width:40px;height:40px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;\">👤</div><div><strong style=\"font-size:14px;color:#1A1A1A;display:block;font-family:Montserrat,sans-serif;\">Maria T.</strong><span style=\"font-size:12px;color:#666666;font-family:Montserrat,sans-serif;\">First-Time Homebuyer, Arizona</span></div></div></div><div style=\"background:#fff;border-radius:16px;padding:28px;border:1px solid #E8E8E8;\"><div style=\"color:#FBBC04;font-size:16px;margin-bottom:12px;\">★★★★★</div><p style=\"font-size:15px;line-height:1.7;color:#1A1A1A;margin:0 0 20px;font-family:Montserrat,sans-serif;\">\"The financial education program was eye-opening. I understood the home buying process so much better and felt truly prepared when we closed.\"</p><div style=\"display:flex;align-items:center;gap:12px;\"><div style=\"width:40px;height:40px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;\">👤</div><div><strong style=\"font-size:14px;color:#1A1A1A;display:block;font-family:Montserrat,sans-serif;\">James R.</strong><span style=\"font-size:12px;color:#666666;font-family:Montserrat,sans-serif;\">Homebuyer, Texas</span></div></div></div><div style=\"background:#fff;border-radius:16px;padding:28px;border:1px solid #E8E8E8;\"><div style=\"color:#FBBC04;font-size:16px;margin-bottom:12px;\">★★★★★</div><p style=\"font-size:15px;line-height:1.7;color:#1A1A1A;margin:0 0 20px;font-family:Montserrat,sans-serif;\">\"As a loan officer, I've referred dozens of clients to Hoper. It strengthens their financial profile and makes my job easier. Win-win.\"</p><div style=\"display:flex;align-items:center;gap:12px;\"><div style=\"width:40px;height:40px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;\">👤</div><div><strong style=\"font-size:14px;color:#1A1A1A;display:block;font-family:Montserrat,sans-serif;\">Sarah K.</strong><span style=\"font-size:12px;color:#666666;font-family:Montserrat,sans-serif;\">Loan Officer, Florida</span></div></div></div><div style=\"background:#fff;border-radius:16px;padding:28px;border:1px solid #E8E8E8;\"><div style=\"color:#FBBC04;font-size:16px;margin-bottom:12px;\">★★★★★</div><p style=\"font-size:15px;line-height:1.7;color:#1A1A1A;margin:0 0 20px;font-family:Montserrat,sans-serif;\">\"We weren't sure we could afford to buy. Hoper changed that. The education, the earned income, and the solar savings made everything click.\"</p><div style=\"display:flex;align-items:center;gap:12px;\"><div style=\"width:40px;height:40px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;\">👤</div><div><strong style=\"font-size:14px;color:#1A1A1A;display:block;font-family:Montserrat,sans-serif;\">David & Priya M.</strong><span style=\"font-size:12px;color:#666666;font-family:Montserrat,sans-serif;\">First-Time Homebuyers, Georgia</span></div></div></div><div style=\"background:#fff;border-radius:16px;padding:28px;border:1px solid #E8E8E8;\"><div style=\"color:#FBBC04;font-size:16px;margin-bottom:12px;\">★★★★★</div><p style=\"font-size:15px;line-height:1.7;color:#1A1A1A;margin:0 0 20px;font-family:Montserrat,sans-serif;\">\"My clients who go through Hoper come to closing more financially prepared and less stressed. It's become a standard recommendation for me.\"</p><div style=\"display:flex;align-items:center;gap:12px;\"><div style=\"width:40px;height:40px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;\">👤</div><div><strong style=\"font-size:14px;color:#1A1A1A;display:block;font-family:Montserrat,sans-serif;\">Carlos R.</strong><span style=\"font-size:12px;color:#666666;font-family:Montserrat,sans-serif;\">Real Estate Agent, Nevada</span></div></div></div><div style=\"background:#fff;border-radius:16px;padding:28px;border:1px solid #E8E8E8;\"><div style=\"color:#FBBC04;font-size:16px;margin-bottom:12px;\">★★★★★</div><p style=\"font-size:15px;line-height:1.7;color:#1A1A1A;margin:0 0 20px;font-family:Montserrat,sans-serif;\">\"The post-closing mentorship was something I didn't expect to value so much. Now two years in, we're building wealth we never thought possible.\"</p><div style=\"display:flex;align-items:center;gap:12px;\"><div style=\"width:40px;height:40px;background:#FDF2E9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;\">👤</div><div><strong style=\"font-size:14px;color:#1A1A1A;display:block;font-family:Montserrat,sans-serif;\">Aisha L.</strong><span style=\"font-size:12px;color:#666666;font-family:Montserrat,sans-serif;\">Homeowner, North Carolina</span></div></div></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "204594a6",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "unit": "px",
+          "top": "64",
+          "right": "40",
+          "bottom": "64",
+          "left": "40",
+          "isLinked": false
+        },
+        "border_border": "solid",
+        "border_width": {
+          "unit": "px",
+          "top": "1",
+          "right": "0",
+          "bottom": "1",
+          "left": "0",
+          "isLinked": false
+        },
+        "border_color": "#E8E8E8"
+      },
+      "elements": [
+        {
+          "id": "06c65a54",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "856099fd",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#F9F9F7;border-radius:20px;padding:48px;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;\"><div style=\"display:flex;align-items:flex-start;gap:24px;\"><div style=\"width:64px;height:64px;background:#FDF2E9;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;\">❓</div><div><h2 style=\"font-size:26px;font-weight:800;color:#1A1A1A;margin:0 0 8px;font-family:Montserrat,sans-serif;\">Any Questions?</h2><p style=\"font-size:16px;color:#666666;margin:0;line-height:1.65;max-width:480px;font-family:Montserrat,sans-serif;\">Find answers to common questions about eligibility, the program, and how Hoper works. Can't find what you're looking for? We're here to help.</p></div></div><div style=\"display:flex;gap:16px;flex-shrink:0;\"><a href=\"/faqs\" style=\"display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#EB7F1E;color:#fff;border-radius:999px;font-family:Montserrat,sans-serif;font-size:15px;font-weight:600;text-decoration:none;\">Read the FAQs →</a><a href=\"/company\" style=\"display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;color:#1A1A1A;border:2px solid #1A1A1A;border-radius:999px;font-family:Montserrat,sans-serif;font-size:15px;font-weight:600;text-decoration:none;\">Contact Us</a></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e4bb35a9",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#EB7F1E",
+        "padding": {
+          "unit": "px",
+          "top": "96",
+          "right": "40",
+          "bottom": "96",
+          "left": "40",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "7643124c",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null
+          },
+          "elements": [
+            {
+              "id": "f3c7f477",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Homeownership Shouldn't Feel Out of Reach",
+                "header_size": "h2",
+                "title_color": "#FFFFFF",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_weight": "800",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 44
+                },
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "isLinked": false
+                },
+                "_animation": "fadeInUp"
+              },
+              "elements": []
+            },
+            {
+              "id": "7ba3979d",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 16
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "e635b11c",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>Whether you're buying your first home or exploring your options, Hoper helps you move forward with earned income, long-term energy savings, and a structure designed for stability.</p>",
+                "text_color": "rgba(255,255,255,0.85)",
+                "typography_typography": "custom",
+                "typography_font_family": "Montserrat",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 18
+                },
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "e717c5a7",
+              "elType": "widget",
+              "widgetType": "spacer",
+              "settings": {
+                "space": {
+                  "unit": "px",
+                  "size": 36
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "861d768c",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"text-align:center;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;\"><a href=\"/check-eligibility\" style=\"display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:#fff;color:#EB7F1E;border-radius:999px;font-family:Montserrat,sans-serif;font-size:16px;font-weight:700;text-decoration:none;\">Check Your Eligibility →</a><a href=\"/programs\" style=\"display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.5);border-radius:999px;font-family:Montserrat,sans-serif;font-size:16px;font-weight:600;text-decoration:none;\">Learn About Hoper</a></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "post_status": "publish",
+    "hide_title": "yes"
+  }
+}
