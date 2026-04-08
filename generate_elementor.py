@@ -583,13 +583,10 @@ content.append(section({
 # ────────────────────────────────────────────────────────
 template = {
     "version": "0.4",
-    "title": "Hoper \u2013 Homepage",
-    "type": "page",
+    "title": "Hoper - Homepage",
+    "type": "section",
     "content": content,
-    "page_settings": {
-        "post_status": "publish",
-        "hide_title": "yes"
-    }
+    "page_settings": {}
 }
 
 out = os.path.join(os.path.dirname(__file__), "hoper-homepage-elementor.json")
