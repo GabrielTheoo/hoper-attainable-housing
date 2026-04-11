@@ -31,6 +31,33 @@
     } catch { return null; }
   }
 
+  // ── Text helpers (preserve child elements like icons) ─────────
+  // Get only the direct text node content of an element
+  function getDirectText(el) {
+    let t = '';
+    el.childNodes.forEach(function (n) {
+      if (n.nodeType === Node.TEXT_NODE) t += n.textContent;
+    });
+    t = t.trim();
+    return t || el.textContent.trim();
+  }
+
+  // Set text without destroying child elements (icons, badges, etc.)
+  function applyText(el, newText) {
+    // Collect direct text nodes
+    const tNodes = [];
+    el.childNodes.forEach(function (n) {
+      if (n.nodeType === Node.TEXT_NODE && n.textContent.trim()) tNodes.push(n);
+    });
+    if (tNodes.length > 0) {
+      tNodes[0].textContent = newText;
+      for (let i = 1; i < tNodes.length; i++) tNodes[i].textContent = '';
+    } else {
+      // No direct text nodes — safe to set textContent
+      el.textContent = newText;
+    }
+  }
+
   // ── Apply stored overrides (regular visitors) ─────────────────
   async function applyOverrides() {
     try {
@@ -42,7 +69,7 @@
       for (const [xpath, ov] of Object.entries(overrides)) {
         const el = byXPath(xpath);
         if (!el) continue;
-        if (ov.text !== undefined) el.textContent = ov.text;
+        if (ov.text !== undefined) applyText(el, ov.text);
         if (ov.color) el.style.color = ov.color;
       }
     } catch { /* silent fail on non-Vercel environments */ }
@@ -50,6 +77,15 @@
 
   // ── Edit mode (when inside admin iframe) ──────────────────────
   const editableMap = new Map();
+
+  function isEditable(el) {
+    if (el.closest('script,style,noscript,svg')) return false;
+    // Exclude elements that contain semantic block children
+    if (el.querySelector('h1,h2,h3,h4,h5,h6,p,ul,ol,table,section,article,nav,header,footer')) return false;
+    // Must have some visible text
+    const t = getDirectText(el);
+    return t.length >= 2;
+  }
 
   function enableEditMode() {
     const style = document.createElement('style');
@@ -59,12 +95,10 @@
       'body{user-select:none!important;}';
     document.head.appendChild(style);
 
-    const SEL = 'h1,h2,h3,h4,h5,h6,p,li,a,button,span,label,td,th,strong,em,small';
+    // Include div to catch card titles/items; filter keeps only leaf-ish text elements
+    const SEL = 'h1,h2,h3,h4,h5,h6,p,li,a,button,span,label,td,th,strong,em,small,div';
     document.querySelectorAll(SEL).forEach(function (el) {
-      if (el.closest('script,style,noscript')) return;
-      if (el.querySelector('h1,h2,h3,h4,p,div,ul,ol,table')) return;
-      const text = el.textContent.trim();
-      if (!text || text.length < 2) return;
+      if (!isEditable(el)) return;
 
       const xpath = getXPath(el);
       el.setAttribute('data-he', '1');
@@ -77,7 +111,7 @@
         window.parent.postMessage({
           type: 'HE_CLICK',
           xpath: xpath,
-          text: el.textContent,
+          text: getDirectText(el),
           color: el.style.color || '',
           rect: { top: r.top + window.scrollY, left: r.left, w: r.width, h: r.height }
         }, window.location.origin);
@@ -89,7 +123,7 @@
       if (e.data.type !== 'HE_APPLY') return;
       const el = editableMap.get(e.data.xpath);
       if (!el) return;
-      if (e.data.text !== undefined) el.textContent = e.data.text;
+      if (e.data.text !== undefined) applyText(el, e.data.text);
       if (e.data.color !== undefined) el.style.color = e.data.color || '';
     });
   }
