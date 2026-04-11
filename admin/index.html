@@ -489,7 +489,8 @@ document.getElementById('pub-btn').addEventListener('click', async () => {
       toast('Sessão expirada. Faça login novamente.', 'err');
       sessionStorage.removeItem('hcms_tok');
     } else {
-      toast('Erro ao publicar. Tente novamente.', 'err');
+      const errData = await r.json().catch(() => ({}));
+      toast('Erro ' + r.status + ': ' + (errData.error || 'Tente novamente.'), 'err');
     }
   } catch { toast('Erro de conexão.', 'err'); }
   btn.disabled = false; btn.textContent = 'Publicar';
