@@ -80,11 +80,19 @@
 
   function isEditable(el) {
     if (el.closest('script,style,noscript,svg')) return false;
-    // Exclude elements that contain semantic block children
     if (el.querySelector('h1,h2,h3,h4,h5,h6,p,ul,ol,table,section,article,nav,header,footer')) return false;
-    // Must have some visible text
-    const t = getDirectText(el);
-    return t.length >= 2;
+    const tag = el.tagName.toLowerCase();
+    if (tag === 'div') {
+      // Divs must have direct text (not just via child elements)
+      // This excludes layout containers that only have child divs
+      const directText = getDirectText(el);
+      if (directText.length < 2) return false;
+      // Skip divs with too many children (clearly a layout container)
+      if (el.children.length > 4) return false;
+    } else {
+      if (el.textContent.trim().length < 2) return false;
+    }
+    return true;
   }
 
   function enableEditMode() {
@@ -115,7 +123,7 @@
           color: el.style.color || '',
           rect: { top: r.top + window.scrollY, left: r.left, w: r.width, h: r.height }
         }, window.location.origin);
-      }, true);
+      }, false);
     });
 
     window.addEventListener('message', function (e) {
