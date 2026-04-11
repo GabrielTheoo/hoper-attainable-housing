@@ -32,7 +32,6 @@
   }
 
   // ── Text helpers (preserve child elements like icons) ─────────
-  // Get only the direct text node content of an element
   function getDirectText(el) {
     let t = '';
     el.childNodes.forEach(function (n) {
@@ -42,9 +41,7 @@
     return t || el.textContent.trim();
   }
 
-  // Set text without destroying child elements (icons, badges, etc.)
   function applyText(el, newText) {
-    // Collect direct text nodes
     const tNodes = [];
     el.childNodes.forEach(function (n) {
       if (n.nodeType === Node.TEXT_NODE && n.textContent.trim()) tNodes.push(n);
@@ -53,7 +50,6 @@
       tNodes[0].textContent = newText;
       for (let i = 1; i < tNodes.length; i++) tNodes[i].textContent = '';
     } else {
-      // No direct text nodes — safe to set textContent
       el.textContent = newText;
     }
   }
@@ -71,6 +67,15 @@
         if (!el) continue;
         if (ov.text !== undefined) applyText(el, ov.text);
         if (ov.color) el.style.color = ov.color;
+        if (ov.src !== undefined && el.tagName.toLowerCase() === 'img') {
+          el.src = ov.src;
+        }
+        if (ov.svgContent !== undefined && el.tagName.toLowerCase() === 'svg') {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = ov.svgContent;
+          const newEl = tmp.firstElementChild;
+          if (newEl) el.replaceWith(newEl);
+        }
       }
     } catch { /* silent fail on non-Vercel environments */ }
   }
@@ -83,11 +88,8 @@
     if (el.querySelector('h1,h2,h3,h4,h5,h6,p,ul,ol,table,section,article,nav,header,footer')) return false;
     const tag = el.tagName.toLowerCase();
     if (tag === 'div') {
-      // Divs must have direct text (not just via child elements)
-      // This excludes layout containers that only have child divs
       const directText = getDirectText(el);
       if (directText.length < 2) return false;
-      // Skip divs with too many children (clearly a layout container)
       if (el.children.length > 4) return false;
     } else {
       if (el.textContent.trim().length < 2) return false;
@@ -95,15 +97,33 @@
     return true;
   }
 
+  function isEditableMedia(el) {
+    if (el.closest('script,style,noscript')) return false;
+    const tag = el.tagName.toLowerCase();
+    if (tag === 'svg') {
+      // Skip small inline icons (width <= 24)
+      const w = el.getAttribute('width');
+      if (w && parseInt(w) <= 24) return false;
+      return true;
+    }
+    if (tag === 'img') {
+      if (!el.src || el.src === window.location.href) return false;
+      return true;
+    }
+    return false;
+  }
+
   function enableEditMode() {
     const style = document.createElement('style');
     style.textContent =
       '[data-he]:hover{outline:2px dashed #EB7F1E!important;outline-offset:3px!important;' +
       'cursor:pointer!important;background:rgba(235,127,30,.06)!important;}' +
+      '[data-hm]:hover{outline:2px dashed #EB7F1E!important;outline-offset:3px!important;' +
+      'cursor:pointer!important;}' +
       'body{user-select:none!important;}';
     document.head.appendChild(style);
 
-    // Include div to catch card titles/items; filter keeps only leaf-ish text elements
+    // Text elements
     const SEL = 'h1,h2,h3,h4,h5,h6,p,li,a,button,span,label,td,th,strong,em,small,div';
     document.querySelectorAll(SEL).forEach(function (el) {
       if (!isEditable(el)) return;
@@ -126,6 +146,30 @@
       }, false);
     });
 
+    // Media elements (images and SVGs)
+    document.querySelectorAll('img, svg').forEach(function (el) {
+      if (!isEditableMedia(el)) return;
+
+      const tag = el.tagName.toLowerCase();
+      const xpath = getXPath(el);
+      el.setAttribute('data-hm', '1');
+      editableMap.set(xpath, el);
+
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const r = el.getBoundingClientRect();
+        window.parent.postMessage({
+          type: 'HE_CLICK',
+          mediaType: tag === 'img' ? 'image' : 'svg',
+          xpath: xpath,
+          src: tag === 'img' ? el.src : undefined,
+          svgContent: tag === 'svg' ? el.outerHTML : undefined,
+          rect: { top: r.top + window.scrollY, left: r.left, w: r.width, h: r.height }
+        }, window.location.origin);
+      }, false);
+    });
+
     window.addEventListener('message', function (e) {
       if (e.origin !== window.location.origin) return;
       if (e.data.type !== 'HE_APPLY') return;
@@ -133,6 +177,19 @@
       if (!el) return;
       if (e.data.text !== undefined) applyText(el, e.data.text);
       if (e.data.color !== undefined) el.style.color = e.data.color || '';
+      if (e.data.src !== undefined && el.tagName.toLowerCase() === 'img') {
+        el.src = e.data.src;
+      }
+      if (e.data.svgContent !== undefined && el.tagName.toLowerCase() === 'svg') {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = e.data.svgContent;
+        const newEl = tmp.firstElementChild;
+        if (newEl) {
+          newEl.setAttribute('data-hm', '1');
+          el.replaceWith(newEl);
+          editableMap.set(e.data.xpath, newEl);
+        }
+      }
     });
   }
 

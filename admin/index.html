@@ -138,6 +138,19 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
   padding:10px;font-size:13px;cursor:pointer;transition:background .2s;}
 #rbtn:hover{background:rgba(255,80,80,.18);}
 
+/* Media upload */
+#media-preview{margin-bottom:10px;}
+#media-preview img{max-width:100%;border-radius:8px;display:block;}
+.svg-placeholder{background:rgba(255,255,255,.05);border-radius:8px;
+  padding:20px;text-align:center;color:var(--dim);font-size:12px;}
+.upload-label{display:block;cursor:pointer;}
+.upload-btn-inner{display:block;background:rgba(255,255,255,.07);
+  border:1px dashed rgba(255,255,255,.2);border-radius:9px;
+  padding:12px 14px;font-size:13px;color:var(--text);text-align:center;
+  transition:background .2s;}
+.upload-btn-inner:hover{background:rgba(255,255,255,.12);}
+.efile-status{font-size:12px;margin-top:8px;line-height:1.5;display:none;}
+
 /* Toast */
 #toast{position:fixed;bottom:24px;left:50%;
   transform:translateX(-50%) translateY(90px);
@@ -205,7 +218,7 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
     <div id="ia">
       <div id="editbar">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        Modo Edição ativo — clique em qualquer texto para editar
+        Modo Edição ativo — clique em textos, imagens ou SVGs para editar
       </div>
       <iframe id="pframe" src="about:blank"></iframe>
       <div id="nopg">
@@ -224,17 +237,27 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
           <span class="ep-title">Editar Elemento</span>
           <button id="xbtn" title="Fechar">×</button>
         </div>
-        <div class="ep-sec">
+        <div class="ep-sec" id="text-sec">
           <span class="ep-lbl">Texto</span>
           <textarea id="etxt" placeholder="Digite o novo texto..."></textarea>
         </div>
-        <div class="ep-sec">
+        <div class="ep-sec" id="color-sec">
           <span class="ep-lbl">Cor do texto</span>
           <div class="cr">
             <input type="color" id="ecol" value="#1a1a1a"/>
             <input type="text" id="ehex" placeholder="#1a1a1a" maxlength="7"/>
             <button class="clear-color" id="clrcol" title="Remover cor">Remover</button>
           </div>
+        </div>
+        <div class="ep-sec" id="media-sec" style="display:none">
+          <span class="ep-lbl" id="media-lbl">Imagem</span>
+          <div id="media-preview"></div>
+          <p class="ep-hint" id="media-hint">Aceita PNG, JPG e WebP (máx. 5MB)</p>
+          <label class="upload-label">
+            <input type="file" id="efile" style="display:none">
+            <span class="upload-btn-inner">Escolher arquivo</span>
+          </label>
+          <p class="efile-status" id="efile-status"></p>
         </div>
         <div class="ep-acts">
           <button id="abtn">Aplicar alteração</button>
@@ -269,10 +292,12 @@ const PAGES = [
 // ── State ─────────────────────────────────────────────────────
 const S = {
   token: sessionStorage.getItem('hcms_tok') || null,
-  all: {},       // content from API
-  pending: {},   // unsaved changes { path: { xpath: {text,color} } }
-  path: null,    // current page path
-  xpath: null,   // selected element xpath
+  all: {},         // content from API
+  pending: {},     // unsaved changes { path: { xpath: {text,color}|{src}|{svgContent} } }
+  path: null,      // current page path
+  xpath: null,     // selected element xpath
+  mediaType: null, // 'image' | 'svg' | null
+  pendingMedia: null, // { src } or { svgContent } after file select
 };
 
 // ── Helpers ───────────────────────────────────────────────────
@@ -398,17 +423,46 @@ window.addEventListener('message', e => {
 // ── Edit panel ────────────────────────────────────────────────
 function openPanel(data) {
   S.xpath = data.xpath;
+  S.mediaType = data.mediaType || null;
+  S.pendingMedia = null;
+
   const pov = (S.pending[S.path] || {})[data.xpath];
   const sov = (S.all[S.path] || {})[data.xpath];
   const ov = pov || sov || {};
 
-  document.getElementById('etxt').value = ov.text !== undefined ? ov.text : data.text;
+  const isMedia = !!S.mediaType;
+  document.getElementById('text-sec').style.display  = isMedia ? 'none' : '';
+  document.getElementById('color-sec').style.display = isMedia ? 'none' : '';
+  document.getElementById('media-sec').style.display = isMedia ? '' : 'none';
 
-  let col = ov.color || data.color || '';
-  if (col && !col.startsWith('#')) col = rgbToHex(col) || '';
-  const valid = /^#[0-9a-fA-F]{6}$/.test(col);
-  document.getElementById('ecol').value = valid ? col : '#1a1a1a';
-  document.getElementById('ehex').value = valid ? col : '';
+  if (isMedia) {
+    document.getElementById('efile').value = '';
+    const st = document.getElementById('efile-status');
+    st.textContent = ''; st.style.display = 'none';
+
+    if (S.mediaType === 'image') {
+      document.getElementById('media-lbl').textContent = 'Imagem';
+      document.getElementById('efile').accept = 'image/png,image/jpeg,image/webp';
+      document.getElementById('media-hint').textContent = 'Aceita PNG, JPG e WebP (máx. 5MB)';
+      const currentSrc = ov.src || data.src || '';
+      document.getElementById('media-preview').innerHTML = currentSrc
+        ? '<img src="' + currentSrc + '" alt="">'
+        : '<div class="svg-placeholder">Sem imagem atual</div>';
+    } else {
+      document.getElementById('media-lbl').textContent = 'SVG';
+      document.getElementById('efile').accept = '.svg,image/svg+xml';
+      document.getElementById('media-hint').textContent = 'Aceita apenas arquivos SVG';
+      document.getElementById('media-preview').innerHTML =
+        '<div class="svg-placeholder">SVG selecionado</div>';
+    }
+  } else {
+    document.getElementById('etxt').value = ov.text !== undefined ? ov.text : (data.text || '');
+    let col = ov.color || data.color || '';
+    if (col && !col.startsWith('#')) col = rgbToHex(col) || '';
+    const valid = /^#[0-9a-fA-F]{6}$/.test(col);
+    document.getElementById('ecol').value = valid ? col : '#1a1a1a';
+    document.getElementById('ehex').value = valid ? col : '';
+  }
 
   document.getElementById('ep').classList.add('open');
 }
@@ -432,9 +486,89 @@ document.getElementById('clrcol').addEventListener('click', () => {
   document.getElementById('ehex').value = '';
 });
 
+// File upload
+document.getElementById('efile').addEventListener('change', async function () {
+  const file = this.files[0];
+  if (!file) return;
+  const st = document.getElementById('efile-status');
+  st.style.display = 'block';
+  st.style.color = '';
+  S.pendingMedia = null;
+
+  const allowedImage = ['image/png', 'image/jpeg', 'image/webp'];
+  const allowedSvg   = ['image/svg+xml'];
+  const allowed = S.mediaType === 'image' ? allowedImage : allowedSvg;
+
+  if (!allowed.includes(file.type)) {
+    st.style.color = '#ff8080';
+    st.textContent = S.mediaType === 'image'
+      ? 'Tipo inválido. Use apenas PNG, JPG ou WebP.'
+      : 'Tipo inválido. Use apenas arquivos SVG.';
+    return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    st.style.color = '#ff8080';
+    st.textContent = 'Arquivo muito grande. Máximo 5MB.';
+    return;
+  }
+
+  if (S.mediaType === 'svg') {
+    const text = await file.text();
+    S.pendingMedia = { svgContent: text };
+    st.style.color = '#80ef80';
+    st.textContent = '✓ SVG carregado. Clique em Aplicar.';
+    return;
+  }
+
+  // Image — upload to Vercel Blob
+  st.style.color = 'var(--or)';
+  st.textContent = 'Enviando...';
+  try {
+    const base64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = ev => resolve(ev.target.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+    const r = await fetch('/api/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + S.token },
+      body: JSON.stringify({ filename: file.name, base64, mimeType: file.type }),
+    });
+    const d = await r.json();
+    if (r.ok && d.url) {
+      S.pendingMedia = { src: d.url };
+      document.getElementById('media-preview').innerHTML = '<img src="' + d.url + '" alt="">';
+      st.style.color = '#80ef80';
+      st.textContent = '✓ Upload concluído. Clique em Aplicar.';
+    } else {
+      st.style.color = '#ff8080';
+      st.textContent = 'Erro: ' + (d.error || 'Tente novamente.');
+    }
+  } catch {
+    st.style.color = '#ff8080';
+    st.textContent = 'Erro de conexão.';
+  }
+});
+
 // Apply
 document.getElementById('abtn').addEventListener('click', () => {
   if (!S.xpath || !S.path) return;
+
+  if (S.mediaType) {
+    if (!S.pendingMedia) { toast('Selecione um arquivo primeiro.', 'err'); return; }
+    if (!S.pending[S.path]) S.pending[S.path] = {};
+    S.pending[S.path][S.xpath] = Object.assign({}, S.pendingMedia);
+    try {
+      document.getElementById('pframe').contentWindow
+        .postMessage(Object.assign({ type: 'HE_APPLY', xpath: S.xpath }, S.pendingMedia), window.location.origin);
+    } catch {}
+    updateBadge();
+    closePanel();
+    toast('Mídia alterada — clique em Publicar para salvar para todos.', 'info');
+    return;
+  }
+
   const text  = document.getElementById('etxt').value;
   const color = document.getElementById('ehex').value || '';
   if (!S.pending[S.path]) S.pending[S.path] = {};
