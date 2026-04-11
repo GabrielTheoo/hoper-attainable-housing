@@ -55,6 +55,7 @@ export default async function handler(req, res) {
 
     try {
       await put(BLOB_FILE, JSON.stringify(body), {
+        access: 'public',
         addRandomSuffix: false,
         allowOverwrite: true,
         contentType: 'application/json',
