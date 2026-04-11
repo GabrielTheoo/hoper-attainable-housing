@@ -61,6 +61,9 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
 #pub-btn:disabled{opacity:.45;cursor:default;}
 #out-btn{background:rgba(255,255,255,.07);color:var(--dim);border:1px solid var(--border);}
 #out-btn:hover{background:rgba(255,255,255,.12);color:var(--text);}
+#prev-btn{background:rgba(255,255,255,.07);color:var(--dim);border:1px solid var(--border);}
+#prev-btn:hover{background:rgba(255,255,255,.12);color:var(--text);}
+#prev-btn:disabled{opacity:.4;cursor:default;}
 
 /* Layout */
 #layout{display:flex;flex:1;overflow:hidden;}
@@ -202,6 +205,7 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
     <span class="tb-page">Editando: <strong id="pgname">—</strong></span>
     <div class="tb-sp"></div>
     <span id="chbadge">0 alterações</span>
+    <button class="tb-btn" id="prev-btn" disabled title="Abrir a página atual numa aba">Visualizar</button>
     <button class="tb-btn" id="pub-btn">Publicar</button>
     <button class="tb-btn" id="out-btn">Sair</button>
   </div>
@@ -368,6 +372,10 @@ document.getElementById('out-btn').addEventListener('click', () => {
   document.getElementById('ls').style.display = 'flex';
 });
 
+document.getElementById('prev-btn').addEventListener('click', () => {
+  if (S.path) window.open(S.path, '_blank');
+});
+
 // ── Init editor ───────────────────────────────────────────────
 async function initEditor() {
   document.getElementById('ls').style.display = 'none';
@@ -394,6 +402,7 @@ function loadPage(page) {
   S.path = page.path; S.xpath = null;
   document.querySelectorAll('.pi').forEach(li => li.classList.toggle('active', li.dataset.path === page.path));
   document.getElementById('pgname').textContent = page.name;
+  document.getElementById('prev-btn').disabled = false;
   document.getElementById('nopg').style.display = 'none';
   document.getElementById('editbar').style.display = 'flex';
   closePanel();

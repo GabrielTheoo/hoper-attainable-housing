@@ -101,9 +101,9 @@
     if (el.closest('script,style,noscript')) return false;
     const tag = el.tagName.toLowerCase();
     if (tag === 'svg') {
-      // Skip small inline icons (width <= 24)
-      const w = el.getAttribute('width');
-      if (w && parseInt(w) <= 24) return false;
+      // Use rendered size — skip icons that display smaller than 28px
+      const rect = el.getBoundingClientRect();
+      if (rect.width > 0 && rect.width < 28) return false;
       return true;
     }
     if (tag === 'img') {
