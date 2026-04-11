@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoper CMS</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --or:#EB7F1E;--bk:#0D0D0D;--card:#161616;--card2:#1E1E1E;
+  --border:rgba(255,255,255,.09);--text:#F0F0F0;--dim:rgba(255,255,255,.5);
+  --sw:224px;--pw:304px;--th:52px;
+}
+body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;height:100vh;overflow:hidden;}
+
+/* ── LOGIN ──────────────────────────────────── */
+#ls{display:flex;align-items:center;justify-content:center;height:100vh;
+  background:radial-gradient(ellipse at 60% 40%,rgba(235,127,30,.12) 0%,transparent 60%),var(--bk);}
+.lcard{background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:44px 48px;width:380px;box-shadow:0 40px 80px rgba(0,0,0,.6);}
+.llogo{text-align:center;margin-bottom:36px;}
+.llogo-mark{display:inline-flex;align-items:center;gap:10px;margin-bottom:8px;}
+.llogo-icon{width:36px;height:36px;background:var(--or);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;}
+.llogo-icon svg{color:#fff;}
+.llogo-name{font-size:22px;font-weight:800;letter-spacing:-.5px;}
+.llogo-name span{color:var(--or);}
+.llogo small{display:block;color:var(--dim);font-size:12px;letter-spacing:.3px;}
+.fg{margin-bottom:18px;}
+.fg label{display:block;font-size:11px;font-weight:700;color:var(--dim);
+  margin-bottom:7px;letter-spacing:.8px;text-transform:uppercase;}
+.fg input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);
+  border-radius:9px;padding:12px 14px;color:var(--text);font-size:14px;outline:none;
+  transition:border-color .2s;}
+.fg input:focus{border-color:var(--or);}
+.lbtn{width:100%;background:var(--or);color:#fff;border:none;border-radius:9px;
+  padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;
+  transition:opacity .2s,transform .1s;}
+.lbtn:hover{opacity:.9;}
+.lbtn:active{transform:scale(.99);}
+.lbtn:disabled{opacity:.5;cursor:default;}
+.lerr{color:#ff7070;font-size:13px;text-align:center;margin-top:14px;display:none;}
+
+/* ── EDITOR ─────────────────────────────────── */
+#es{display:none;flex-direction:column;height:100vh;}
+
+/* Top bar */
+#tb{height:var(--th);background:var(--card);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0;z-index:100;}
+.tb-logo{font-weight:800;color:var(--or);font-size:15px;letter-spacing:-.3px;}
+.tb-sep{width:1px;height:18px;background:var(--border);}
+.tb-page{font-size:13px;color:var(--dim);}
+.tb-page strong{color:var(--text);font-weight:600;}
+.tb-sp{flex:1;}
+#chbadge{font-size:12px;color:var(--or);background:rgba(235,127,30,.12);
+  border:1px solid rgba(235,127,30,.25);border-radius:999px;padding:4px 12px;display:none;}
+.tb-btn{border:none;border-radius:8px;padding:8px 16px;font-size:13px;
+  font-weight:600;cursor:pointer;transition:opacity .2s,background .2s;}
+#pub-btn{background:var(--or);color:#fff;}
+#pub-btn:hover{opacity:.88;}
+#pub-btn:disabled{opacity:.45;cursor:default;}
+#out-btn{background:rgba(255,255,255,.07);color:var(--dim);border:1px solid var(--border);}
+#out-btn:hover{background:rgba(255,255,255,.12);color:var(--text);}
+
+/* Layout */
+#layout{display:flex;flex:1;overflow:hidden;}
+
+/* Sidebar */
+#sb{width:var(--sw);background:var(--card);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;flex-shrink:0;}
+.sb-head{padding:16px 16px 10px;font-size:10px;font-weight:700;color:var(--dim);
+  letter-spacing:1.5px;text-transform:uppercase;}
+#plist{list-style:none;overflow-y:auto;flex:1;padding:4px 10px 16px;}
+.pi{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;
+  cursor:pointer;font-size:13px;color:var(--dim);transition:all .15s;
+  border:1px solid transparent;}
+.pi:hover{background:rgba(255,255,255,.05);color:var(--text);}
+.pi.active{background:rgba(235,127,30,.1);color:var(--or);
+  border-color:rgba(235,127,30,.2);font-weight:600;}
+.pi-dot{width:5px;height:5px;border-radius:50%;background:currentColor;
+  flex-shrink:0;opacity:.55;}
+.pi.active .pi-dot{opacity:1;}
+.pi-name{flex:1;}
+.pi-badge{background:var(--or);color:#fff;border-radius:999px;font-size:10px;
+  font-weight:700;padding:1px 7px;display:none;}
+.pi.changed .pi-badge{display:block;}
+
+/* iframe area */
+#ia{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+#editbar{background:rgba(235,127,30,.1);border-bottom:1px solid rgba(235,127,30,.2);
+  padding:8px 16px;font-size:12px;color:var(--or);font-weight:600;flex-shrink:0;
+  display:none;align-items:center;gap:8px;}
+#pframe{flex:1;width:100%;border:none;background:#fff;}
+#nopg{flex:1;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:14px;color:var(--dim);}
+#nopg svg{opacity:.2;}
+#nopg p{font-size:14px;}
+
+/* Edit panel */
+#ep{width:0;overflow:hidden;background:var(--card);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;transition:width .25s ease;flex-shrink:0;}
+#ep.open{width:var(--pw);}
+.ep-inner{width:var(--pw);padding:22px 20px;overflow-y:auto;height:100%;}
+.ep-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+.ep-title{font-size:14px;font-weight:700;}
+#xbtn{background:rgba(255,255,255,.07);border:none;color:var(--dim);border-radius:7px;
+  width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;line-height:1;transition:background .2s;}
+#xbtn:hover{background:rgba(255,255,255,.14);color:var(--text);}
+.ep-sec{margin-bottom:20px;}
+.ep-lbl{display:block;font-size:11px;font-weight:700;color:var(--dim);
+  letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;}
+.ep-hint{font-size:11px;color:var(--dim);margin-bottom:8px;line-height:1.4;}
+#etxt{width:100%;min-height:90px;background:rgba(255,255,255,.05);
+  border:1px solid var(--border);border-radius:9px;padding:12px;
+  color:var(--text);font-size:13px;resize:vertical;outline:none;
+  font-family:inherit;line-height:1.5;transition:border-color .2s;}
+#etxt:focus{border-color:var(--or);}
+.cr{display:flex;align-items:center;gap:10px;}
+#ecol{width:46px;height:46px;border:2px solid var(--border);border-radius:9px;
+  cursor:pointer;background:transparent;padding:3px;}
+#ecol::-webkit-color-swatch-wrapper{padding:0;border-radius:5px;}
+#ecol::-webkit-color-swatch{border:none;border-radius:5px;}
+#ehex{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);
+  border-radius:9px;padding:10px 12px;color:var(--text);font-size:13px;
+  outline:none;font-family:monospace;transition:border-color .2s;}
+#ehex:focus{border-color:var(--or);}
+.clear-color{background:rgba(255,255,255,.06);border:1px solid var(--border);
+  color:var(--dim);border-radius:7px;padding:6px 10px;font-size:11px;
+  cursor:pointer;transition:background .2s;white-space:nowrap;}
+.clear-color:hover{background:rgba(255,255,255,.12);}
+.ep-acts{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+#abtn{background:var(--or);color:#fff;border:none;border-radius:9px;
+  padding:12px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;}
+#abtn:hover{opacity:.88;}
+#rbtn{background:rgba(255,80,80,.1);color:#ff8080;
+  border:1px solid rgba(255,80,80,.2);border-radius:9px;
+  padding:10px;font-size:13px;cursor:pointer;transition:background .2s;}
+#rbtn:hover{background:rgba(255,80,80,.18);}
+
+/* Toast */
+#toast{position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(90px);
+  background:var(--card2);border:1px solid var(--border);border-radius:11px;
+  padding:13px 24px;font-size:14px;font-weight:600;
+  box-shadow:0 12px 40px rgba(0,0,0,.5);transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  z-index:9999;white-space:nowrap;pointer-events:none;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+#toast.ok{border-color:rgba(80,220,80,.35);color:#80ef80;}
+#toast.err{border-color:rgba(255,80,80,.35);color:#ff8080;}
+#toast.info{border-color:rgba(235,127,30,.35);color:var(--or);}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="ls">
+  <div class="lcard">
+    <div class="llogo">
+      <div class="llogo-mark">
+        <div class="llogo-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <span class="llogo-name">HOPER <span>CMS</span></span>
+      </div>
+      <small>Painel de edição de conteúdo</small>
+    </div>
+    <form id="lform">
+      <div class="fg">
+        <label>Login</label>
+        <input type="text" id="lin" placeholder="admin" autocomplete="username"/>
+      </div>
+      <div class="fg">
+        <label>Senha</label>
+        <input type="password" id="lpass" placeholder="••••••" autocomplete="current-password"/>
+      </div>
+      <button type="submit" class="lbtn" id="lbtn">Entrar</button>
+      <p class="lerr" id="lerr">Credenciais inválidas.</p>
+    </form>
+  </div>
+</div>
+
+<!-- EDITOR SCREEN -->
+<div id="es">
+  <!-- Top bar -->
+  <div id="tb">
+    <span class="tb-logo">HOPER CMS</span>
+    <div class="tb-sep"></div>
+    <span class="tb-page">Editando: <strong id="pgname">—</strong></span>
+    <div class="tb-sp"></div>
+    <span id="chbadge">0 alterações</span>
+    <button class="tb-btn" id="pub-btn">Publicar</button>
+    <button class="tb-btn" id="out-btn">Sair</button>
+  </div>
+
+  <!-- Main layout -->
+  <div id="layout">
+    <!-- Sidebar -->
+    <aside id="sb">
+      <p class="sb-head">Páginas</p>
+      <ul id="plist"></ul>
+    </aside>
+
+    <!-- iframe area -->
+    <div id="ia">
+      <div id="editbar">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Modo Edição ativo — clique em qualquer texto para editar
+      </div>
+      <iframe id="pframe" src="about:blank"></iframe>
+      <div id="nopg">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <rect x="3" y="3" width="18" height="18" rx="2.5"/>
+          <path d="M3 9h18M9 21V9"/>
+        </svg>
+        <p>Selecione uma página para começar a editar</p>
+      </div>
+    </div>
+
+    <!-- Edit panel -->
+    <aside id="ep">
+      <div class="ep-inner">
+        <div class="ep-head">
+          <span class="ep-title">Editar Elemento</span>
+          <button id="xbtn" title="Fechar">×</button>
+        </div>
+        <div class="ep-sec">
+          <span class="ep-lbl">Texto</span>
+          <textarea id="etxt" placeholder="Digite o novo texto..."></textarea>
+        </div>
+        <div class="ep-sec">
+          <span class="ep-lbl">Cor do texto</span>
+          <div class="cr">
+            <input type="color" id="ecol" value="#1a1a1a"/>
+            <input type="text" id="ehex" placeholder="#1a1a1a" maxlength="7"/>
+            <button class="clear-color" id="clrcol" title="Remover cor">Remover</button>
+          </div>
+        </div>
+        <div class="ep-acts">
+          <button id="abtn">Aplicar alteração</button>
+          <button id="rbtn">Resetar para original</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+const PAGES = [
+  {name:'Home',              path:'/'},
+  {name:'Programas',         path:'/programs/'},
+  {name:'Informações Gerais',path:'/general/'},
+  {name:'Casos de Uso',      path:'/use-cases/'},
+  {name:'Compradores',       path:'/use-cases/homebuyers/'},
+  {name:'Construtores',      path:'/use-cases/home-builders/'},
+  {name:'Casas Modulares',   path:'/use-cases/manufactured-homes/'},
+  {name:'Corretores (LO)',   path:'/use-cases/loan-officers/'},
+  {name:'Agentes Imob.',     path:'/use-cases/real-estate-agents/'},
+  {name:'Recursos',          path:'/resources/'},
+  {name:'Elegibilidade',     path:'/resources/eligibility-hub/'},
+  {name:'FAQs',              path:'/resources/faqs/'},
+  {name:'Blog',              path:'/resources/blogs/'},
+  {name:'Empresa',           path:'/company/'},
+];
+
+// ── State ─────────────────────────────────────────────────────
+const S = {
+  token: sessionStorage.getItem('hcms_tok') || null,
+  all: {},       // content from API
+  pending: {},   // unsaved changes { path: { xpath: {text,color} } }
+  path: null,    // current page path
+  xpath: null,   // selected element xpath
+};
+
+// ── Helpers ───────────────────────────────────────────────────
+function pendingCount() {
+  return Object.values(S.pending).reduce((a,b) => a + Object.keys(b).length, 0);
+}
+
+function updateBadge() {
+  const n = pendingCount();
+  const b = document.getElementById('chbadge');
+  b.textContent = n === 1 ? '1 alteração' : n + ' alterações';
+  b.style.display = n > 0 ? '' : 'none';
+  document.querySelectorAll('.pi').forEach(li => {
+    const p = li.dataset.path;
+    const c = S.pending[p] ? Object.keys(S.pending[p]).length : 0;
+    li.classList.toggle('changed', c > 0);
+    li.querySelector('.pi-badge').textContent = c;
+  });
+}
+
+let _tid;
+function toast(msg, type='info') {
+  clearTimeout(_tid);
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show ' + type;
+  _tid = setTimeout(() => { t.className = ''; }, 3500);
+}
+
+function rgbToHex(rgb) {
+  const m = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+  if (!m) return null;
+  return '#' + [m[1],m[2],m[3]].map(n => (+n).toString(16).padStart(2,'0')).join('');
+}
+
+// ── Login ─────────────────────────────────────────────────────
+document.getElementById('lform').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('lbtn');
+  const err = document.getElementById('lerr');
+  btn.disabled = true; btn.textContent = 'Entrando...'; err.style.display = 'none';
+  try {
+    const r = await fetch('/api/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        login: document.getElementById('lin').value,
+        password: document.getElementById('lpass').value,
+      })
+    });
+    const d = await r.json();
+    if (d.ok && d.token) {
+      S.token = d.token;
+      sessionStorage.setItem('hcms_tok', d.token);
+      await initEditor();
+    } else {
+      err.textContent = 'Credenciais inválidas.'; err.style.display = 'block';
+    }
+  } catch {
+    err.textContent = 'Erro de conexão.'; err.style.display = 'block';
+  }
+  btn.disabled = false; btn.textContent = 'Entrar';
+});
+
+document.getElementById('out-btn').addEventListener('click', () => {
+  sessionStorage.removeItem('hcms_tok'); S.token = null;
+  document.getElementById('es').style.display = 'none';
+  document.getElementById('ls').style.display = 'flex';
+});
+
+// ── Init editor ───────────────────────────────────────────────
+async function initEditor() {
+  document.getElementById('ls').style.display = 'none';
+  document.getElementById('es').style.display = 'flex';
+  try {
+    const r = await fetch('/api/content', {cache:'no-store'});
+    if (r.ok) S.all = await r.json();
+  } catch {}
+
+  const ul = document.getElementById('plist');
+  ul.innerHTML = '';
+  PAGES.forEach(p => {
+    const li = document.createElement('li');
+    li.className = 'pi'; li.dataset.path = p.path;
+    li.innerHTML = `<span class="pi-dot"></span><span class="pi-name">${p.name}</span><span class="pi-badge">0</span>`;
+    li.addEventListener('click', () => loadPage(p));
+    ul.appendChild(li);
+  });
+  updateBadge();
+}
+
+// ── Load page ─────────────────────────────────────────────────
+function loadPage(page) {
+  S.path = page.path; S.xpath = null;
+  document.querySelectorAll('.pi').forEach(li => li.classList.toggle('active', li.dataset.path === page.path));
+  document.getElementById('pgname').textContent = page.name;
+  document.getElementById('nopg').style.display = 'none';
+  document.getElementById('editbar').style.display = 'flex';
+  closePanel();
+  const f = document.getElementById('pframe');
+  f.src = page.path;
+  f.onload = () => {
+    setTimeout(() => {
+      try { f.contentWindow.postMessage({type:'HE_ENABLE'}, window.location.origin); } catch {}
+    }, 300);
+  };
+}
+
+// ── postMessage from iframe ────────────────────────────────────
+window.addEventListener('message', e => {
+  if (e.origin !== window.location.origin) return;
+  if (e.data.type === 'HE_READY') {
+    setTimeout(() => {
+      try {
+        document.getElementById('pframe').contentWindow
+          .postMessage({type:'HE_ENABLE'}, window.location.origin);
+      } catch {}
+    }, 150);
+  }
+  if (e.data.type === 'HE_CLICK') openPanel(e.data);
+});
+
+// ── Edit panel ────────────────────────────────────────────────
+function openPanel(data) {
+  S.xpath = data.xpath;
+  const pov = (S.pending[S.path] || {})[data.xpath];
+  const sov = (S.all[S.path] || {})[data.xpath];
+  const ov = pov || sov || {};
+
+  document.getElementById('etxt').value = ov.text !== undefined ? ov.text : data.text;
+
+  let col = ov.color || data.color || '';
+  if (col && !col.startsWith('#')) col = rgbToHex(col) || '';
+  const valid = /^#[0-9a-fA-F]{6}$/.test(col);
+  document.getElementById('ecol').value = valid ? col : '#1a1a1a';
+  document.getElementById('ehex').value = valid ? col : '';
+
+  document.getElementById('ep').classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('ep').classList.remove('open');
+  S.xpath = null;
+}
+
+document.getElementById('xbtn').addEventListener('click', closePanel);
+
+document.getElementById('ecol').addEventListener('input', e => {
+  document.getElementById('ehex').value = e.target.value;
+});
+document.getElementById('ehex').addEventListener('input', e => {
+  if (/^#[0-9a-fA-F]{6}$/.test(e.target.value))
+    document.getElementById('ecol').value = e.target.value;
+});
+document.getElementById('clrcol').addEventListener('click', () => {
+  document.getElementById('ecol').value = '#1a1a1a';
+  document.getElementById('ehex').value = '';
+});
+
+// Apply
+document.getElementById('abtn').addEventListener('click', () => {
+  if (!S.xpath || !S.path) return;
+  const text  = document.getElementById('etxt').value;
+  const color = document.getElementById('ehex').value || '';
+  if (!S.pending[S.path]) S.pending[S.path] = {};
+  S.pending[S.path][S.xpath] = { text, color };
+  try {
+    document.getElementById('pframe').contentWindow
+      .postMessage({type:'HE_APPLY', xpath:S.xpath, text, color}, window.location.origin);
+  } catch {}
+  updateBadge();
+  closePanel();
+  toast('Alteração aplicada — clique em Publicar para salvar para todos.', 'info');
+});
+
+// Reset
+document.getElementById('rbtn').addEventListener('click', () => {
+  if (!S.xpath || !S.path) return;
+  if (S.pending[S.path]) {
+    delete S.pending[S.path][S.xpath];
+    if (!Object.keys(S.pending[S.path]).length) delete S.pending[S.path];
+  }
+  if (S.all[S.path]) {
+    delete S.all[S.path][S.xpath];
+    if (!Object.keys(S.all[S.path]).length) delete S.all[S.path];
+  }
+  updateBadge();
+  closePanel();
+  document.getElementById('pframe').src = S.path;
+  toast('Texto original restaurado.');
+});
+
+// ── Publish ───────────────────────────────────────────────────
+document.getElementById('pub-btn').addEventListener('click', async () => {
+  if (pendingCount() === 0) { toast('Nenhuma alteração para publicar.'); return; }
+  const btn = document.getElementById('pub-btn');
+  btn.disabled = true; btn.textContent = 'Publicando...';
+  try {
+    const merged = JSON.parse(JSON.stringify(S.all));
+    for (const [p, ch] of Object.entries(S.pending)) {
+      if (!merged[p]) merged[p] = {};
+      for (const [x, ov] of Object.entries(ch)) merged[p][x] = ov;
+    }
+    const r = await fetch('/api/content', {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json','Authorization':'Bearer ' + S.token},
+      body: JSON.stringify(merged),
+    });
+    if (r.ok) {
+      S.all = merged; S.pending = {};
+      updateBadge();
+      toast('Publicado! O site foi atualizado para todos os visitantes.', 'ok');
+    } else if (r.status === 401) {
+      toast('Sessão expirada. Faça login novamente.', 'err');
+      sessionStorage.removeItem('hcms_tok');
+    } else {
+      toast('Erro ao publicar. Tente novamente.', 'err');
+    }
+  } catch { toast('Erro de conexão.', 'err'); }
+  btn.disabled = false; btn.textContent = 'Publicar';
+});
+
+// ── Auto-restore session ───────────────────────────────────────
+if (S.token) initEditor();
+</script>
+</body>
+</html>
