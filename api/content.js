@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     try {
       const { blobs } = await list({ prefix: BLOB_FILE });
       if (!blobs.length) return res.json({});
-      const r = await fetch(blobs[0].url + '?bust=' + Date.now());
+      const r = await fetch((blobs[0].downloadUrl || blobs[0].url) + '?bust=' + Date.now());
       return res.json(await r.json());
     } catch (e) {
       console.error('GET /api/content error:', e);
@@ -55,7 +55,6 @@ export default async function handler(req, res) {
 
     try {
       await put(BLOB_FILE, JSON.stringify(body), {
-        access: 'public',
         addRandomSuffix: false,
         allowOverwrite: true,
         contentType: 'application/json',
