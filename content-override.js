@@ -73,7 +73,7 @@
     }
   }
 
-  // ── Apply stored overrides (visitors + preview) ───────────────
+  // ── Apply stored overrides ────────────────────────────────────
   function applyOverrideMap(overrides) {
     const blocks = overrides.__blocks__;
     if (blocks) {
@@ -136,6 +136,45 @@
 
   // ── Edit mode ──────────────────────────────────────────────────
   const editableMap = new Map();
+  let swapMode = false;
+
+  // Swap mode: visual style injected dynamically
+  let swapStyle = null;
+
+  function enterSwapMode() {
+    swapMode = true;
+    if (!swapStyle) {
+      swapStyle = document.createElement('style');
+      swapStyle.id = 'he-swap-style';
+      document.head.appendChild(swapStyle);
+    }
+    swapStyle.textContent =
+      '[data-he]:hover{outline:2px dashed #00c8ff!important;outline-offset:3px!important;' +
+      'cursor:crosshair!important;background:rgba(0,200,255,.08)!important;}' +
+      '[data-hm]:hover{outline:2px dashed #00c8ff!important;outline-offset:3px!important;cursor:crosshair!important;}';
+  }
+
+  function exitSwapMode() {
+    swapMode = false;
+    if (swapStyle) swapStyle.textContent = '';
+  }
+
+  function elSnapshot(el) {
+    const tag = el.tagName.toLowerCase();
+    const isMedia = el.hasAttribute('data-hm');
+    if (isMedia) {
+      return {
+        mediaType: tag === 'img' ? 'image' : 'svg',
+        src: tag === 'img' ? el.src : undefined,
+        svgContent: tag === 'svg' ? el.outerHTML : undefined,
+      };
+    }
+    return {
+      text: getDirectText(el),
+      color: el.style.color || '',
+      elStyle: el.getAttribute('style') || '',
+    };
+  }
 
   function inZone(el, selector) { return !!el.closest(selector); }
 
@@ -183,15 +222,14 @@
     style.textContent =
       '[data-he]:hover{outline:2px dashed #EB7F1E!important;outline-offset:3px!important;' +
       'cursor:pointer!important;background:rgba(235,127,30,.08)!important;}' +
-      '[data-hm]:hover{outline:2px dashed #EB7F1E!important;outline-offset:3px!important;' +
-      'cursor:pointer!important;}' +
+      '[data-hm]:hover{outline:2px dashed #EB7F1E!important;outline-offset:3px!important;cursor:pointer!important;}' +
       '[data-hb]{transition:outline .1s;}' +
       '[data-hb]:hover{outline:2px solid rgba(235,127,30,.5)!important;outline-offset:-2px!important;cursor:pointer!important;}' +
       '[data-hb].hb-sel{outline:2px solid #EB7F1E!important;outline-offset:-2px!important;}' +
       'body{user-select:none!important;}';
     document.head.appendChild(style);
 
-    // ── Blocks (only in unrestricted / full-page mode) ─────────
+    // ── Blocks ─────────────────────────────────────────────────
     if (!restrict) {
       const main = document.querySelector('main');
       if (main) {
@@ -229,18 +267,21 @@
       const xpath = getXPath(el);
       el.setAttribute('data-he', '1');
       editableMap.set(xpath, el);
+
       el.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
+        const snap = elSnapshot(el);
+        if (swapMode) {
+          exitSwapMode();
+          window.parent.postMessage(Object.assign({ type: 'HE_SWAP_PICK', xpath: xpath }, snap), window.location.origin);
+          return;
+        }
         const r = el.getBoundingClientRect();
-        window.parent.postMessage({
-          type: 'HE_CLICK',
-          xpath: xpath,
-          text: getDirectText(el),
-          color: el.style.color || '',
-          elStyle: el.getAttribute('style') || '',
+        window.parent.postMessage(Object.assign({
+          type: 'HE_CLICK', xpath: xpath,
           rect: { top: r.top + window.scrollY, left: r.left, w: r.width, h: r.height }
-        }, window.location.origin);
+        }, snap), window.location.origin);
       }, false);
     });
 
@@ -251,18 +292,21 @@
       const xpath = getXPath(el);
       el.setAttribute('data-hm', '1');
       editableMap.set(xpath, el);
+
       el.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
+        const snap = elSnapshot(el);
+        if (swapMode) {
+          exitSwapMode();
+          window.parent.postMessage(Object.assign({ type: 'HE_SWAP_PICK', xpath: xpath }, snap), window.location.origin);
+          return;
+        }
         const r = el.getBoundingClientRect();
-        window.parent.postMessage({
-          type: 'HE_CLICK',
-          mediaType: tag === 'img' ? 'image' : 'svg',
-          xpath: xpath,
-          src: tag === 'img' ? el.src : undefined,
-          svgContent: tag === 'svg' ? el.outerHTML : undefined,
+        window.parent.postMessage(Object.assign({
+          type: 'HE_CLICK', xpath: xpath,
           rect: { top: r.top + window.scrollY, left: r.left, w: r.width, h: r.height }
-        }, window.location.origin);
+        }, snap), window.location.origin);
       }, false);
     });
 
@@ -281,12 +325,41 @@
           const tmp = document.createElement('div');
           tmp.innerHTML = e.data.svgContent;
           const newEl = tmp.firstElementChild;
-          if (newEl) {
-            newEl.setAttribute('data-hm', '1');
-            el.replaceWith(newEl);
-            editableMap.set(e.data.xpath, newEl);
-          }
+          if (newEl) { newEl.setAttribute('data-hm', '1'); el.replaceWith(newEl); editableMap.set(e.data.xpath, newEl); }
         }
+        return;
+      }
+
+      if (e.data.type === 'HE_SWAP_ENTER') { enterSwapMode(); return; }
+      if (e.data.type === 'HE_SWAP_EXIT')  { exitSwapMode();  return; }
+
+      if (e.data.type === 'HE_CLICK_XPATH') {
+        const el = editableMap.get(e.data.xpath);
+        if (el) el.click();
+        return;
+      }
+
+      if (e.data.type === 'HE_GET_BLOCK_ELEMENTS') {
+        const blockEl = findBlockById(e.data.blockId);
+        if (!blockEl) return;
+        const elements = [];
+        const seen = new Set();
+        blockEl.querySelectorAll('[data-he],[data-hm]').forEach(function (el) {
+          const xpath = getXPath(el);
+          if (seen.has(xpath)) return;
+          seen.add(xpath);
+          const isMedia = el.hasAttribute('data-hm');
+          const tag = el.tagName.toLowerCase();
+          elements.push({
+            xpath: xpath,
+            tag: tag,
+            type: isMedia ? (tag === 'img' ? 'image' : 'svg') : 'text',
+            preview: isMedia ? '' : (getDirectText(el) || el.textContent.trim()).slice(0, 45),
+          });
+        });
+        window.parent.postMessage({
+          type: 'HE_BLOCK_ELEMENTS', blockId: e.data.blockId, elements: elements
+        }, window.location.origin);
         return;
       }
 
