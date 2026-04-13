@@ -770,10 +770,11 @@ function renderBlockChildren(bid, container) {
         '<span class="bi-child-label">' + escHtml(el.preview || el.tag) + '</span>';
       li.addEventListener('click', e => {
         e.stopPropagation();
-        // Highlight in sidebar
         document.querySelectorAll('.bi-child').forEach(c => c.classList.remove('active'));
         li.classList.add('active');
-        // Tell iframe to fire click on this xpath
+        // Open panel directly using the data already captured in HE_GET_BLOCK_ELEMENTS
+        openElementPanel(el);
+        // Also highlight the element in the iframe
         try {
           document.getElementById('pframe').contentWindow
             .postMessage({type:'HE_CLICK_XPATH', xpath:el.xpath}, window.location.origin);

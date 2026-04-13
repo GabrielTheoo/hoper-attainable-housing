@@ -350,12 +350,23 @@
           seen.add(xpath);
           const isMedia = el.hasAttribute('data-hm');
           const tag = el.tagName.toLowerCase();
-          elements.push({
-            xpath: xpath,
-            tag: tag,
+          const entry = {
+            xpath: xpath, tag: tag,
             type: isMedia ? (tag === 'img' ? 'image' : 'svg') : 'text',
             preview: isMedia ? '' : (getDirectText(el) || el.textContent.trim()).slice(0, 45),
-          });
+          };
+          // Include full data so admin can open the panel without a round-trip
+          if (!isMedia) {
+            entry.text    = getDirectText(el);
+            entry.color   = el.style.color || '';
+            entry.elStyle = el.getAttribute('style') || '';
+          } else if (tag === 'img') {
+            entry.src = el.src;
+          } else {
+            entry.svgContent = el.outerHTML;
+            entry.mediaType  = 'svg';
+          }
+          elements.push(entry);
         });
         window.parent.postMessage({
           type: 'HE_BLOCK_ELEMENTS', blockId: e.data.blockId, elements: elements
