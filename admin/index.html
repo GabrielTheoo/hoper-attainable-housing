@@ -85,6 +85,10 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
 #out-btn,#prev-btn{background:rgba(255,255,255,.07);color:var(--dim);border:1px solid var(--border);}
 #out-btn:hover,#prev-btn:hover{background:rgba(255,255,255,.12);color:var(--text);}
 #prev-btn:disabled{opacity:.4;cursor:default;}
+.tb-device{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:3px;}
+.tb-dev-btn{background:none;border:none;color:var(--dim);cursor:pointer;border-radius:5px;padding:4px 6px;display:flex;align-items:center;transition:all .15s;}
+.tb-dev-btn:hover{color:var(--text);background:rgba(255,255,255,.07);}
+.tb-dev-btn.active{background:var(--or);color:#fff;}
 
 /* Layout */
 #layout{display:flex;flex:1;overflow:hidden;}
@@ -126,6 +130,15 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
 #ia{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 #editbar{background:rgba(235,127,30,.07);border-bottom:1px solid rgba(235,127,30,.14);padding:6px 16px;font-size:12px;color:var(--or);font-weight:600;flex-shrink:0;display:none;align-items:center;gap:8px;}
 #pframe{flex:1;width:100%;border:none;background:#fff;}
+/* Mobile preview */
+#ia.mobile-view{background:#1a1a1a;align-items:center;justify-content:center;}
+#ia.mobile-view #editbar{align-self:stretch;}
+#mobile-shell{display:none;flex-direction:column;align-items:center;flex:1;width:100%;min-height:0;padding:16px 0;}
+#ia.mobile-view #mobile-shell{display:flex;}
+#ia.mobile-view #pframe{display:none;}
+#mobile-device{background:#111;border:3px solid #333;border-radius:38px;box-shadow:0 0 0 1px #444,0 20px 60px rgba(0,0,0,.6);overflow:hidden;position:relative;width:390px;flex-shrink:0;height:100%;}
+#mobile-device::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:28px;background:#111;border-radius:0 0 18px 18px;z-index:10;}
+#pframe-mobile{width:390px;height:100%;border:none;background:#fff;display:block;}
 #nopg{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:var(--dim);}
 #nopg svg{opacity:.2;} #nopg p{font-size:14px;}
 
@@ -266,6 +279,15 @@ select.ep-sel option{background:#1e1e1e;} input.ep-num{width:100%;}
     <span class="tb-logo">HOPER</span>
     <span class="tb-page"><strong id="pgname">—</strong></span>
     <div class="tb-sp"></div>
+    <div class="tb-device" id="device-toggle">
+      <button class="tb-dev-btn active" id="dev-desktop" title="Desktop">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </button>
+      <button class="tb-dev-btn" id="dev-mobile" title="Mobile">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="18" r="1" fill="currentColor" stroke="none"/></svg>
+      </button>
+    </div>
+    <div class="tb-sep"></div>
     <span id="chbadge">0 alterações</span>
     <button class="tb-btn" id="prev-btn" disabled>Visualizar</button>
     <button class="tb-btn" id="pub-btn">Publicar</button>
@@ -286,6 +308,7 @@ select.ep-sel option{background:#1e1e1e;} input.ep-num{width:100%;}
 
     <!-- iframe -->
     <div id="ia">
+      <div id="mobile-shell"><div id="mobile-device"><iframe id="pframe-mobile"></iframe></div></div>
       <div id="editbar">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         Modo Edição — clique em qualquer texto para editar direto na página
@@ -630,6 +653,8 @@ function enterEditor(page) {
   document.getElementById('sb').style.display = S.restrict ? 'none' : 'flex';
 
   updateBadge();
+  // Reset to desktop view when switching pages
+  setDeviceMode('desktop');
   const f = document.getElementById('pframe');
   const loadUrl = page.iframePath || page.path;
   f.src = loadUrl;
@@ -1104,6 +1129,29 @@ document.getElementById('pub-btn').addEventListener('click', async () => {
   } catch { toast('Erro de conexão.','err'); }
   btn.disabled = false; btn.textContent = 'Publicar';
 });
+
+// ── Device toggle ─────────────────────────────────────────────
+S.deviceMode = 'desktop';
+function setDeviceMode(mode) {
+  S.deviceMode = mode;
+  const ia = document.getElementById('ia');
+  const pframe = document.getElementById('pframe');
+  const mframe = document.getElementById('pframe-mobile');
+  document.getElementById('dev-desktop').classList.toggle('active', mode === 'desktop');
+  document.getElementById('dev-mobile').classList.toggle('active', mode === 'mobile');
+  if (mode === 'mobile') {
+    ia.classList.add('mobile-view');
+    // Sync src to mobile iframe
+    if (pframe.src && pframe.src !== 'about:blank') {
+      mframe.src = pframe.src;
+    }
+  } else {
+    ia.classList.remove('mobile-view');
+    mframe.src = 'about:blank';
+  }
+}
+document.getElementById('dev-desktop').addEventListener('click', () => setDeviceMode('desktop'));
+document.getElementById('dev-mobile').addEventListener('click', () => setDeviceMode('mobile'));
 
 // ── Resize: rescale preview iframes ──────────────────────────
 window.addEventListener('resize', scalePreviewIframes);
