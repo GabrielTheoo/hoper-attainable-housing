@@ -83,8 +83,24 @@
         if (el && bdata.style) el.setAttribute('style', bdata.style);
       }
     }
+    // Insert dynamically-added sections
+    if (Array.isArray(overrides.__sections__)) {
+      var mainEl = document.querySelector('main');
+      if (mainEl) {
+        overrides.__sections__.forEach(function (sec) {
+          if (!sec || !sec.html) return;
+          if (sec.id && document.getElementById(sec.id)) return; // already in DOM
+          var tmp = document.createElement('div');
+          tmp.innerHTML = sec.html;
+          var el = tmp.firstElementChild;
+          if (el) mainEl.appendChild(el);
+        });
+        if (typeof lucide !== 'undefined') { try { lucide.createIcons(); } catch {} }
+      }
+    }
+
     for (const [xpath, ov] of Object.entries(overrides)) {
-      if (xpath === '__blocks__') continue;
+      if (xpath === '__blocks__' || xpath === '__sections__') continue;
       const el = byXPath(xpath);
       if (!el) continue;
       if (ov.text !== undefined) applyText(el, ov.text);
@@ -101,7 +117,7 @@
   }
 
   async function applyOverrides() {
-    const path = window.location.pathname;
+    const path = new URLSearchParams(window.location.search).get('path') || window.location.pathname;
     try {
       const res = await fetch('/api/content', { cache: 'no-store' });
       if (res.ok) {
@@ -206,6 +222,59 @@
   const editableMap = new Map();
   let swapMode = false;
   let swapStyle = null;
+  let currentRestrict = null;
+
+  // Register editing on a newly inserted section element (after enableEditMode ran)
+  function registerSection(sectionEl) {
+    var bid = getBlockId(sectionEl);
+    if (bid && !sectionEl.hasAttribute('data-hb')) {
+      sectionEl.setAttribute('data-hb', bid);
+      var heading = sectionEl.querySelector('h1,h2,h3,h4,h5,h6');
+      var label = heading ? heading.textContent.trim().slice(0, 50) : bid;
+      sectionEl.addEventListener('click', function (e) {
+        if (e.target.closest('[data-he],[data-hm]')) return;
+        if (activeEditEl) return;
+        e.stopPropagation();
+        document.querySelectorAll('[data-hb]').forEach(function (s) { s.classList.remove('hb-sel'); });
+        sectionEl.classList.add('hb-sel');
+        var r = sectionEl.getBoundingClientRect();
+        window.parent.postMessage({ type: 'HE_BLOCK_CLICK', blockId: bid, blockStyle: sectionEl.getAttribute('style') || '',
+          rect: { top: r.top + window.scrollY, left: r.left, w: r.width, h: r.height } }, window.location.origin);
+      }, false);
+      window.parent.postMessage({ type: 'HE_BLOCKS_ADD', block: { blockId: bid, label: label } }, window.location.origin);
+    }
+    var SEL2 = 'h1,h2,h3,h4,h5,h6,p,li,a,button,span,label,td,th,strong,em,small,div';
+    sectionEl.querySelectorAll(SEL2).forEach(function (el) {
+      if (el.hasAttribute('data-he') || !isEditable(el, currentRestrict)) return;
+      var xp = getXPath(el);
+      el.setAttribute('data-he', '1');
+      editableMap.set(xp, el);
+      el.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        var snap = elSnapshot(el);
+        if (swapMode) { exitSwapMode(); window.parent.postMessage(Object.assign({ type: 'HE_SWAP_PICK', xpath: xp }, snap), window.location.origin); return; }
+        startInlineEdit(el, xp);
+        var r2 = el.getBoundingClientRect();
+        window.parent.postMessage(Object.assign({ type: 'HE_CLICK', xpath: xp,
+          rect: { top: r2.top + window.scrollY, left: r2.left, w: r2.width, h: r2.height } }, snap), window.location.origin);
+      }, false);
+    });
+    sectionEl.querySelectorAll('img,svg').forEach(function (el) {
+      if (el.hasAttribute('data-hm') || !isEditableMedia(el, currentRestrict)) return;
+      var xp = getXPath(el);
+      el.setAttribute('data-hm', '1');
+      editableMap.set(xp, el);
+      el.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (activeEditEl) commitInlineEdit();
+        var snap = elSnapshot(el);
+        if (swapMode) { exitSwapMode(); window.parent.postMessage(Object.assign({ type: 'HE_SWAP_PICK', xpath: xp }, snap), window.location.origin); return; }
+        var r2 = el.getBoundingClientRect();
+        window.parent.postMessage(Object.assign({ type: 'HE_CLICK', xpath: xp,
+          rect: { top: r2.top + window.scrollY, left: r2.left, w: r2.width, h: r2.height } }, snap), window.location.origin);
+      }, false);
+    });
+  }
 
   function enterSwapMode() {
     swapMode = true;
@@ -251,6 +320,7 @@
   }
 
   function enableEditMode(restrict) {
+    currentRestrict = restrict;
     const style = document.createElement('style');
     style.textContent =
       '[data-he]{cursor:text!important;}' +
@@ -417,6 +487,22 @@
         if (el && e.data.style !== undefined) el.setAttribute('style', e.data.style);
         return;
       }
+
+      if (e.data.type === 'HE_INSERT_SECTION') {
+        const mainEl2 = document.querySelector('main');
+        if (!mainEl2) return;
+        const tmp2 = document.createElement('div');
+        tmp2.innerHTML = e.data.html;
+        const newSec = tmp2.firstElementChild;
+        if (newSec) {
+          mainEl2.appendChild(newSec);
+          registerSection(newSec);
+          if (typeof lucide !== 'undefined') { try { lucide.createIcons(); } catch {} }
+          newSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        window.parent.postMessage({ type: 'HE_SECTION_INSERTED', sectionId: e.data.sectionId }, window.location.origin);
+        return;
+      }
     });
   }
 
@@ -426,7 +512,8 @@
   // ── Boot ──────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
     if (inAdminFrame()) {
-      window.parent.postMessage({ type: 'HE_READY', path: window.location.pathname }, window.location.origin);
+      const hePath = new URLSearchParams(window.location.search).get('path') || window.location.pathname;
+      window.parent.postMessage({ type: 'HE_READY', path: hePath }, window.location.origin);
       window.addEventListener('message', function init(e) {
         if (e.origin !== window.location.origin) return;
         if (e.data.type !== 'HE_ENABLE') return;

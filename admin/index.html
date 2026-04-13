@@ -65,6 +65,43 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
 .ps-card-badge{position:absolute;top:8px;right:8px;background:var(--or);color:#fff;border-radius:999px;font-size:10px;font-weight:700;padding:2px 8px;display:none;z-index:3;}
 .ps-card.changed .ps-card-badge{display:block;}
 
+/* ── SECTION PICKER ─────────────────────────── */
+#sb-sections-view{display:none;flex-direction:column;flex:1;overflow:hidden;}
+.sp-header{display:flex;align-items:center;gap:8px;padding:10px 12px 8px;border-bottom:1px solid var(--border);}
+#sp-back-btn{background:none;border:none;color:var(--dim);cursor:pointer;font-size:12px;padding:4px 6px;border-radius:5px;display:flex;align-items:center;gap:4px;transition:all .15s;}
+#sp-back-btn:hover{color:var(--text);background:rgba(255,255,255,.07);}
+.sp-header-title{font-size:11px;font-weight:700;color:var(--dim);letter-spacing:1.2px;text-transform:uppercase;flex:1;}
+.sp-cat-bar{display:flex;gap:4px;padding:8px 8px 6px;flex-wrap:wrap;border-bottom:1px solid var(--border);}
+.sp-cat{background:none;border:1px solid transparent;border-radius:6px;color:var(--dim);cursor:pointer;font-size:11px;font-weight:600;padding:3px 8px;transition:all .12s;}
+.sp-cat:hover{color:var(--text);background:rgba(255,255,255,.06);}
+.sp-cat.active{background:rgba(235,127,30,.12);color:var(--or);border-color:rgba(235,127,30,.25);}
+#sp-list{overflow-y:auto;flex:1;padding:8px;}
+.sp-card{border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .15s;margin-bottom:8px;background:var(--card2);}
+.sp-card:hover{border-color:rgba(235,127,30,.45);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
+.sp-card-thumb{width:100%;height:72px;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.sp-card-thumb svg{width:100%;height:100%;}
+.sp-card-body{padding:8px 10px;}
+.sp-card-name{font-size:12px;font-weight:600;margin-bottom:2px;}
+.sp-card-desc{font-size:10px;color:var(--dim);line-height:1.4;}
+#add-section-btn{margin:8px;border:1px dashed rgba(235,127,30,.35);background:rgba(235,127,30,.04);color:var(--or);border-radius:8px;padding:9px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px;flex-shrink:0;}
+#add-section-btn:hover{background:rgba(235,127,30,.1);border-color:var(--or);}
+/* ── NEW PAGE MODAL ──────────────────────────── */
+#np-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;}
+.np-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);}
+.np-inner{position:relative;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;width:440px;max-width:calc(100vw - 32px);}
+.np-inner h3{font-size:17px;font-weight:700;margin-bottom:20px;}
+.np-slug-wrap{display:flex;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:7px;padding:0 10px;gap:2px;}
+.np-slug-wrap span{color:var(--dim);font-size:13px;}
+.np-slug-wrap input{background:none;border:none;color:var(--text);font-size:13px;padding:8px 4px;flex:1;outline:none;}
+.np-actions{display:flex;gap:8px;margin-top:20px;justify-content:flex-end;}
+.np-actions button{border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;}
+#np-cancel{background:rgba(255,255,255,.07);color:var(--dim);}
+#np-create{background:var(--or);color:#fff;}
+/* ── PS NEW PAGE CARD ────────────────────────── */
+.ps-card-new{border:1px dashed rgba(235,127,30,.3);background:rgba(235,127,30,.03);}
+.ps-card-new:hover{border-color:var(--or);background:rgba(235,127,30,.07);}
+.ps-card-new .ps-card-icon{background:rgba(235,127,30,.1);color:var(--or);}
+
 /* ── EDITOR ─────────────────────────────────── */
 #es{display:none;flex-direction:column;height:100vh;}
 
@@ -268,6 +305,27 @@ select.ep-sel option{background:#1e1e1e;} input.ep-num{width:100%;}
   </div>
 </div>
 
+<!-- NEW PAGE MODAL -->
+<div id="np-modal">
+  <div class="np-overlay" id="np-overlay"></div>
+  <div class="np-inner">
+    <h3>Nova Página</h3>
+    <div class="fg" style="margin-bottom:14px;">
+      <label style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;">Nome</label>
+      <input id="np-name" type="text" placeholder="Ex: Sobre Nós" style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:7px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;">
+    </div>
+    <div class="fg" style="margin-bottom:6px;">
+      <label style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;">URL</label>
+      <div class="np-slug-wrap"><span>/</span><input id="np-slug" type="text" placeholder="sobre-nos"><span>/</span></div>
+    </div>
+    <p style="font-size:11px;color:var(--dim);margin-bottom:16px;">Crie a página com seções adicionadas pelo editor.</p>
+    <div class="np-actions">
+      <button id="np-cancel">Cancelar</button>
+      <button id="np-create">Criar Página</button>
+    </div>
+  </div>
+</div>
+
 <!-- EDITOR -->
 <div id="es">
   <div id="tb">
@@ -297,12 +355,37 @@ select.ep-sel option{background:#1e1e1e;} input.ep-num{width:100%;}
   <div id="layout">
     <!-- Sidebar: blocks only -->
     <aside id="sb">
-      <div class="sb-hd" data-target="blocks-body">
-        <svg class="sb-hd-arr open" width="8" height="8" viewBox="0 0 8 8"><path d="M2 1l4 3-4 3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-        <span class="sb-hd-title">Blocos</span>
+      <!-- Blocks view -->
+      <div id="sb-blocks-view" style="display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0;">
+        <div class="sb-hd" data-target="blocks-body">
+          <svg class="sb-hd-arr open" width="8" height="8" viewBox="0 0 8 8"><path d="M2 1l4 3-4 3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          <span class="sb-hd-title">Blocos</span>
+        </div>
+        <div class="sb-section-body" id="blocks-body" style="display:flex;flex-direction:column;overflow:hidden;flex:1;min-height:0;">
+          <div id="blist-wrap"><ul id="blist"></ul></div>
+        </div>
+        <button id="add-section-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          Adicionar Seção
+        </button>
       </div>
-      <div class="sb-section-body" id="blocks-body" style="display:flex;flex-direction:column;overflow:hidden;flex:1;min-height:0;">
-        <div id="blist-wrap"><ul id="blist"></ul></div>
+      <!-- Section picker view -->
+      <div id="sb-sections-view">
+        <div class="sp-header">
+          <button id="sp-back-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Voltar
+          </button>
+          <span class="sp-header-title">Adicionar Seção</span>
+        </div>
+        <div class="sp-cat-bar">
+          <button class="sp-cat active" data-cat="">Todos</button>
+          <button class="sp-cat" data-cat="hero">Hero</button>
+          <button class="sp-cat" data-cat="layout">Layout</button>
+          <button class="sp-cat" data-cat="cards">Cards</button>
+          <button class="sp-cat" data-cat="cta">CTA</button>
+        </div>
+        <div id="sp-list"></div>
       </div>
     </aside>
 
@@ -464,6 +547,49 @@ const PAGES = [
   {name:'Empresa',           path:'/company/',                icon:'🏢'},
 ];
 
+// ── Section templates library ─────────────────────────────────
+const SECTION_TEMPLATES = [
+  { type:'hero', label:'Hero Banner', category:'hero', desc:'Fundo escuro, título, subtítulo e botões',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#1a1a1a"/><rect x="24" y="28" width="90" height="11" fill="rgba(255,255,255,.75)" rx="2"/><rect x="24" y="44" width="70" height="7" fill="rgba(255,255,255,.35)" rx="2"/><rect x="24" y="56" width="52" height="3" fill="rgba(255,255,255,.2)" rx="2"/><rect x="24" y="68" width="50" height="18" fill="#EB7F1E" rx="9"/><rect x="80" y="68" width="46" height="18" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" rx="9"/></svg>`,
+    html: id => `<section id="${id}" style="min-height:520px;background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);position:relative;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden;"><div class="container"><div style="max-width:700px;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;">LABEL DA SEÇÃO</p><h2 style="font-size:clamp(32px,4.5vw,56px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-0.5px;margin-bottom:20px;">Seu Título Principal<br>Vai Aqui</h2><p style="font-size:17px;color:rgba(255,255,255,.7);line-height:1.75;max-width:560px;margin-bottom:32px;">Adicione sua descrição aqui. Explique o valor do seu produto ou serviço de forma clara e direta.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;box-shadow:0 8px 32px rgba(235,127,30,.35);">Comece Agora</a><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;border:2px solid rgba(255,255,255,.45);color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
+
+  { type:'page-hero', label:'Page Hero', category:'hero', desc:'Cabeçalho de página interna com imagem de fundo',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#111"/><rect x="24" y="32" width="40" height="5" fill="#EB7F1E" rx="2"/><rect x="24" y="42" width="80" height="11" fill="rgba(255,255,255,.75)" rx="2"/><rect x="24" y="58" width="64" height="6" fill="rgba(255,255,255,.3)" rx="2"/><rect x="24" y="72" width="46" height="16" fill="#EB7F1E" rx="8"/></svg>`,
+    html: id => `<section id="${id}" style="min-height:400px;background:#1A1A1A;position:relative;overflow:hidden;display:flex;align-items:center;padding:calc(90px + 40px) 0 80px;"><div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.92) 0%,rgba(10,10,10,.6) 100%);z-index:1;"></div><div class="container" style="position:relative;z-index:2;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><span style="display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;"></span>Label da Página</p><h1 style="font-size:clamp(32px,5vw,60px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:700px;">Título da Página</h1><p style="font-size:17px;color:rgba(255,255,255,.72);line-height:1.75;max-width:580px;margin-bottom:32px;">Subtítulo descritivo da página vai aqui.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></section>` },
+
+  { type:'features', label:'Cards de Funcionalidades', category:'cards', desc:'Grade de 3 cards com ícone, título e descrição',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#f9f9f7"/><rect x="68" y="10" width="64" height="8" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="50" y="22" width="100" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="8" y="34" width="56" height="56" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="72" y="34" width="56" height="56" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="136" y="34" width="56" height="56" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><circle cx="36" cy="48" r="7" fill="#EB7F1E" opacity=".2"/><circle cx="100" cy="48" r="7" fill="#EB7F1E" opacity=".2"/><circle cx="164" cy="48" r="7" fill="#EB7F1E" opacity=".2"/><rect x="16" y="62" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="80" y="62" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="144" y="62" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="16" y="70" width="32" height="3" fill="#1a1a1a" opacity=".15" rx="1"/><rect x="80" y="70" width="32" height="3" fill="#1a1a1a" opacity=".15" rx="1"/><rect x="144" y="70" width="32" height="3" fill="#1a1a1a" opacity=".15" rx="1"/></svg>`,
+    html: id => `<section id="${id}" style="padding:80px 0;background:#f9f9f7;"><div class="container"><div style="text-align:center;margin-bottom:48px;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;">FUNCIONALIDADES</p><h2 style="font-size:clamp(26px,4vw,44px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Tudo que Você Precisa</h2><p style="font-size:16px;color:#666;max-width:560px;margin:0 auto;line-height:1.7;">Descrição geral das funcionalidades apresentadas abaixo.</p></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">${[1,2,3].map(n=>`<div style="background:#fff;border:1px solid #e8e8e8;border-radius:16px;padding:28px 24px;"><div style="width:44px;height:44px;border-radius:10px;background:rgba(235,127,30,.1);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EB7F1E" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><h3 style="font-size:16px;font-weight:700;color:#1A1A1A;margin-bottom:10px;">Funcionalidade ${n}</h3><p style="font-size:14px;color:#666;line-height:1.65;margin-bottom:16px;">Descrição desta funcionalidade e o valor que ela entrega para o usuário.</p><a href="#" style="color:#EB7F1E;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Saiba mais →</a></div>`).join('')}</div></div></section>` },
+
+  { type:'split', label:'Texto + Imagem', category:'layout', desc:'Duas colunas: texto à esquerda, imagem à direita',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#fff"/><rect x="12" y="20" width="40" height="5" fill="#EB7F1E" opacity=".7" rx="2"/><rect x="12" y="30" width="78" height="9" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="12" y="44" width="70" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="12" y="52" width="60" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="12" y="60" width="50" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="12" y="74" width="44" height="16" fill="#EB7F1E" rx="8"/><rect x="106" y="12" width="82" height="76" fill="#e8e8e8" rx="8"/></svg>`,
+    html: id => `<section id="${id}" style="padding:80px 0;background:#fff;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><ul style="list-style:none;padding:0;margin-bottom:28px;">${[1,2,3].map(n=>`<li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;"><span style="width:20px;height:20px;border-radius:50%;background:rgba(235,127,30,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EB7F1E" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><span style="font-size:15px;color:#383838;line-height:1.5;">Item de benefício ${n}</span></li>`).join('')}</ul><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div><div style="background:#f0f0f0;border-radius:16px;height:380px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:14px;">Imagem Aqui</div></div></div></section>` },
+
+  { type:'split-reverse', label:'Imagem + Texto', category:'layout', desc:'Duas colunas: imagem à esquerda, texto à direita',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#f9f9f7"/><rect x="12" y="12" width="82" height="76" fill="#e8e8e8" rx="8"/><rect x="110" y="20" width="40" height="5" fill="#EB7F1E" opacity=".7" rx="2"/><rect x="110" y="30" width="78" height="9" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="110" y="44" width="70" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="110" y="52" width="60" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="110" y="74" width="44" height="16" fill="#EB7F1E" rx="8"/></svg>`,
+    html: id => `<section id="${id}" style="padding:80px 0;background:#f9f9f7;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div style="background:#e8e8e8;border-radius:16px;height:380px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:14px;">Imagem Aqui</div><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
+
+  { type:'cta', label:'Chamada para Ação', category:'cta', desc:'Seção centralizada com título e botão de destaque',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#EB7F1E" rx="0"/><rect x="60" y="22" width="80" height="10" fill="rgba(255,255,255,.85)" rx="2"/><rect x="40" y="38" width="120" height="5" fill="rgba(255,255,255,.45)" rx="2"/><rect x="70" y="50" width="60" height="5" fill="rgba(255,255,255,.35)" rx="2"/><rect x="75" y="64" width="50" height="20" fill="#fff" rx="10"/></svg>`,
+    html: id => `<section id="${id}" style="padding:80px 0;background:linear-gradient(135deg,#EB7F1E 0%,#C96C12 100%);"><div class="container"><div style="text-align:center;max-width:640px;margin:0 auto;"><h2 style="font-size:clamp(28px,4vw,48px);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-0.5px;margin-bottom:18px;">Pronto para Começar?</h2><p style="font-size:17px;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:36px;">Adicione sua chamada para ação aqui. Seja direto e mostre o próximo passo.</p><div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;"><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:999px;background:#fff;color:#EB7F1E;font-weight:700;font-size:15px;text-decoration:none;">Começar Agora</a><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:999px;border:2px solid rgba(255,255,255,.6);color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
+
+  { type:'steps', label:'Etapas / Processo', category:'layout', desc:'Passos numerados para ilustrar um processo',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#fff"/><rect x="68" y="10" width="64" height="8" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="8" y="30" width="56" height="58" fill="#f9f9f7" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="72" y="30" width="56" height="58" fill="#f9f9f7" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="136" y="30" width="56" height="58" fill="#f9f9f7" stroke="#e8e8e8" stroke-width="1" rx="5"/><text x="22" y="52" fill="#EB7F1E" font-size="14" font-weight="800">01</text><text x="86" y="52" fill="#EB7F1E" font-size="14" font-weight="800">02</text><text x="150" y="52" fill="#EB7F1E" font-size="14" font-weight="800">03</text><rect x="16" y="60" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="80" y="60" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="144" y="60" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/></svg>`,
+    html: id => `<section id="${id}" style="padding:80px 0;background:#fff;"><div class="container"><div style="text-align:center;margin-bottom:48px;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;">COMO FUNCIONA</p><h2 style="font-size:clamp(26px,4vw,44px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;">Processo em 3 Etapas</h2></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;">${[['01','Primeira Etapa'],['02','Segunda Etapa'],['03','Terceira Etapa']].map(([n,t])=>`<div style="background:#f9f9f7;border:1px solid #e8e8e8;border-radius:16px;padding:28px 24px;"><div style="font-size:28px;font-weight:800;color:#EB7F1E;margin-bottom:14px;">${n}</div><h3 style="font-size:16px;font-weight:700;color:#1A1A1A;margin-bottom:10px;">${t}</h3><p style="font-size:14px;color:#666;line-height:1.65;">Descreva o que acontece nesta etapa do processo.</p></div>`).join('')}</div></div></section>` },
+
+  { type:'benefits', label:'Grade de Benefícios', category:'cards', desc:'Grade 2×2 com ícone, título e descrição',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#f9f9f7"/><rect x="68" y="8" width="64" height="8" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="8" y="28" width="88" height="32" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="104" y="28" width="88" height="32" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="8" y="66" width="88" height="32" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="104" y="66" width="88" height="32" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><circle cx="22" cy="40" r="5" fill="#EB7F1E" opacity=".3"/><circle cx="118" cy="40" r="5" fill="#EB7F1E" opacity=".3"/><circle cx="22" cy="78" r="5" fill="#EB7F1E" opacity=".3"/><circle cx="118" cy="78" r="5" fill="#EB7F1E" opacity=".3"/></svg>`,
+    html: id => `<section id="${id}" style="padding:80px 0;background:#f9f9f7;"><div class="container"><div style="text-align:center;margin-bottom:48px;"><h2 style="font-size:clamp(26px,4vw,44px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:14px;">Nossos Benefícios</h2><p style="font-size:16px;color:#666;max-width:520px;margin:0 auto;line-height:1.7;">Descrição geral dos benefícios apresentados abaixo.</p></div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:840px;margin:0 auto;">${[1,2,3,4].map(n=>`<div style="background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:26px 22px;display:flex;gap:16px;align-items:flex-start;"><div style="width:42px;height:42px;border-radius:10px;background:rgba(235,127,30,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EB7F1E" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><h3 style="font-size:15px;font-weight:700;color:#1A1A1A;margin-bottom:7px;">Benefício ${n}</h3><p style="font-size:13px;color:#666;line-height:1.6;">Descrição deste benefício e como ele ajuda o usuário.</p></div></div>`).join('')}</div></div></section>` },
+
+  { type:'faq-banner', label:'Banner FAQ / Contato', category:'cta', desc:'Banner horizontal com ícone, texto e botão',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#1a1a1a" rx="0"/><circle cx="34" cy="50" r="12" fill="rgba(235,127,30,.2)"/><text x="30" y="55" fill="#EB7F1E" font-size="12" font-weight="700">?</text><rect x="54" y="38" width="60" height="7" fill="rgba(255,255,255,.75)" rx="2"/><rect x="54" y="50" width="48" height="5" fill="rgba(255,255,255,.3)" rx="2"/><rect x="144" y="38" width="48" height="24" fill="#EB7F1E" rx="8"/></svg>`,
+    html: id => `<section id="${id}" style="padding:48px 0;background:#1A1A1A;"><div class="container"><div style="display:flex;align-items:center;gap:24px;justify-content:space-between;flex-wrap:wrap;"><div style="display:flex;align-items:center;gap:20px;"><div style="width:52px;height:52px;border-radius:12px;background:rgba(235,127,30,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EB7F1E" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><h3 style="font-size:18px;font-weight:700;color:#fff;margin-bottom:4px;">Tem Dúvidas?</h3><p style="font-size:14px;color:rgba(255,255,255,.55);">Estamos aqui para ajudar você a encontrar as respostas.</p></div></div><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap;">Ver FAQs</a></div></div></section>` },
+
+  { type:'stats', label:'Estatísticas / Números', category:'layout', desc:'Linha de números e métricas em destaque',
+    thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#fff"/><rect x="68" y="10" width="64" height="8" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="14" y="34" width="40" height="18" fill="#EB7F1E" opacity=".15" rx="4"/><rect x="64" y="34" width="40" height="18" fill="#EB7F1E" opacity=".15" rx="4"/><rect x="114" y="34" width="40" height="18" fill="#EB7F1E" opacity=".15" rx="4"/><rect x="164" y="34" width="22" height="18" fill="#EB7F1E" opacity=".15" rx="4"/><rect x="14" y="57" width="32" height="5" fill="#1a1a1a" opacity=".25" rx="2"/><rect x="64" y="57" width="32" height="5" fill="#1a1a1a" opacity=".25" rx="2"/><rect x="114" y="57" width="32" height="5" fill="#1a1a1a" opacity=".25" rx="2"/><rect x="164" y="57" width="22" height="5" fill="#1a1a1a" opacity=".25" rx="2"/></svg>`,
+    html: id => `<section id="${id}" style="padding:64px 0;background:#fff;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8;"><div class="container"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;text-align:center;">${[['$13K','Benefício por Compra'],['92%','Taxa de Aprovação'],['5★','Avaliação Média'],['2024','Ano de Fundação']].map(([v,l])=>`<div><div style="font-size:clamp(28px,4vw,44px);font-weight:800;color:#EB7F1E;margin-bottom:6px;">${v}</div><div style="font-size:14px;color:#666;font-weight:500;">${l}</div></div>`).join('')}</div></div></section>` },
+];
+
 const S = {
   token: sessionStorage.getItem('hcms_tok') || null,
   all: {}, pending: {},
@@ -597,23 +723,33 @@ function showPageSelection() {
 
   const grid = document.getElementById('ps-page-grid');
   grid.innerHTML = '';
-  PAGES.forEach(p => {
+  // Merge built-in pages + custom pages from content JSON
+  const allPages = PAGES.concat((S.all.__pages__ || []).filter(cp => !PAGES.find(p => p.path === cp.path)));
+  allPages.forEach(p => {
     const card = document.createElement('div');
     card.className = 'ps-card ps-page-card';
     card.dataset.path = p.path;
     const c = Object.keys(S.pending[p.path] || {}).length;
     if (c > 0) card.classList.add('changed');
-    const previewSrc = p.iframePath || p.path;
+    const previewSrc = p.iframePath || (p.isCustom ? '/_blank.html?path=' + encodeURIComponent(p.path) : p.path);
     card.innerHTML =
       '<div class="ps-card-preview"><iframe src="' + previewSrc + '" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>' +
       '<div class="ps-card-footer">' +
-      '<div class="ps-card-name">' + escHtml(p.name) + '</div>' +
+      '<div class="ps-card-name">' + escHtml(p.name) + (p.isCustom ? ' <span style="font-size:9px;background:rgba(235,127,30,.15);color:var(--or);padding:1px 5px;border-radius:4px;font-weight:600;vertical-align:middle;">novo</span>' : '') + '</div>' +
       '<div class="ps-card-hint">' + p.path + '</div>' +
       '</div>' +
       '<span class="ps-card-badge" style="' + (c > 0 ? '' : 'display:none') + '">' + c + '</span>';
-    card.addEventListener('click', () => enterEditor(p));
+    card.addEventListener('click', () => enterEditor(Object.assign({}, p, { iframePath: previewSrc })));
     grid.appendChild(card);
   });
+
+  // New page card
+  const newCard = document.createElement('div');
+  newCard.className = 'ps-card ps-card-new';
+  newCard.style.padding = '20px 18px';
+  newCard.innerHTML = '<div class="ps-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div><div class="ps-card-name">Nova Página</div><div class="ps-card-hint">Criar do zero</div>';
+  newCard.addEventListener('click', () => { document.getElementById('np-modal').style.display = 'flex'; document.getElementById('np-name').focus(); });
+  grid.appendChild(newCard);
 
   // Scale iframes after layout
   requestAnimationFrame(() => { requestAnimationFrame(scalePreviewIframes); });
@@ -726,6 +862,18 @@ window.addEventListener('message', e => {
   }
 
   if (e.data.type === 'HE_BLOCK_CLICK') selectBlock(e.data.blockId);
+
+  // New section inserted from iframe — add to block list
+  if (e.data.type === 'HE_BLOCKS_ADD') {
+    const b = e.data.block;
+    if (b) {
+      const li = createBlockItem(b);
+      document.getElementById('blist').appendChild(li);
+      updateBadge();
+    }
+  }
+
+  if (e.data.type === 'HE_SECTION_INSERTED') { /* already handled optimistically in insertSection */ }
 
   // Live text update from inline editing
   if (e.data.type === 'HE_LIVE_TEXT') {
@@ -1152,6 +1300,107 @@ function setDeviceMode(mode) {
 }
 document.getElementById('dev-desktop').addEventListener('click', () => setDeviceMode('desktop'));
 document.getElementById('dev-mobile').addEventListener('click', () => setDeviceMode('mobile'));
+
+// ── Section picker ────────────────────────────────────────────
+let spActiveCat = '';
+
+function openSectionPicker() {
+  document.getElementById('sb-blocks-view').style.display = 'none';
+  document.getElementById('sb-sections-view').style.display = 'flex';
+  renderSectionPicker();
+}
+
+function closeSectionPicker() {
+  document.getElementById('sb-sections-view').style.display = 'none';
+  document.getElementById('sb-blocks-view').style.display = 'flex';
+}
+
+function renderSectionPicker() {
+  const list = document.getElementById('sp-list');
+  list.innerHTML = '';
+  SECTION_TEMPLATES.filter(t => !spActiveCat || t.category === spActiveCat).forEach(tpl => {
+    const card = document.createElement('div');
+    card.className = 'sp-card';
+    card.innerHTML =
+      '<div class="sp-card-thumb">' + tpl.thumb + '</div>' +
+      '<div class="sp-card-body"><div class="sp-card-name">' + escHtml(tpl.label) + '</div>' +
+      '<div class="sp-card-desc">' + escHtml(tpl.desc) + '</div></div>';
+    card.addEventListener('click', () => insertSection(tpl));
+    list.appendChild(card);
+  });
+}
+
+function insertSection(tpl) {
+  if (!S.path) return;
+  const sectionId = tpl.type + '_' + Date.now();
+  const html = tpl.html(sectionId);
+  try {
+    document.getElementById('pframe').contentWindow
+      .postMessage({ type: 'HE_INSERT_SECTION', sectionId, html }, window.location.origin);
+  } catch {}
+  // Optimistically save to pending
+  if (!S.pending[S.path]) S.pending[S.path] = {};
+  if (!S.pending[S.path].__sections__) S.pending[S.path].__sections__ = [];
+  S.pending[S.path].__sections__.push({ id: sectionId, html });
+  updateBadge();
+  closeSectionPicker();
+  toast('Seção adicionada — clique em Publicar para salvar.', 'info');
+}
+
+document.getElementById('add-section-btn').addEventListener('click', openSectionPicker);
+document.getElementById('sp-back-btn').addEventListener('click', closeSectionPicker);
+
+document.querySelectorAll('.sp-cat').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sp-cat').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    spActiveCat = btn.dataset.cat;
+    renderSectionPicker();
+  });
+});
+
+// ── HE_BLOCKS_ADD (section inserted from iframe) ──────────────
+// Handled in message listener below; find existing listener and add there.
+
+// ── New page creation ─────────────────────────────────────────
+function slugify(str) {
+  return str.toLowerCase().trim()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+document.getElementById('np-name').addEventListener('input', function () {
+  const auto = slugify(this.value);
+  document.getElementById('np-slug').value = auto;
+});
+
+document.getElementById('np-create').addEventListener('click', () => {
+  const name = document.getElementById('np-name').value.trim();
+  const slug = slugify(document.getElementById('np-slug').value || document.getElementById('np-name').value);
+  if (!name || !slug) { toast('Preencha nome e URL.', 'err'); return; }
+  const path = '/' + slug + '/';
+  const page = { name, path, isCustom: true, icon: '📄' };
+  // Save to pending as a new custom page entry
+  if (!S.pending.__pages__) S.pending.__pages__ = [];
+  if (!S.all.__pages__) S.all.__pages__ = [];
+  // Avoid duplicates
+  if (!S.all.__pages__.find(p => p.path === path) && !S.pending.__pages__.find(p => p.path === path)) {
+    S.pending.__pages__.push(page);
+    S.all.__pages__.push(page);
+  }
+  document.getElementById('np-modal').style.display = 'none';
+  document.getElementById('np-name').value = '';
+  document.getElementById('np-slug').value = '';
+  updateBadge();
+  enterEditor(Object.assign({}, page, { iframePath: '/_blank.html?path=' + encodeURIComponent(path) }));
+});
+
+document.getElementById('np-cancel').addEventListener('click', () => {
+  document.getElementById('np-modal').style.display = 'none';
+});
+document.getElementById('np-overlay').addEventListener('click', () => {
+  document.getElementById('np-modal').style.display = 'none';
+});
 
 // ── Resize: rescale preview iframes ──────────────────────────
 window.addEventListener('resize', scalePreviewIframes);
