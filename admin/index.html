@@ -373,7 +373,15 @@ document.getElementById('out-btn').addEventListener('click', () => {
 });
 
 document.getElementById('prev-btn').addEventListener('click', () => {
-  if (S.path) window.open(S.path, '_blank');
+  if (!S.path) return;
+  // Merge published + pending so preview tab shows all changes, including unsaved ones
+  const merged = JSON.parse(JSON.stringify(S.all));
+  for (const [p, ch] of Object.entries(S.pending)) {
+    if (!merged[p]) merged[p] = {};
+    for (const [x, ov] of Object.entries(ch)) merged[p][x] = ov;
+  }
+  localStorage.setItem('hcms_preview_session', JSON.stringify(merged));
+  window.open(S.path, '_blank');
 });
 
 // ── Init editor ───────────────────────────────────────────────

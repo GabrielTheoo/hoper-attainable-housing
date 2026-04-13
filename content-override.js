@@ -33,12 +33,14 @@
 
   // ── Text helpers (preserve child elements like icons) ─────────
   function getDirectText(el) {
-    let t = '';
+    const parts = [];
     el.childNodes.forEach(function (n) {
-      if (n.nodeType === Node.TEXT_NODE) t += n.textContent;
+      if (n.nodeType === Node.TEXT_NODE) {
+        const t = n.textContent.trim();
+        if (t) parts.push(t);
+      }
     });
-    t = t.trim();
-    return t || el.textContent.trim();
+    return parts.join(' ') || el.textContent.trim();
   }
 
   function applyText(el, newText) {
@@ -49,35 +51,54 @@
     if (tNodes.length > 0) {
       tNodes[0].textContent = newText;
       for (let i = 1; i < tNodes.length; i++) tNodes[i].textContent = '';
+      // Remove orphaned <br> elements — they create extra spacing when text
+      // nodes split across them are merged into the first node
+      Array.from(el.childNodes).forEach(function (n) {
+        if (n.nodeType === 1 && n.tagName === 'BR') n.remove();
+      });
     } else {
       el.textContent = newText;
     }
   }
 
   // ── Apply stored overrides (regular visitors) ─────────────────
+  function applyOverrideMap(overrides) {
+    for (const [xpath, ov] of Object.entries(overrides)) {
+      const el = byXPath(xpath);
+      if (!el) continue;
+      if (ov.text !== undefined) applyText(el, ov.text);
+      if (ov.color) el.style.color = ov.color;
+      if (ov.src !== undefined && el.tagName.toLowerCase() === 'img') {
+        el.src = ov.src;
+      }
+      if (ov.svgContent !== undefined && el.tagName.toLowerCase() === 'svg') {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = ov.svgContent;
+        const newEl = tmp.firstElementChild;
+        if (newEl) el.replaceWith(newEl);
+      }
+    }
+  }
+
   async function applyOverrides() {
+    const path = window.location.pathname;
     try {
       const res = await fetch('/api/content', { cache: 'no-store' });
-      if (!res.ok) return;
-      const all = await res.json();
-      const path = window.location.pathname;
-      const overrides = all[path] || all[path.replace(/\/$/, '')] || all[path + '/'] || {};
-      for (const [xpath, ov] of Object.entries(overrides)) {
-        const el = byXPath(xpath);
-        if (!el) continue;
-        if (ov.text !== undefined) applyText(el, ov.text);
-        if (ov.color) el.style.color = ov.color;
-        if (ov.src !== undefined && el.tagName.toLowerCase() === 'img') {
-          el.src = ov.src;
-        }
-        if (ov.svgContent !== undefined && el.tagName.toLowerCase() === 'svg') {
-          const tmp = document.createElement('div');
-          tmp.innerHTML = ov.svgContent;
-          const newEl = tmp.firstElementChild;
-          if (newEl) el.replaceWith(newEl);
-        }
+      if (res.ok) {
+        const all = await res.json();
+        const overrides = all[path] || all[path.replace(/\/$/, '')] || all[path + '/'] || {};
+        applyOverrideMap(overrides);
       }
     } catch { /* silent fail on non-Vercel environments */ }
+    // Apply admin preview overrides (pending changes written by admin panel before opening tab)
+    try {
+      const raw = localStorage.getItem('hcms_preview_session');
+      if (raw) {
+        const all = JSON.parse(raw);
+        const overrides = all[path] || all[path.replace(/\/$/, '')] || all[path + '/'] || {};
+        applyOverrideMap(overrides);
+      }
+    } catch {}
   }
 
   // ── Edit mode (when inside admin iframe) ──────────────────────
@@ -101,9 +122,9 @@
     if (el.closest('script,style,noscript')) return false;
     const tag = el.tagName.toLowerCase();
     if (tag === 'svg') {
-      // Use rendered size — skip icons that display smaller than 28px
+      // Use rendered size — skip tiny decorative icons (≤18px: stars, arrows, social)
       const rect = el.getBoundingClientRect();
-      if (rect.width > 0 && rect.width < 28) return false;
+      if (rect.width > 0 && rect.width <= 18) return false;
       return true;
     }
     if (tag === 'img') {
