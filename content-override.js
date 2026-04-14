@@ -264,6 +264,15 @@
       var xp = getXPath(el);
       el.setAttribute('data-hm', '1');
       editableMap.set(xp, el);
+      if (el.hasAttribute('data-he-img') && el.parentElement) {
+        if (getComputedStyle(el.parentElement).position === 'static') el.parentElement.style.position = 'relative';
+        var hint2 = document.createElement('span');
+        hint2.className = 'he-img-hint';
+        hint2.textContent = '📷 Trocar imagem';
+        el.parentElement.appendChild(hint2);
+        el.addEventListener('mouseenter', function() { hint2.style.opacity = '1'; });
+        el.addEventListener('mouseleave', function() { hint2.style.opacity = '0'; });
+      }
       el.addEventListener('click', function (e) {
         e.preventDefault(); e.stopPropagation();
         if (activeEditEl) commitInlineEdit();
@@ -327,6 +336,7 @@
       '[data-he]:hover{outline:2px dashed #EB7F1E!important;outline-offset:3px!important;background:rgba(235,127,30,.06)!important;}' +
       '[data-he].he-editing{outline:2px solid #EB7F1E!important;outline-offset:3px!important;background:rgba(235,127,30,.04)!important;cursor:text!important;}' +
       '[data-hm]:hover{outline:2px dashed #EB7F1E!important;outline-offset:3px!important;cursor:pointer!important;}' +
+      '.he-img-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:600;font-family:sans-serif;padding:6px 12px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap;z-index:10;}' +
       '[data-hb]{transition:outline .1s;}' +
       '[data-hb]:hover{outline:2px solid rgba(235,127,30,.4)!important;outline-offset:-2px!important;cursor:pointer!important;}' +
       '[data-hb].hb-sel{outline:2px solid #EB7F1E!important;outline-offset:-2px!important;}' +
@@ -387,6 +397,18 @@
       const xpath = getXPath(el);
       el.setAttribute('data-hm', '1');
       editableMap.set(xpath, el);
+      // Show hover hint for background/placeholder images
+      if (el.hasAttribute('data-he-img') && el.parentElement) {
+        if (getComputedStyle(el.parentElement).position === 'static') {
+          el.parentElement.style.position = 'relative';
+        }
+        var hint = document.createElement('span');
+        hint.className = 'he-img-hint';
+        hint.textContent = '📷 Trocar imagem';
+        el.parentElement.appendChild(hint);
+        el.addEventListener('mouseenter', function() { hint.style.opacity = '1'; });
+        el.addEventListener('mouseleave', function() { hint.style.opacity = '0'; });
+      }
       el.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -540,7 +562,11 @@
         if (e.origin !== window.location.origin) return;
         if (e.data.type !== 'HE_ENABLE') return;
         window.removeEventListener('message', init);
-        applyOverrides().then(function () { enableEditMode(e.data.restrict || null); });
+        var pendingOv = e.data.pendingOverrides || null;
+        applyOverrides().then(function () {
+          if (pendingOv) applyOverrideMap(pendingOv);
+          enableEditMode(e.data.restrict || null);
+        });
       });
     } else {
       applyOverrides();
