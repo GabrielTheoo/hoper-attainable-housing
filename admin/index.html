@@ -1578,7 +1578,10 @@ document.getElementById('del-page-confirm').addEventListener('click', () => {
   S.all.__pages__ = (S.all.__pages__ || []).filter(p => p.path !== _delPagePath);
   if (!S.pending.__pages__) S.pending.__pages__ = [];
   S.pending.__pages__ = S.all.__pages__.slice();
-  delete S.pending[_delPagePath];
+  // Mark as deleted so publish removes the key from the server
+  S.pending[_delPagePath] = { __deleted__: true };
+  // Clear local published data immediately so it can't bleed into a new page with the same path
+  delete S.all[_delPagePath];
   document.getElementById('del-page-modal').style.display = 'none';
   _delPagePath = null;
   updateBadge();
@@ -1593,6 +1596,7 @@ document.getElementById('pub-btn').addEventListener('click', async () => {
   try {
     const merged = JSON.parse(JSON.stringify(S.all));
     for (const [p, ch] of Object.entries(S.pending)) {
+      if (ch && ch.__deleted__) { delete merged[p]; continue; } // page was deleted — remove from server
       if (!merged[p]) merged[p] = {};
       for (const [x, ov] of Object.entries(ch)) {
         if (x === '__blocks__') {
