@@ -315,7 +315,7 @@
     else { if (inZone(el, 'nav,header,footer')) return false; }
     const tag = el.tagName.toLowerCase();
     if (tag === 'svg') { const r = el.getBoundingClientRect(); if (r.width > 0 && r.width <= 18) return false; return true; }
-    if (tag === 'img') { if (!el.src || el.src === window.location.href) return false; return true; }
+    if (tag === 'img') { if (el.hasAttribute('data-he-img')) return true; if (!el.src || el.src === window.location.href) return false; return true; }
     return false;
   }
 
@@ -501,6 +501,28 @@
           newSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         window.parent.postMessage({ type: 'HE_SECTION_INSERTED', sectionId: e.data.sectionId }, window.location.origin);
+        return;
+      }
+
+      if (e.data.type === 'HE_REMOVE_SECTION') {
+        const el = findBlockById(e.data.blockId);
+        if (el) el.remove();
+        return;
+      }
+
+      if (e.data.type === 'HE_SET_OVERLAY') {
+        const el = findBlockById(e.data.blockId);
+        if (!el) return;
+        const overlay = el.querySelector('[data-he-overlay]');
+        if (overlay) overlay.style.background = e.data.bg;
+        return;
+      }
+
+      if (e.data.type === 'HE_SET_BG_IMG') {
+        const el = findBlockById(e.data.blockId);
+        if (!el) return;
+        const img = el.querySelector('[data-he-img]');
+        if (img) { if (e.data.src) img.src = e.data.src; if (e.data.opacity != null) img.style.opacity = e.data.opacity; }
         return;
       }
     });

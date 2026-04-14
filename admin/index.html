@@ -64,6 +64,8 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
 .ps-card-hint{font-size:11px;color:var(--dim);line-height:1.4;}
 .ps-card-badge{position:absolute;top:8px;right:8px;background:var(--or);color:#fff;border-radius:999px;font-size:10px;font-weight:700;padding:2px 8px;display:none;z-index:3;}
 .ps-card.changed .ps-card-badge{display:block;}
+.ps-card-del{position:absolute;top:8px;left:8px;z-index:4;background:rgba(229,62,62,.85);border:none;color:#fff;border-radius:50%;width:22px;height:22px;font-size:14px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;padding:0;}
+.ps-card:hover .ps-card-del{display:flex;}
 
 /* ── SECTION PICKER ─────────────────────────── */
 #sb-sections-view{display:none;flex-direction:column;flex:1;overflow:hidden;}
@@ -150,6 +152,10 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
 .bi.dragging{opacity:.4;}
 .bi-grip{cursor:grab;color:var(--dim);flex-shrink:0;opacity:.5;}
 .bi-grip:active{cursor:grabbing;}
+.ctx-item{display:block;width:100%;text-align:left;background:none;border:none;padding:7px 12px;font-size:12px;color:var(--text);cursor:pointer;border-radius:6px;}
+.ctx-item:hover{background:rgba(255,255,255,.06);}
+.ctx-item.ctx-danger{color:#fc8181;}
+.ctx-item:disabled{opacity:.35;cursor:default;pointer-events:none;}
 .bi-arr{flex-shrink:0;color:var(--dim);transition:transform .18s;opacity:.5;}
 .bi-arr.open{transform:rotate(90deg);}
 .bi-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -515,6 +521,31 @@ select.ep-sel option{background:#1e1e1e;} input.ep-num{width:100%;}
               <span class="ep-lbl">CSS personalizado</span>
               <textarea id="b-custom-css" class="ep-input code" placeholder="background: linear-gradient(...);"></textarea>
             </div>
+            <div class="ep-sec" id="bg-img-sec" style="display:none;">
+              <span class="ep-lbl">Imagem de fundo</span>
+              <button id="bg-img-pick" class="ep-input" style="width:100%;text-align:left;cursor:pointer;background:#f5f5f3;border:1px solid #ddd;padding:7px 10px;border-radius:6px;font-size:12px;color:#555;">Clique para selecionar imagem</button>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                <span class="ep-lbl" style="margin:0;white-space:nowrap;">Opacidade</span>
+                <input type="range" id="bg-img-opacity" min="0" max="1" step="0.05" value="0.5" style="flex:1;">
+                <span id="bg-img-opacity-val" style="font-size:11px;color:#888;min-width:28px;">50%</span>
+              </div>
+            </div>
+            <div class="ep-sec" id="overlay-sec" style="display:none;">
+              <span class="ep-lbl">Cobertura (overlay)</span>
+              <select id="overlay-type" class="ep-input" style="margin-bottom:6px;">
+                <option value="none">Nenhuma</option>
+                <option value="gradient-diag" selected>Gradiente diagonal</option>
+                <option value="gradient-horiz">Gradiente horizontal</option>
+                <option value="solid">Sólida</option>
+              </select>
+              <div class="cr">
+                <input type="color" id="overlay-col1" class="col-swatch" value="#0a0a0a" title="Cor principal"/>
+                <input type="color" id="overlay-col2" class="col-swatch" value="#0a0a0a" title="Cor secundária" style="margin-left:4px;"/>
+                <input type="range" id="overlay-opacity" min="0" max="1" step="0.05" value="0.85" style="flex:1;margin-left:8px;">
+                <span id="overlay-opacity-val" style="font-size:11px;color:#888;min-width:28px;">85%</span>
+              </div>
+              <button id="overlay-apply" style="margin-top:6px;width:100%;padding:7px;background:#EB7F1E;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">Aplicar overlay</button>
+            </div>
           </div>
 
         </div><!-- /ep-body -->
@@ -528,6 +559,30 @@ select.ep-sel option{background:#1e1e1e;} input.ep-num{width:100%;}
 </div>
 
 <div id="toast"></div>
+
+<!-- Block context menu -->
+<div id="block-ctx-menu" style="display:none;position:fixed;z-index:9990;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:4px;box-shadow:0 8px 32px rgba(0,0,0,.25);min-width:160px;">
+  <button class="ctx-item" id="ctx-move-up">↑ Mover para cima</button>
+  <button class="ctx-item" id="ctx-move-down">↓ Mover para baixo</button>
+  <hr style="border:none;border-top:1px solid var(--border);margin:3px 0;">
+  <button class="ctx-item ctx-danger" id="ctx-delete">Excluir seção</button>
+</div>
+
+<!-- Hidden file input for bg image pick -->
+<input type="file" id="bg-img-file" accept="image/png,image/jpeg,image/webp" style="display:none;">
+
+<!-- Delete page confirmation modal -->
+<div id="del-page-modal" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);" id="del-page-overlay"></div>
+  <div style="position:relative;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;width:360px;max-width:calc(100vw - 32px);z-index:1;">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Excluir página?</h3>
+    <p id="del-page-msg" style="font-size:13px;color:var(--dim);margin-bottom:22px;"></p>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button id="del-page-cancel" style="padding:8px 18px;border-radius:8px;background:transparent;border:1px solid var(--border);color:var(--text);cursor:pointer;font-size:13px;">Cancelar</button>
+      <button id="del-page-confirm" style="padding:8px 18px;border-radius:8px;background:#e53e3e;border:none;color:#fff;cursor:pointer;font-size:13px;font-weight:600;">Excluir</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const PAGES = [
@@ -551,11 +606,11 @@ const PAGES = [
 const SECTION_TEMPLATES = [
   { type:'hero', label:'Hero Banner', category:'hero', desc:'Fundo escuro, título, subtítulo e botões',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#1a1a1a"/><rect x="24" y="28" width="90" height="11" fill="rgba(255,255,255,.75)" rx="2"/><rect x="24" y="44" width="70" height="7" fill="rgba(255,255,255,.35)" rx="2"/><rect x="24" y="56" width="52" height="3" fill="rgba(255,255,255,.2)" rx="2"/><rect x="24" y="68" width="50" height="18" fill="#EB7F1E" rx="9"/><rect x="80" y="68" width="46" height="18" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" rx="9"/></svg>`,
-    html: id => `<section id="${id}" style="min-height:520px;background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);position:relative;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden;"><div class="container"><div style="max-width:700px;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;">LABEL DA SEÇÃO</p><h2 style="font-size:clamp(32px,4.5vw,56px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-0.5px;margin-bottom:20px;">Seu Título Principal<br>Vai Aqui</h2><p style="font-size:17px;color:rgba(255,255,255,.7);line-height:1.75;max-width:560px;margin-bottom:32px;">Adicione sua descrição aqui. Explique o valor do seu produto ou serviço de forma clara e direta.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;box-shadow:0 8px 32px rgba(235,127,30,.35);">Comece Agora</a><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;border:2px solid rgba(255,255,255,.45);color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
+    html: id => `<section id="${id}" style="min-height:520px;background:#1a1a1a;position:relative;display:flex;align-items:center;padding:calc(var(--nav-h,90px) + 40px) 0 80px;overflow:hidden;"><img data-he-img="1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.5;"><div data-he-overlay="1" style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,.85) 0%,rgba(10,10,10,.55) 100%);z-index:1;"></div><div class="container" style="position:relative;z-index:2;"><div style="max-width:700px;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;">LABEL DA SEÇÃO</p><h2 style="font-size:clamp(32px,4.5vw,56px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-0.5px;margin-bottom:20px;">Seu Título Principal<br>Vai Aqui</h2><p style="font-size:17px;color:rgba(255,255,255,.7);line-height:1.75;max-width:560px;margin-bottom:32px;">Adicione sua descrição aqui. Explique o valor do seu produto ou serviço de forma clara e direta.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;box-shadow:0 8px 32px rgba(235,127,30,.35);">Comece Agora</a><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;border:2px solid rgba(255,255,255,.45);color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
 
   { type:'page-hero', label:'Page Hero', category:'hero', desc:'Cabeçalho de página interna com imagem de fundo',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#111"/><rect x="24" y="32" width="40" height="5" fill="#EB7F1E" rx="2"/><rect x="24" y="42" width="80" height="11" fill="rgba(255,255,255,.75)" rx="2"/><rect x="24" y="58" width="64" height="6" fill="rgba(255,255,255,.3)" rx="2"/><rect x="24" y="72" width="46" height="16" fill="#EB7F1E" rx="8"/></svg>`,
-    html: id => `<section id="${id}" style="min-height:400px;background:#1A1A1A;position:relative;overflow:hidden;display:flex;align-items:center;padding:calc(90px + 40px) 0 80px;"><div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.92) 0%,rgba(10,10,10,.6) 100%);z-index:1;"></div><div class="container" style="position:relative;z-index:2;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><span style="display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;"></span>Label da Página</p><h1 style="font-size:clamp(32px,5vw,60px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:700px;">Título da Página</h1><p style="font-size:17px;color:rgba(255,255,255,.72);line-height:1.75;max-width:580px;margin-bottom:32px;">Subtítulo descritivo da página vai aqui.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></section>` },
+    html: id => `<section id="${id}" style="min-height:400px;background:#1A1A1A;position:relative;overflow:hidden;display:flex;align-items:center;padding:calc(var(--nav-h,90px) + 40px) 0 80px;"><img data-he-img="1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.5;"><div data-he-overlay="1" style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.92) 0%,rgba(10,10,10,.6) 100%);z-index:1;"></div><div class="container" style="position:relative;z-index:2;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><span style="display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;"></span>Label da Página</p><h1 style="font-size:clamp(32px,5vw,60px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:700px;">Título da Página</h1><p style="font-size:17px;color:rgba(255,255,255,.72);line-height:1.75;max-width:580px;margin-bottom:32px;">Subtítulo descritivo da página vai aqui.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></section>` },
 
   { type:'features', label:'Cards de Funcionalidades', category:'cards', desc:'Grade de 3 cards com ícone, título e descrição',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#f9f9f7"/><rect x="68" y="10" width="64" height="8" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="50" y="22" width="100" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="8" y="34" width="56" height="56" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="72" y="34" width="56" height="56" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="136" y="34" width="56" height="56" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><circle cx="36" cy="48" r="7" fill="#EB7F1E" opacity=".2"/><circle cx="100" cy="48" r="7" fill="#EB7F1E" opacity=".2"/><circle cx="164" cy="48" r="7" fill="#EB7F1E" opacity=".2"/><rect x="16" y="62" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="80" y="62" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="144" y="62" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="16" y="70" width="32" height="3" fill="#1a1a1a" opacity=".15" rx="1"/><rect x="80" y="70" width="32" height="3" fill="#1a1a1a" opacity=".15" rx="1"/><rect x="144" y="70" width="32" height="3" fill="#1a1a1a" opacity=".15" rx="1"/></svg>`,
@@ -563,11 +618,11 @@ const SECTION_TEMPLATES = [
 
   { type:'split', label:'Texto + Imagem', category:'layout', desc:'Duas colunas: texto à esquerda, imagem à direita',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#fff"/><rect x="12" y="20" width="40" height="5" fill="#EB7F1E" opacity=".7" rx="2"/><rect x="12" y="30" width="78" height="9" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="12" y="44" width="70" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="12" y="52" width="60" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="12" y="60" width="50" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="12" y="74" width="44" height="16" fill="#EB7F1E" rx="8"/><rect x="106" y="12" width="82" height="76" fill="#e8e8e8" rx="8"/></svg>`,
-    html: id => `<section id="${id}" style="padding:80px 0;background:#fff;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><ul style="list-style:none;padding:0;margin-bottom:28px;">${[1,2,3].map(n=>`<li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;"><span style="width:20px;height:20px;border-radius:50%;background:rgba(235,127,30,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EB7F1E" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><span style="font-size:15px;color:#383838;line-height:1.5;">Item de benefício ${n}</span></li>`).join('')}</ul><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div><div style="background:#f0f0f0;border-radius:16px;height:380px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:14px;">Imagem Aqui</div></div></div></section>` },
+    html: id => `<section id="${id}" style="padding:80px 0;background:#fff;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><ul style="list-style:none;padding:0;margin-bottom:28px;">${[1,2,3].map(n=>`<li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;"><span style="width:20px;height:20px;border-radius:50%;background:rgba(235,127,30,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EB7F1E" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><span style="font-size:15px;color:#383838;line-height:1.5;">Item de benefício ${n}</span></li>`).join('')}</ul><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div><div style="border-radius:16px;height:380px;overflow:hidden;position:relative;background:#e8e8e8;"><img data-he-img="1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div></div></div></section>` },
 
   { type:'split-reverse', label:'Imagem + Texto', category:'layout', desc:'Duas colunas: imagem à esquerda, texto à direita',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#f9f9f7"/><rect x="12" y="12" width="82" height="76" fill="#e8e8e8" rx="8"/><rect x="110" y="20" width="40" height="5" fill="#EB7F1E" opacity=".7" rx="2"/><rect x="110" y="30" width="78" height="9" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="110" y="44" width="70" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="110" y="52" width="60" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="110" y="74" width="44" height="16" fill="#EB7F1E" rx="8"/></svg>`,
-    html: id => `<section id="${id}" style="padding:80px 0;background:#f9f9f7;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div style="background:#e8e8e8;border-radius:16px;height:380px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:14px;">Imagem Aqui</div><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
+    html: id => `<section id="${id}" style="padding:80px 0;background:#f9f9f7;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div style="border-radius:16px;height:380px;overflow:hidden;position:relative;background:#e8e8e8;"><img data-he-img="1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
 
   { type:'cta', label:'Chamada para Ação', category:'cta', desc:'Seção centralizada com título e botão de destaque',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#EB7F1E" rx="0"/><rect x="60" y="22" width="80" height="10" fill="rgba(255,255,255,.85)" rx="2"/><rect x="40" y="38" width="120" height="5" fill="rgba(255,255,255,.45)" rx="2"/><rect x="70" y="50" width="60" height="5" fill="rgba(255,255,255,.35)" rx="2"/><rect x="75" y="64" width="50" height="20" fill="#fff" rx="10"/></svg>`,
@@ -731,15 +786,16 @@ function showPageSelection() {
     card.dataset.path = p.path;
     const c = Object.keys(S.pending[p.path] || {}).length;
     if (c > 0) card.classList.add('changed');
-    const previewSrc = p.iframePath || (p.isCustom ? '/_blank.html?path=' + encodeURIComponent(p.path) : p.path);
+    const previewSrc = p.iframePath || p.path;
     card.innerHTML =
       '<div class="ps-card-preview"><iframe src="' + previewSrc + '" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>' +
       '<div class="ps-card-footer">' +
       '<div class="ps-card-name">' + escHtml(p.name) + (p.isCustom ? ' <span style="font-size:9px;background:rgba(235,127,30,.15);color:var(--or);padding:1px 5px;border-radius:4px;font-weight:600;vertical-align:middle;">novo</span>' : '') + '</div>' +
       '<div class="ps-card-hint">' + p.path + '</div>' +
       '</div>' +
-      '<span class="ps-card-badge" style="' + (c > 0 ? '' : 'display:none') + '">' + c + '</span>';
-    card.addEventListener('click', () => enterEditor(Object.assign({}, p, { iframePath: previewSrc })));
+      '<span class="ps-card-badge" style="' + (c > 0 ? '' : 'display:none') + '">' + c + '</span>' +
+      (p.isCustom ? '<button class="ps-card-del" title="Excluir página" onclick="event.stopPropagation();confirmDeletePage(\'' + p.path.replace(/'/g,"\\'") + '\',\'' + escHtml(p.name).replace(/'/g,"\\'") + '\')">×</button>' : '');
+    card.addEventListener('click', () => enterEditor(p));
     grid.appendChild(card);
   });
 
@@ -1163,6 +1219,7 @@ function createBlockItem(b) {
     else expandBlock(b.blockId);
     selectBlock(b.blockId);
   });
+  row.addEventListener('contextmenu', e => { e.preventDefault(); openBlockCtxMenu(e, b.blockId); });
   li.draggable = true;
   li.addEventListener('dragstart', e => { e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain',b.blockId); li.classList.add('dragging'); });
   li.addEventListener('dragend', () => li.classList.remove('dragging'));
@@ -1239,6 +1296,11 @@ function openBlockPanel(bid) {
   document.getElementById('bp-left').value   = parseInt(parseStyleProp(css,'padding-left'))   || '';
   document.getElementById('bp-radius').value = parseInt(parseStyleProp(css,'border-radius'))  || '';
   document.getElementById('b-custom-css').value = css;
+  // Show bg/overlay controls only for sections that have those elements
+  const sections = (S.pending[S.path]||{}).__sections__ || (S.all[S.path]||{}).__sections__ || [];
+  const sec = sections.find(s => s && s.id === bid);
+  document.getElementById('bg-img-sec').style.display = (sec && sec.html.includes('data-he-img')) ? '' : 'none';
+  document.getElementById('overlay-sec').style.display = (sec && sec.html.includes('data-he-overlay')) ? '' : 'none';
   document.getElementById('ep').classList.add('open');
 }
 
@@ -1254,6 +1316,135 @@ function reorderBlocks(fromId, toId) {
   try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_REORDER',order},window.location.origin); } catch {}
   toast('Bloco movido — clique em Publicar para salvar.','info');
 }
+
+// ── Block context menu ────────────────────────────────────────
+let _ctxBid = null;
+function openBlockCtxMenu(e, bid) {
+  _ctxBid = bid;
+  const menu = document.getElementById('block-ctx-menu');
+  const idx = S.blocks.findIndex(b => b.blockId === bid);
+  document.getElementById('ctx-move-up').disabled   = idx <= 0;
+  document.getElementById('ctx-move-down').disabled = idx >= S.blocks.length - 1;
+  // Only show delete for inserted sections
+  const sections = (S.pending[S.path]||{}).__sections__ || (S.all[S.path]||{}).__sections__ || [];
+  const isSection = sections.some(s => s && s.id === bid);
+  document.getElementById('ctx-delete').style.display = isSection ? '' : 'none';
+  document.querySelector('#block-ctx-menu hr').style.display = isSection ? '' : 'none';
+  menu.style.display = 'block';
+  const x = Math.min(e.clientX, window.innerWidth - 180);
+  const y = Math.min(e.clientY, window.innerHeight - 140);
+  menu.style.left = x + 'px'; menu.style.top = y + 'px';
+}
+document.addEventListener('click', () => { document.getElementById('block-ctx-menu').style.display = 'none'; });
+document.getElementById('ctx-move-up').addEventListener('click', () => {
+  if (!_ctxBid) return;
+  const idx = S.blocks.findIndex(b => b.blockId === _ctxBid);
+  if (idx > 0) reorderBlocks(_ctxBid, S.blocks[idx - 1].blockId);
+});
+document.getElementById('ctx-move-down').addEventListener('click', () => {
+  if (!_ctxBid) return;
+  const idx = S.blocks.findIndex(b => b.blockId === _ctxBid);
+  if (idx < S.blocks.length - 1) reorderBlocks(S.blocks[idx + 1].blockId, _ctxBid);
+});
+document.getElementById('ctx-delete').addEventListener('click', () => { if (_ctxBid) deleteSection(_ctxBid); });
+
+function deleteSection(bid) {
+  // Remove from pending sections
+  if (!S.pending[S.path]) S.pending[S.path] = {};
+  const cur = S.pending[S.path].__sections__ || (S.all[S.path]||{}).__sections__ || [];
+  S.pending[S.path].__sections__ = cur.filter(s => s && s.id !== bid);
+  // Remove from block list
+  S.blocks = S.blocks.filter(b => b.blockId !== bid);
+  if (S.selectedBlock === bid) { S.selectedBlock = null; closePanel(); }
+  clearBlockList(); buildBlockList(S.blocks);
+  updateBadge();
+  try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_REMOVE_SECTION', blockId:bid}, window.location.origin); } catch {}
+  toast('Seção excluída — clique em Publicar para salvar.', 'info');
+}
+
+// ── Overlay & background image controls ──────────────────────
+function getOverrideBg() {
+  const type = document.getElementById('overlay-type').value;
+  const c1 = document.getElementById('overlay-col1').value;
+  const c2 = document.getElementById('overlay-col2').value;
+  const op = parseFloat(document.getElementById('overlay-opacity').value);
+  const r1 = hexToRgba(c1, op), r2 = hexToRgba(c2, Math.max(0, op - 0.25));
+  if (type === 'none') return 'none';
+  if (type === 'solid') return hexToRgba(c1, op);
+  if (type === 'gradient-horiz') return `linear-gradient(to right,${r1} 0%,${r2} 100%)`;
+  return `linear-gradient(135deg,${r1} 0%,${r2} 100%)`;
+}
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
+}
+document.getElementById('overlay-opacity').addEventListener('input', function() {
+  document.getElementById('overlay-opacity-val').textContent = Math.round(this.value * 100) + '%';
+});
+document.getElementById('overlay-apply').addEventListener('click', () => {
+  if (!S.selectedBlock) return;
+  const bg = getOverrideBg();
+  try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_SET_OVERLAY', blockId:S.selectedBlock, bg}, window.location.origin); } catch {}
+  // Persist in pending sections html
+  const sections = S.pending[S.path].__sections__ || [];
+  const sec = sections.find(s => s && s.id === S.selectedBlock);
+  if (sec) {
+    sec.html = sec.html.replace(/(<\[^>]*data-he-overlay[^>]*style=")[^"]*(")/,
+      (m, pre, post) => pre + sec.html.match(/style="([^"]*)"/)?.[1].replace(/background:[^;]+;?/, '') + 'background:' + bg + ';' + post);
+  }
+  updateBadge();
+  toast('Overlay aplicado.', 'info');
+});
+
+// ── Background image pick for sections ───────────────────────
+document.getElementById('bg-img-opacity').addEventListener('input', function() {
+  document.getElementById('bg-img-opacity-val').textContent = Math.round(this.value * 100) + '%';
+  if (S.selectedBlock) {
+    try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_SET_BG_IMG', blockId:S.selectedBlock, src:null, opacity:parseFloat(this.value)}, window.location.origin); } catch {}
+  }
+});
+document.getElementById('bg-img-pick').addEventListener('click', () => document.getElementById('bg-img-file').click());
+document.getElementById('bg-img-file').addEventListener('change', async function() {
+  const file = this.files[0]; if (!file || !S.selectedBlock) return;
+  const st = document.getElementById('bg-img-pick');
+  st.textContent = 'Enviando...';
+  try {
+    const b64 = await new Promise((res,rej) => { const r = new FileReader(); r.onload=e=>res(e.target.result.split(',')[1]); r.onerror=rej; r.readAsDataURL(file); });
+    const resp = await fetch('/api/upload', {method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+S.token}, body:JSON.stringify({filename:file.name,base64:b64,mimeType:file.type})});
+    const j = await resp.json(); if (!j.url) throw new Error('no url');
+    const opacity = parseFloat(document.getElementById('bg-img-opacity').value);
+    try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_SET_BG_IMG', blockId:S.selectedBlock, src:j.url, opacity}, window.location.origin); } catch {}
+    // Persist src in section html
+    const sections = S.pending[S.path].__sections__ || [];
+    const sec = sections.find(s => s && s.id === S.selectedBlock);
+    if (sec) sec.html = sec.html.replace(/(<img[^>]*data-he-img[^>]*src=")[^"]*(")/g, '$1' + j.url + '$2');
+    updateBadge();
+    st.textContent = '✓ ' + file.name;
+  } catch { st.textContent = 'Erro no upload.'; }
+  this.value = '';
+});
+
+// ── Delete page ───────────────────────────────────────────────
+let _delPagePath = null;
+function confirmDeletePage(path, name) {
+  _delPagePath = path;
+  document.getElementById('del-page-msg').textContent = 'Tem certeza que deseja excluir a página "' + name + '"? Esta ação não pode ser desfeita.';
+  document.getElementById('del-page-modal').style.display = 'flex';
+}
+document.getElementById('del-page-cancel').addEventListener('click', () => { document.getElementById('del-page-modal').style.display = 'none'; _delPagePath = null; });
+document.getElementById('del-page-overlay').addEventListener('click', () => { document.getElementById('del-page-modal').style.display = 'none'; _delPagePath = null; });
+document.getElementById('del-page-confirm').addEventListener('click', () => {
+  if (!_delPagePath) return;
+  S.all.__pages__ = (S.all.__pages__ || []).filter(p => p.path !== _delPagePath);
+  if (!S.pending.__pages__) S.pending.__pages__ = [];
+  S.pending.__pages__ = S.all.__pages__.slice();
+  delete S.pending[_delPagePath];
+  document.getElementById('del-page-modal').style.display = 'none';
+  _delPagePath = null;
+  updateBadge();
+  showPageSelection();
+  toast('Página excluída — clique em Publicar para salvar.', 'info');
+});
 
 // ── Publish ───────────────────────────────────────────────────
 document.getElementById('pub-btn').addEventListener('click', async () => {
@@ -1392,7 +1583,7 @@ document.getElementById('np-create').addEventListener('click', () => {
   document.getElementById('np-name').value = '';
   document.getElementById('np-slug').value = '';
   updateBadge();
-  enterEditor(Object.assign({}, page, { iframePath: '/_blank.html?path=' + encodeURIComponent(path) }));
+  enterEditor(page);
 });
 
 document.getElementById('np-cancel').addEventListener('click', () => {
