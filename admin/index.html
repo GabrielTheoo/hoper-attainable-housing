@@ -1165,7 +1165,6 @@ document.getElementById('rbtn').addEventListener('click', () => { if (S.panelMod
 
 function applyBlock() {
   if (!S.selectedBlock || !S.path) return;
-  pushUndo();
   const bg = document.getElementById('bhex').value.trim() || document.getElementById('bcol').value;
   const pt = document.getElementById('bp-top').value, pr = document.getElementById('bp-right').value;
   const pb = document.getElementById('bp-bottom').value, pl = document.getElementById('bp-left').value;
@@ -1179,6 +1178,9 @@ function applyBlock() {
     if (radius !== '') parts.push('border-radius:'+radius+'px');
     style = parts.join(';');
   }
+  // Guard: never send an empty style — that used to wipe all inline styles
+  if (!style) { toast('Preencha ao menos um campo antes de aplicar.', 'info'); return; }
+  pushUndo();
   const bpend = getBlocksPending(S.path);
   if (!bpend[S.selectedBlock]) bpend[S.selectedBlock] = {};
   bpend[S.selectedBlock].style = style;
@@ -1191,7 +1193,8 @@ function resetBlock() {
   if (!S.selectedBlock || !S.path) return;
   const bp = (S.pending[S.path] || {}).__blocks__; if (bp && bp[S.selectedBlock]) delete bp[S.selectedBlock];
   const ab = (S.all[S.path] || {}).__blocks__; if (ab && ab[S.selectedBlock]) delete ab[S.selectedBlock];
-  try { document.getElementById('pframe').contentWindow.postMessage({ type:'HE_APPLY_BLOCK', blockId:S.selectedBlock, style:'' }, window.location.origin); } catch {}
+  // Use reset:true flag — never send empty style string (it wiped all inline styles)
+  try { document.getElementById('pframe').contentWindow.postMessage({ type:'HE_APPLY_BLOCK', blockId:S.selectedBlock, reset:true }, window.location.origin); } catch {}
   updateBadge(); closePanel(); toast('Estilo do bloco resetado.');
 }
 

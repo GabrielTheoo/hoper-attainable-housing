@@ -2,17 +2,30 @@
   'use strict';
 
   // ── Style merge helper ────────────────────────────────────────
-  // Merges two inline style strings: override props win, base props preserved
+  // Structural properties that can never be overridden via the block panel.
+  // Changing these would break section containment (image overflow, gradient escape, etc.)
+  var LOCKED_PROPS = { 'position':1, 'overflow':1, 'overflow-x':1, 'overflow-y':1,
+                       'display':1, 'flex-direction':1, 'align-items':1 };
+
+  // Merges two inline style strings: override props win, LOCKED base props are preserved
   function mergeStyles(base, override) {
     var map = {};
-    function parse(s) {
+    var lockedVals = {};
+    function parseInto(s, target) {
       (s || '').split(';').forEach(function(part) {
         var i = part.indexOf(':');
-        if (i > 0) { var k = part.slice(0, i).trim(), v = part.slice(i + 1).trim(); if (k && v) map[k] = v; }
+        if (i > 0) { var k = part.slice(0, i).trim(), v = part.slice(i + 1).trim(); if (k && v) target[k] = v; }
       });
     }
-    parse(base);
-    parse(override);
+    parseInto(base, map);
+    // Record locked values from the base so they can't be overridden
+    Object.keys(LOCKED_PROPS).forEach(function(k) { if (map[k]) lockedVals[k] = map[k]; });
+    // Apply override, skipping any locked properties
+    var overMap = {};
+    parseInto(override, overMap);
+    Object.keys(overMap).forEach(function(k) {
+      if (!lockedVals[k]) map[k] = overMap[k];
+    });
     return Object.keys(map).map(function(k) { return k + ':' + map[k]; }).join(';');
   }
 
@@ -523,21 +536,22 @@
       }
 
       if (e.data.type === 'HE_APPLY_BLOCK') {
-        const el = findBlockById(e.data.blockId);
-        if (el && e.data.style !== undefined) {
-          if (!e.data.style) {
-            // Reset: restore the original template inline style
-            el.setAttribute('style', el.getAttribute('data-orig-style') || '');
-          } else {
-            // Save original template style on first override so reset can restore it
-            if (!el.hasAttribute('data-orig-style')) {
-              el.setAttribute('data-orig-style', el.getAttribute('style') || '');
-            }
-            // Merge: keep all template structural styles, layer user overrides on top
-            var orig = el.getAttribute('data-orig-style') || '';
-            el.setAttribute('style', mergeStyles(orig, e.data.style));
+        var el = findBlockById(e.data.blockId);
+        if (!el) return;
+        if (e.data.reset) {
+          // Explicit reset: restore saved template style
+          el.setAttribute('style', el.getAttribute('data-orig-style') || '');
+        } else if (e.data.style) {
+          // Save original template inline style on the very first override
+          if (!el.hasAttribute('data-orig-style')) {
+            el.setAttribute('data-orig-style', el.getAttribute('style') || '');
           }
+          // Merge override on top of ORIGINAL template style (not current merged style)
+          // Locked structural properties (position, overflow, display, etc.) are protected
+          var orig = el.getAttribute('data-orig-style') || '';
+          el.setAttribute('style', mergeStyles(orig, e.data.style));
         }
+        // Empty style with no reset flag → no-op (prevents accidental style wipe)
         return;
       }
 
