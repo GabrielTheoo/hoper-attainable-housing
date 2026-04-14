@@ -1,6 +1,21 @@
 (function () {
   'use strict';
 
+  // ── Style merge helper ────────────────────────────────────────
+  // Merges two inline style strings: override props win, base props preserved
+  function mergeStyles(base, override) {
+    var map = {};
+    function parse(s) {
+      (s || '').split(';').forEach(function(part) {
+        var i = part.indexOf(':');
+        if (i > 0) { var k = part.slice(0, i).trim(), v = part.slice(i + 1).trim(); if (k && v) map[k] = v; }
+      });
+    }
+    parse(base);
+    parse(override);
+    return Object.keys(map).map(function(k) { return k + ':' + map[k]; }).join(';');
+  }
+
   // ── XPath helpers ─────────────────────────────────────────────
   function getXPath(el) {
     const parts = [];
@@ -80,7 +95,10 @@
       for (const [bid, bdata] of Object.entries(blocks)) {
         if (bid === '__order__') continue;
         const el = findBlockById(bid);
-        if (el && bdata.style) el.setAttribute('style', bdata.style);
+        if (el && bdata.style) {
+          // On page load the element's current style IS the original template style — merge on top
+          el.setAttribute('style', mergeStyles(el.getAttribute('style') || '', bdata.style));
+        }
       }
     }
     // Insert dynamically-added sections
@@ -506,7 +524,20 @@
 
       if (e.data.type === 'HE_APPLY_BLOCK') {
         const el = findBlockById(e.data.blockId);
-        if (el && e.data.style !== undefined) el.setAttribute('style', e.data.style);
+        if (el && e.data.style !== undefined) {
+          if (!e.data.style) {
+            // Reset: restore the original template inline style
+            el.setAttribute('style', el.getAttribute('data-orig-style') || '');
+          } else {
+            // Save original template style on first override so reset can restore it
+            if (!el.hasAttribute('data-orig-style')) {
+              el.setAttribute('data-orig-style', el.getAttribute('style') || '');
+            }
+            // Merge: keep all template structural styles, layer user overrides on top
+            var orig = el.getAttribute('data-orig-style') || '';
+            el.setAttribute('style', mergeStyles(orig, e.data.style));
+          }
+        }
         return;
       }
 
