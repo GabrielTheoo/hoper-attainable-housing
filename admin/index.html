@@ -152,6 +152,9 @@ body{background:var(--bk);color:var(--text);font-family:'Segoe UI',system-ui,san
 .bi.dragging{opacity:.4;}
 .bi-grip{cursor:grab;color:var(--dim);flex-shrink:0;opacity:.5;}
 .bi-grip:active{cursor:grabbing;}
+.bi-del-btn{margin-left:auto;flex-shrink:0;background:none;border:none;color:rgba(252,129,129,.7);font-size:15px;line-height:1;cursor:pointer;padding:0 2px;display:none;align-items:center;}
+.bi-row:hover .bi-del-btn{display:flex;}
+.bi-del-btn:hover{color:#fc8181;}
 .ctx-item{display:block;width:100%;text-align:left;background:none;border:none;padding:7px 12px;font-size:12px;color:var(--text);cursor:pointer;border-radius:6px;}
 .ctx-item:hover{background:rgba(255,255,255,.06);}
 .ctx-item.ctx-danger{color:#fc8181;}
@@ -786,7 +789,7 @@ function showPageSelection() {
     card.dataset.path = p.path;
     const c = Object.keys(S.pending[p.path] || {}).length;
     if (c > 0) card.classList.add('changed');
-    const previewSrc = p.iframePath || p.path;
+    const previewSrc = p.iframePath || (p.isCustom ? '/_blank.html?path=' + p.path : p.path);
     card.innerHTML =
       '<div class="ps-card-preview"><iframe src="' + previewSrc + '" loading="lazy" tabindex="-1" aria-hidden="true"></iframe></div>' +
       '<div class="ps-card-footer">' +
@@ -831,7 +834,8 @@ function enterEditor(page) {
   document.getElementById('ps').style.display = 'none';
   document.getElementById('es').style.display = 'flex';
   S.path = page.path;
-  S.previewPath = page.iframePath || page.path;
+  const _iframePath = page.iframePath || (page.isCustom ? '/_blank.html?path=' + page.path : page.path);
+  S.previewPath = _iframePath;
   S.restrict = page.restrict || null;
   S.xpath = null; S.selectedBlock = null;
   exitSwapUI();
@@ -848,8 +852,7 @@ function enterEditor(page) {
   // Reset to desktop view when switching pages
   setDeviceMode('desktop');
   const f = document.getElementById('pframe');
-  const loadUrl = page.iframePath || page.path;
-  f.src = loadUrl;
+  f.src = _iframePath;
   f.onload = () => {
     setTimeout(() => {
       try { f.contentWindow.postMessage({ type: 'HE_ENABLE', restrict: S.restrict }, window.location.origin); } catch {}
@@ -1203,6 +1206,8 @@ function buildBlockList(blocks) {
 }
 
 function createBlockItem(b) {
+  const sections = (S.pending[S.path]||{}).__sections__ || (S.all[S.path]||{}).__sections__ || [];
+  const isSection = sections.some(s => s && s.id === b.blockId);
   const li = document.createElement('li');
   li.className = 'bi'; li.dataset.bid = b.blockId;
   const row = document.createElement('div'); row.className = 'bi-row';
@@ -1210,15 +1215,19 @@ function createBlockItem(b) {
     '<span class="bi-grip"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.5"/><circle cx="15" cy="5" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="15" cy="19" r="1.5"/></svg></span>' +
     '<svg class="bi-arr" width="8" height="8" viewBox="0 0 8 8"><path d="M2 1l4 3-4 3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>' +
     '<span class="bi-name">' + escHtml(b.label || b.blockId) + '</span>' +
-    '<span class="bi-badge">•</span>';
+    '<span class="bi-badge">•</span>' +
+    (isSection ? '<button class="bi-del-btn" title="Excluir seção" tabindex="-1">×</button>' : '');
   li.appendChild(row);
   const children = document.createElement('ul'); children.className = 'bi-children'; li.appendChild(children);
   row.addEventListener('click', e => {
-    if (e.target.closest('.bi-grip')) return;
+    if (e.target.closest('.bi-grip,.bi-del-btn')) return;
     if (S.expandedBlock === b.blockId) collapseBlock(b.blockId);
     else expandBlock(b.blockId);
     selectBlock(b.blockId);
   });
+  if (isSection) {
+    row.querySelector('.bi-del-btn').addEventListener('click', e => { e.stopPropagation(); deleteSection(b.blockId); });
+  }
   row.addEventListener('contextmenu', e => { e.preventDefault(); openBlockCtxMenu(e, b.blockId); });
   li.draggable = true;
   li.addEventListener('dragstart', e => { e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain',b.blockId); li.classList.add('dragging'); });
@@ -1570,7 +1579,7 @@ document.getElementById('np-create').addEventListener('click', () => {
   const slug = slugify(document.getElementById('np-slug').value || document.getElementById('np-name').value);
   if (!name || !slug) { toast('Preencha nome e URL.', 'err'); return; }
   const path = '/' + slug + '/';
-  const page = { name, path, isCustom: true, icon: '📄' };
+  const page = { name, path, isCustom: true, icon: '📄', iframePath: '/_blank.html?path=' + path };
   // Save to pending as a new custom page entry
   if (!S.pending.__pages__) S.pending.__pages__ = [];
   if (!S.all.__pages__) S.all.__pages__ = [];

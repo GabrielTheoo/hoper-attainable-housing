@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/:path*", "destination": "/_blank.html" }
+    { "source": "/((?!api/|admin/|_blank\\.html|content-override\\.js|favicon|assets/).*)", "destination": "/_blank.html" }
   ]
 }
