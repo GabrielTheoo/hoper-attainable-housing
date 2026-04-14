@@ -622,11 +622,11 @@ const PAGES = [
 const SECTION_TEMPLATES = [
   { type:'hero', label:'Hero Banner', category:'hero', desc:'Fundo escuro, título, subtítulo e botões',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#1a1a1a"/><rect x="24" y="28" width="90" height="11" fill="rgba(255,255,255,.75)" rx="2"/><rect x="24" y="44" width="70" height="7" fill="rgba(255,255,255,.35)" rx="2"/><rect x="24" y="56" width="52" height="3" fill="rgba(255,255,255,.2)" rx="2"/><rect x="24" y="68" width="50" height="18" fill="#EB7F1E" rx="9"/><rect x="80" y="68" width="46" height="18" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" rx="9"/></svg>`,
-    html: id => `<section id="${id}" style="min-height:520px;background:#1a1a1a;position:relative;overflow:hidden;display:flex;align-items:center;padding-top:calc(var(--nav-h,90px) + 40px);padding-bottom:80px;"><img data-he-img="1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.5;max-width:none;max-height:none;"><div data-he-overlay="1" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(135deg,rgba(10,10,10,.85) 0%,rgba(10,10,10,.55) 100%);"></div><div class="container" style="position:relative;z-index:2;"><div style="max-width:700px;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;">LABEL DA SEÇÃO</p><h2 style="font-size:clamp(32px,4.5vw,56px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-0.5px;margin-bottom:20px;">Seu Título Principal<br>Vai Aqui</h2><p style="font-size:17px;color:rgba(255,255,255,.7);line-height:1.75;max-width:560px;margin-bottom:32px;">Adicione sua descrição aqui. Explique o valor do seu produto ou serviço de forma clara e direta.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;box-shadow:0 8px 32px rgba(235,127,30,.35);">Comece Agora</a><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;border:2px solid rgba(255,255,255,.45);color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
+    html: id => `<section id="${id}" style="min-height:520px;background:#1a1a1a;position:relative;overflow:hidden;display:flex;align-items:center;padding-top:calc(var(--nav-h,90px) + 40px);padding-bottom:80px;"><img data-he-img="1" src="/Images/placeholder.jpeg" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.5;max-width:none;max-height:none;"><div data-he-overlay="1" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(135deg,rgba(10,10,10,.85) 0%,rgba(10,10,10,.55) 100%);"></div><div class="container" style="position:relative;z-index:2;"><div style="max-width:700px;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;">LABEL DA SEÇÃO</p><h2 style="font-size:clamp(32px,4.5vw,56px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-0.5px;margin-bottom:20px;">Seu Título Principal<br>Vai Aqui</h2><p style="font-size:17px;color:rgba(255,255,255,.7);line-height:1.75;max-width:560px;margin-bottom:32px;">Adicione sua descrição aqui. Explique o valor do seu produto ou serviço de forma clara e direta.</p><div style="display:flex;gap:14px;flex-wrap:wrap;"><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;box-shadow:0 8px 32px rgba(235,127,30,.35);">Comece Agora</a><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;border:2px solid rgba(255,255,255,.45);color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
 
   { type:'page-hero', label:'Page Hero', category:'hero', desc:'Cabeçalho de página interna com imagem de fundo',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#111"/><rect x="24" y="32" width="40" height="5" fill="#EB7F1E" rx="2"/><rect x="24" y="42" width="80" height="11" fill="rgba(255,255,255,.75)" rx="2"/><rect x="24" y="58" width="64" height="6" fill="rgba(255,255,255,.3)" rx="2"/><rect x="24" y="72" width="46" height="16" fill="#EB7F1E" rx="8"/></svg>`,
-    html: id => `<section id="${id}" style="min-height:420px;background:#1A1A1A;position:relative;overflow:hidden;display:flex;align-items:center;padding-top:calc(var(--nav-h,90px) + 40px);padding-bottom:80px;"><img data-he-img="1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.5;max-width:none;max-height:none;"><div data-he-overlay="1" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(to right,rgba(10,10,10,.92) 0%,rgba(10,10,10,.6) 100%);"></div><div class="container" style="position:relative;z-index:2;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><span style="display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;"></span>Label da Página</p><h1 style="font-size:clamp(32px,5vw,60px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:700px;">Título da Página</h1><p style="font-size:17px;color:rgba(255,255,255,.72);line-height:1.75;max-width:580px;margin-bottom:32px;">Subtítulo descritivo da página vai aqui.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></section>` },
+    html: id => `<section id="${id}" style="min-height:420px;background:#1A1A1A;position:relative;overflow:hidden;display:flex;align-items:center;padding-top:calc(var(--nav-h,90px) + 40px);padding-bottom:80px;"><img data-he-img="1" src="/Images/placeholder.jpeg" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.5;max-width:none;max-height:none;"><div data-he-overlay="1" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(to right,rgba(10,10,10,.92) 0%,rgba(10,10,10,.6) 100%);"></div><div class="container" style="position:relative;z-index:2;"><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><span style="display:block;width:24px;height:2px;background:#EB7F1E;flex-shrink:0;"></span>Label da Página</p><h1 style="font-size:clamp(32px,5vw,60px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:700px;">Título da Página</h1><p style="font-size:17px;color:rgba(255,255,255,.72);line-height:1.75;max-width:580px;margin-bottom:32px;">Subtítulo descritivo da página vai aqui.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></section>` },
 
   { type:'features', label:'Cards de Funcionalidades', category:'cards', desc:'Grade de 3 cards com ícone, título e descrição',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#f9f9f7"/><rect x="68" y="10" width="64" height="8" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="50" y="22" width="100" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="8" y="34" width="56" height="56" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="72" y="34" width="56" height="56" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><rect x="136" y="34" width="56" height="56" fill="#fff" stroke="#e8e8e8" stroke-width="1" rx="5"/><circle cx="36" cy="48" r="7" fill="#EB7F1E" opacity=".2"/><circle cx="100" cy="48" r="7" fill="#EB7F1E" opacity=".2"/><circle cx="164" cy="48" r="7" fill="#EB7F1E" opacity=".2"/><rect x="16" y="62" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="80" y="62" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="144" y="62" width="40" height="4" fill="#1a1a1a" opacity=".4" rx="2"/><rect x="16" y="70" width="32" height="3" fill="#1a1a1a" opacity=".15" rx="1"/><rect x="80" y="70" width="32" height="3" fill="#1a1a1a" opacity=".15" rx="1"/><rect x="144" y="70" width="32" height="3" fill="#1a1a1a" opacity=".15" rx="1"/></svg>`,
@@ -634,11 +634,11 @@ const SECTION_TEMPLATES = [
 
   { type:'split', label:'Texto + Imagem', category:'layout', desc:'Duas colunas: texto à esquerda, imagem à direita',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#fff"/><rect x="12" y="20" width="40" height="5" fill="#EB7F1E" opacity=".7" rx="2"/><rect x="12" y="30" width="78" height="9" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="12" y="44" width="70" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="12" y="52" width="60" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="12" y="60" width="50" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="12" y="74" width="44" height="16" fill="#EB7F1E" rx="8"/><rect x="106" y="12" width="82" height="76" fill="#e8e8e8" rx="8"/></svg>`,
-    html: id => `<section id="${id}" style="padding:80px 0;background:#fff;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><ul style="list-style:none;padding:0;margin-bottom:28px;">${[1,2,3].map(n=>`<li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;"><span style="width:20px;height:20px;border-radius:50%;background:rgba(235,127,30,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EB7F1E" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><span style="font-size:15px;color:#383838;line-height:1.5;">Item de benefício ${n}</span></li>`).join('')}</ul><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div><div style="border-radius:16px;height:380px;overflow:hidden;position:relative;background:#e8e8e8;"><img data-he-img="1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div></div></div></section>` },
+    html: id => `<section id="${id}" style="padding:80px 0;background:#fff;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><ul style="list-style:none;padding:0;margin-bottom:28px;">${[1,2,3].map(n=>`<li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;"><span style="width:20px;height:20px;border-radius:50%;background:rgba(235,127,30,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EB7F1E" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span><span style="font-size:15px;color:#383838;line-height:1.5;">Item de benefício ${n}</span></li>`).join('')}</ul><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div><div style="border-radius:16px;height:380px;overflow:hidden;position:relative;background:#e8e8e8;"><img data-he-img="1" src="/Images/placeholder.jpeg" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;max-width:none;max-height:none;"></div></div></div></section>` },
 
   { type:'split-reverse', label:'Imagem + Texto', category:'layout', desc:'Duas colunas: imagem à esquerda, texto à direita',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#f9f9f7"/><rect x="12" y="12" width="82" height="76" fill="#e8e8e8" rx="8"/><rect x="110" y="20" width="40" height="5" fill="#EB7F1E" opacity=".7" rx="2"/><rect x="110" y="30" width="78" height="9" fill="#1a1a1a" opacity=".6" rx="2"/><rect x="110" y="44" width="70" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="110" y="52" width="60" height="4" fill="#1a1a1a" opacity=".2" rx="2"/><rect x="110" y="74" width="44" height="16" fill="#EB7F1E" rx="8"/></svg>`,
-    html: id => `<section id="${id}" style="padding:80px 0;background:#f9f9f7;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div style="border-radius:16px;height:380px;overflow:hidden;position:relative;background:#e8e8e8;"><img data-he-img="1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
+    html: id => `<section id="${id}" style="padding:80px 0;background:#f9f9f7;"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;"><div style="border-radius:16px;height:380px;overflow:hidden;position:relative;background:#e8e8e8;"><img data-he-img="1" src="/Images/placeholder.jpeg" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;max-width:none;max-height:none;"></div><div><p style="color:#EB7F1E;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;">SEÇÃO</p><h2 style="font-size:clamp(26px,3.5vw,42px);font-weight:800;color:#1A1A1A;line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px;">Título da Seção</h2><p style="font-size:16px;color:#666;line-height:1.75;margin-bottom:20px;">Adicione seu texto explicativo aqui. Descreva os benefícios e o valor da sua proposta.</p><a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;background:#EB7F1E;color:#fff;font-weight:600;font-size:15px;text-decoration:none;">Saiba Mais</a></div></div></div></section>` },
 
   { type:'cta', label:'Chamada para Ação', category:'cta', desc:'Seção centralizada com título e botão de destaque',
     thumb:`<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="100" fill="#EB7F1E" rx="0"/><rect x="60" y="22" width="80" height="10" fill="rgba(255,255,255,.85)" rx="2"/><rect x="40" y="38" width="120" height="5" fill="rgba(255,255,255,.45)" rx="2"/><rect x="70" y="50" width="60" height="5" fill="rgba(255,255,255,.35)" rx="2"/><rect x="75" y="64" width="50" height="20" fill="#fff" rx="10"/></svg>`,
@@ -673,6 +673,34 @@ const S = {
   expandedBlock: null, blockElements: {},
   inlineActive: false,
 };
+
+// ── Undo stack ────────────────────────────────────────────────
+const _undoStack = [];
+const _MAX_UNDO = 30;
+function pushUndo() {
+  _undoStack.push(JSON.stringify(S.pending));
+  if (_undoStack.length > _MAX_UNDO) _undoStack.shift();
+}
+function performUndo() {
+  if (!_undoStack.length) { toast('Nada para desfazer.', 'info'); return; }
+  S.pending = JSON.parse(_undoStack.pop());
+  updateBadge();
+  if (S.path) {
+    const f = document.getElementById('pframe');
+    const cur = f.src;
+    f.src = '';
+    setTimeout(() => { f.src = cur; }, 30);
+  }
+  toast('Alteração desfeita.', 'info');
+}
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+    const tag = document.activeElement && document.activeElement.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return; // let native undo handle text inputs
+    e.preventDefault();
+    performUndo();
+  }
+});
 
 // ── Helpers ───────────────────────────────────────────────────
 function pendingCount() {
@@ -1137,6 +1165,7 @@ document.getElementById('rbtn').addEventListener('click', () => { if (S.panelMod
 
 function applyBlock() {
   if (!S.selectedBlock || !S.path) return;
+  pushUndo();
   const bg = document.getElementById('bhex').value.trim() || document.getElementById('bcol').value;
   const pt = document.getElementById('bp-top').value, pr = document.getElementById('bp-right').value;
   const pb = document.getElementById('bp-bottom').value, pl = document.getElementById('bp-left').value;
@@ -1168,6 +1197,7 @@ function resetBlock() {
 
 function applyElement() {
   if (!S.xpath || !S.path) return;
+  pushUndo();
   if (!S.pending[S.path]) S.pending[S.path] = {};
   // Stop inline edit first
   try { document.getElementById('pframe').contentWindow.postMessage({ type:'HE_STOP_INLINE' }, window.location.origin); } catch {}
@@ -1376,6 +1406,7 @@ function openBlockPanel(bid) {
 }
 
 function reorderBlocks(fromId, toId) {
+  pushUndo();
   const fi = S.blocks.findIndex(b=>b.blockId===fromId), ti = S.blocks.findIndex(b=>b.blockId===toId);
   if (fi===-1||ti===-1) return;
   const [moved] = S.blocks.splice(fi,1); S.blocks.splice(ti,0,moved);
@@ -1434,6 +1465,7 @@ document.getElementById('del-sec-confirm').addEventListener('click', () => {
 function deleteSection(bid) { confirmDeleteSection(bid); }
 
 function doDeleteSection(bid) {
+  pushUndo();
   // Remove from pending sections
   if (!S.pending[S.path]) S.pending[S.path] = {};
   const cur = S.pending[S.path].__sections__ || (S.all[S.path]||{}).__sections__ || [];
@@ -1476,6 +1508,7 @@ document.getElementById('overlay-opacity').addEventListener('input', function() 
 });
 document.getElementById('overlay-apply').addEventListener('click', () => {
   if (!S.selectedBlock) return;
+  pushUndo();
   const bg = getOverrideBg();
   try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_SET_OVERLAY', blockId:S.selectedBlock, bg}, window.location.origin); } catch {}
   // Persist overlay background in stored section html
@@ -1507,6 +1540,7 @@ document.getElementById('bg-img-opacity').addEventListener('input', function() {
 document.getElementById('bg-img-pick').addEventListener('click', () => document.getElementById('bg-img-file').click());
 document.getElementById('bg-img-file').addEventListener('change', async function() {
   const file = this.files[0]; if (!file || !S.selectedBlock) return;
+  pushUndo();
   const st = document.getElementById('bg-img-pick');
   st.textContent = 'Enviando...';
   try {
@@ -1629,6 +1663,7 @@ function renderSectionPicker() {
 
 function insertSection(tpl) {
   if (!S.path) return;
+  pushUndo();
   const sectionId = tpl.type + '_' + Date.now();
   const html = tpl.html(sectionId);
   try {
