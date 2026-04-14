@@ -1312,8 +1312,53 @@ function openBlockPanel(bid) {
   // Show bg/overlay controls only for sections that have those elements
   const sections = (S.pending[S.path]||{}).__sections__ || (S.all[S.path]||{}).__sections__ || [];
   const sec = sections.find(s => s && s.id === bid);
-  document.getElementById('bg-img-sec').style.display = (sec && sec.html.includes('data-he-img')) ? '' : 'none';
-  document.getElementById('overlay-sec').style.display = (sec && sec.html.includes('data-he-overlay')) ? '' : 'none';
+  const hasBgImg = sec && sec.html.includes('data-he-img');
+  const hasOverlay = sec && sec.html.includes('data-he-overlay');
+  document.getElementById('bg-img-sec').style.display = hasBgImg ? '' : 'none';
+  document.getElementById('overlay-sec').style.display = hasOverlay ? '' : 'none';
+  // Pre-populate controls from current section HTML
+  if (sec) {
+    const tmpDoc = new DOMParser().parseFromString(sec.html, 'text/html');
+    if (hasBgImg) {
+      const imgEl = tmpDoc.querySelector('[data-he-img]');
+      if (imgEl) {
+        const op = parseFloat(imgEl.style.opacity);
+        const opVal = isNaN(op) ? 0.5 : op;
+        document.getElementById('bg-img-opacity').value = opVal;
+        document.getElementById('bg-img-opacity-val').textContent = Math.round(opVal * 100) + '%';
+        const src = imgEl.getAttribute('src') || '';
+        if (src && !src.startsWith('data:')) {
+          const fname = decodeURIComponent(src.split('/').pop().split('?')[0]).substring(0, 45);
+          document.getElementById('bg-img-pick').textContent = '✓ ' + fname;
+        } else {
+          document.getElementById('bg-img-pick').textContent = 'Clique para selecionar imagem';
+        }
+      }
+    }
+    if (hasOverlay) {
+      const ovEl = tmpDoc.querySelector('[data-he-overlay]');
+      if (ovEl) {
+        const bg = ovEl.style.background || ovEl.style.backgroundImage || '';
+        let type = 'none';
+        if (bg.includes('linear-gradient')) {
+          type = (bg.includes('to right') || bg.includes('90deg')) ? 'gradient-horiz' : 'gradient-diag';
+        } else if (bg && bg !== 'none') {
+          type = 'solid';
+        }
+        document.getElementById('overlay-type').value = type;
+        const opMatch = bg.match(/rgba\([^)]+?,\s*([\d.]+)\)/);
+        if (opMatch) {
+          const ov = parseFloat(opMatch[1]);
+          document.getElementById('overlay-opacity').value = ov;
+          document.getElementById('overlay-opacity-val').textContent = Math.round(ov * 100) + '%';
+        }
+        const hexMatch = bg.match(/#([0-9a-fA-F]{6})/);
+        if (hexMatch) {
+          document.getElementById('overlay-col1').value = '#' + hexMatch[1];
+        }
+      }
+    }
+  }
   document.getElementById('ep').classList.add('open');
 }
 
@@ -1391,6 +1436,12 @@ function hexToRgba(hex, alpha) {
   const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
   return `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
 }
+function persistImgStyle(html, prop, value) {
+  return html.replace(/(<img[^>]*data-he-img[^>]*style=")([^"]*)(")/g, function(m, pre, style, post) {
+    var cleaned = style.replace(new RegExp(prop + '\\s*:[^;]+;?\\s*', 'g'), '').trimEnd().replace(/;$/, '');
+    return pre + (cleaned ? cleaned + ';' : '') + prop + ':' + value + ';' + post;
+  });
+}
 document.getElementById('overlay-opacity').addEventListener('input', function() {
   document.getElementById('overlay-opacity-val').textContent = Math.round(this.value * 100) + '%';
 });
@@ -1398,12 +1449,14 @@ document.getElementById('overlay-apply').addEventListener('click', () => {
   if (!S.selectedBlock) return;
   const bg = getOverrideBg();
   try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_SET_OVERLAY', blockId:S.selectedBlock, bg}, window.location.origin); } catch {}
-  // Persist in pending sections html
-  const sections = S.pending[S.path].__sections__ || [];
-  const sec = sections.find(s => s && s.id === S.selectedBlock);
-  if (sec) {
-    sec.html = sec.html.replace(/(<\[^>]*data-he-overlay[^>]*style=")[^"]*(")/,
-      (m, pre, post) => pre + sec.html.match(/style="([^"]*)"/)?.[1].replace(/background:[^;]+;?/, '') + 'background:' + bg + ';' + post);
+  // Persist overlay background in stored section html
+  if (!S.pending[S.path]) S.pending[S.path] = {};
+  if (!S.pending[S.path].__sections__) S.pending[S.path].__sections__ = (S.all[S.path]||{}).__sections__ || [];
+  const sections2 = S.pending[S.path].__sections__;
+  const sec2 = sections2.find(s => s && s.id === S.selectedBlock);
+  if (sec2) {
+    sec2.html = sec2.html.replace(/(<[^>]*data-he-overlay[^>]*style=")([^"]*)(")/,
+      (m, pre, style, post) => pre + style.replace(/background:[^;]*;?\s*/g, '') + 'background:' + bg + ';' + post);
   }
   updateBadge();
   toast('Overlay aplicado.', 'info');
@@ -1411,9 +1464,15 @@ document.getElementById('overlay-apply').addEventListener('click', () => {
 
 // ── Background image pick for sections ───────────────────────
 document.getElementById('bg-img-opacity').addEventListener('input', function() {
-  document.getElementById('bg-img-opacity-val').textContent = Math.round(this.value * 100) + '%';
+  const op = parseFloat(this.value);
+  document.getElementById('bg-img-opacity-val').textContent = Math.round(op * 100) + '%';
   if (S.selectedBlock) {
-    try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_SET_BG_IMG', blockId:S.selectedBlock, src:null, opacity:parseFloat(this.value)}, window.location.origin); } catch {}
+    try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_SET_BG_IMG', blockId:S.selectedBlock, src:null, opacity:op}, window.location.origin); } catch {}
+    // Persist opacity in stored section html
+    const sections = (S.pending[S.path]||{}).__sections__ || [];
+    const sec = sections.find(s => s && s.id === S.selectedBlock);
+    if (sec) sec.html = persistImgStyle(sec.html, 'opacity', String(op));
+    updateBadge();
   }
 });
 document.getElementById('bg-img-pick').addEventListener('click', () => document.getElementById('bg-img-file').click());
@@ -1427,10 +1486,15 @@ document.getElementById('bg-img-file').addEventListener('change', async function
     const j = await resp.json(); if (!j.url) throw new Error('no url');
     const opacity = parseFloat(document.getElementById('bg-img-opacity').value);
     try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_SET_BG_IMG', blockId:S.selectedBlock, src:j.url, opacity}, window.location.origin); } catch {}
-    // Persist src in section html
-    const sections = S.pending[S.path].__sections__ || [];
+    // Persist src + opacity in section html
+    if (!S.pending[S.path]) S.pending[S.path] = {};
+    if (!S.pending[S.path].__sections__) S.pending[S.path].__sections__ = (S.all[S.path]||{}).__sections__ || [];
+    const sections = S.pending[S.path].__sections__;
     const sec = sections.find(s => s && s.id === S.selectedBlock);
-    if (sec) sec.html = sec.html.replace(/(<img[^>]*data-he-img[^>]*src=")[^"]*(")/g, '$1' + j.url + '$2');
+    if (sec) {
+      sec.html = sec.html.replace(/(<img[^>]*data-he-img[^>]*src=")[^"]*(")/g, '$1' + j.url + '$2');
+      sec.html = persistImgStyle(sec.html, 'opacity', String(opacity));
+    }
     updateBadge();
     st.textContent = '✓ ' + file.name;
   } catch { st.textContent = 'Erro no upload.'; }
