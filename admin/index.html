@@ -574,6 +574,19 @@ select.ep-sel option{background:#1e1e1e;} input.ep-num{width:100%;}
 <!-- Hidden file input for bg image pick -->
 <input type="file" id="bg-img-file" accept="image/png,image/jpeg,image/webp" style="display:none;">
 
+<!-- Delete section confirmation modal -->
+<div id="del-sec-modal" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);" id="del-sec-overlay"></div>
+  <div style="position:relative;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;width:360px;max-width:calc(100vw - 32px);z-index:1;">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Excluir seção?</h3>
+    <p style="font-size:13px;color:var(--dim);margin-bottom:22px;">Tem certeza que deseja excluir esta seção? A ação será efetivada ao publicar.</p>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button id="del-sec-cancel" style="padding:8px 18px;border-radius:8px;background:transparent;border:1px solid var(--border);color:var(--text);cursor:pointer;font-size:13px;">Cancelar</button>
+      <button id="del-sec-confirm" style="padding:8px 18px;border-radius:8px;background:#e53e3e;border:none;color:#fff;cursor:pointer;font-size:13px;font-weight:600;">Excluir</button>
+    </div>
+  </div>
+</div>
+
 <!-- Delete page confirmation modal -->
 <div id="del-page-modal" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;">
   <div style="position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);" id="del-page-overlay"></div>
@@ -1230,7 +1243,7 @@ function createBlockItem(b) {
     selectBlock(b.blockId);
   });
   if (isSection) {
-    row.querySelector('.bi-del-btn').addEventListener('click', e => { e.stopPropagation(); deleteSection(b.blockId); });
+    row.querySelector('.bi-del-btn').addEventListener('click', e => { e.stopPropagation(); confirmDeleteSection(b.blockId); });
   }
   row.addEventListener('contextmenu', e => { e.preventDefault(); openBlockCtxMenu(e, b.blockId); });
   li.draggable = true;
@@ -1404,17 +1417,33 @@ document.getElementById('ctx-move-down').addEventListener('click', () => {
   const idx = S.blocks.findIndex(b => b.blockId === _ctxBid);
   if (idx < S.blocks.length - 1) reorderBlocks(S.blocks[idx + 1].blockId, _ctxBid);
 });
-document.getElementById('ctx-delete').addEventListener('click', () => { if (_ctxBid) deleteSection(_ctxBid); });
+document.getElementById('ctx-delete').addEventListener('click', () => { if (_ctxBid) confirmDeleteSection(_ctxBid); });
 
-function deleteSection(bid) {
+let _delSecBid = null;
+function confirmDeleteSection(bid) {
+  _delSecBid = bid;
+  document.getElementById('del-sec-modal').style.display = 'flex';
+}
+document.getElementById('del-sec-cancel').addEventListener('click', () => { document.getElementById('del-sec-modal').style.display = 'none'; _delSecBid = null; });
+document.getElementById('del-sec-overlay').addEventListener('click', () => { document.getElementById('del-sec-modal').style.display = 'none'; _delSecBid = null; });
+document.getElementById('del-sec-confirm').addEventListener('click', () => {
+  document.getElementById('del-sec-modal').style.display = 'none';
+  if (_delSecBid) { doDeleteSection(_delSecBid); _delSecBid = null; }
+});
+
+function deleteSection(bid) { confirmDeleteSection(bid); }
+
+function doDeleteSection(bid) {
   // Remove from pending sections
   if (!S.pending[S.path]) S.pending[S.path] = {};
   const cur = S.pending[S.path].__sections__ || (S.all[S.path]||{}).__sections__ || [];
   S.pending[S.path].__sections__ = cur.filter(s => s && s.id !== bid);
-  // Remove from block list
-  S.blocks = S.blocks.filter(b => b.blockId !== bid);
+  // Build remaining list BEFORE clearing DOM (clearBlockList resets S.blocks to [])
+  const remaining = S.blocks.filter(b => b.blockId !== bid);
   if (S.selectedBlock === bid) { S.selectedBlock = null; closePanel(); }
-  clearBlockList(); buildBlockList(S.blocks);
+  document.getElementById('blist').innerHTML = '';
+  S.blocks = []; S.blockElements = {}; S.expandedBlock = null;
+  buildBlockList(remaining);
   updateBadge();
   try { document.getElementById('pframe').contentWindow.postMessage({type:'HE_REMOVE_SECTION', blockId:bid}, window.location.origin); } catch {}
   toast('Seção excluída — clique em Publicar para salvar.', 'info');
